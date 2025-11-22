@@ -1,0 +1,2191 @@
+# Bulgarian translation for gnome-system-monitor.
+# Copyright (C) 2024 gnome-system-monitor's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-system-monitor package.
+# twlvnn kraftwerk <kraft_werk@tutanota.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-system-monitor gnome-46\n"
+"POT-Creation-Date: 2025-01-12 22:52+0000\n"
+"PO-Revision-Date: 2024-09-23 22:56+0200\n"
+"Last-Translator: twlvnn kraftwerk <kraft_werk@tutanota.com>\n"
+"Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 46.1\n"
+
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr "twlvnn kraftwerk <kraft_werk@tutanota.com>"
+
+#. (itstool) path: credit/name
+#: C/memory-map-what.page:12 C/process-identify-file.page:11
+#: C/process-explain.page:11 C/process-columns.page:11
+#: C/process-update-speed.page:11 C/cpu-multicore.page:11
+#: C/process-many.page:11 C/process-priority-change.page:14
+#: C/commandline.page:11 C/mem-swap.page:12 C/solaris-mode.page:11
+#: C/process-priority-what.page:11 C/process-files.page:11
+#: C/process-identify-hog.page:11 C/units.page:11 C/cpu-check.page:15
+#: C/net-bits.page:11 C/fs-device.page:13 C/fs-diskusage.page:13
+#: C/process-forcequit.page:9 C/memory-map-use.page:13 C/mem-check.page:12
+#: C/cpu-mem-normal.page:11 C/fs-info.page:13 C/net-check.page:11
+#: C/index.page:14 C/process-kill.page:12 C/process-status.page:14
+#: C/fs-showall.page:11
+msgid "Phil Bull"
+msgstr "Phil Bull"
+
+#. (itstool) path: credit/years
+#: C/memory-map-what.page:14 C/process-identify-file.page:13
+#: C/process-explain.page:13 C/process-update-speed.page:13
+#: C/commandline.page:13 C/mem-swap.page:14 C/solaris-mode.page:13
+#: C/process-priority-what.page:19 C/process-identify-hog.page:13
+#: C/units.page:13 C/net-bits.page:13 C/process-forcequit.page:11
+#: C/memory-map-use.page:15 C/mem-check.page:14 C/net-check.page:13
+msgid "2011"
+msgstr "2011"
+
+#. (itstool) path: credit/name
+#: C/memory-map-what.page:18 C/process-identify-file.page:17
+#: C/process-explain.page:17 C/process-columns.page:17
+#: C/process-update-speed.page:17 C/commandline.page:16 C/mem-swap.page:18
+#: C/solaris-mode.page:17 C/process-priority-what.page:17
+#: C/process-identify-hog.page:17 C/units.page:17 C/net-bits.page:17
+#: C/memory-map-use.page:19 C/mem-check.page:18 C/net-check.page:17
+msgid "Michael Hill"
+msgstr "Michael Hill"
+
+#. (itstool) path: credit/years
+#: C/memory-map-what.page:20 C/process-identify-file.page:19
+#: C/process-explain.page:19 C/process-columns.page:19
+#: C/process-update-speed.page:19 C/mem-swap.page:20 C/solaris-mode.page:19
+#: C/process-priority-what.page:13 C/process-identify-hog.page:19
+#: C/units.page:19 C/net-bits.page:19 C/memory-map-use.page:21
+#: C/mem-check.page:20 C/net-check.page:19
+msgid "2011, 2014"
+msgstr "2011, 2014"
+
+#. (itstool) path: info/desc
+#: C/memory-map-what.page:23
+msgid "The memory map of a process can help diagnose certain memory issues."
+msgstr ""
+"Картата на паметта на даден процес може да помогне за оправяне на определени "
+"проблеми с паметта."
+
+#. (itstool) path: page/title
+#: C/memory-map-what.page:27
+msgid "What is a memory map?"
+msgstr "Какво е карта на паметта?"
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:40
+msgid ""
+"<gui>Virtual memory</gui> is a representation of the combined <gui>physical "
+"memory</gui> and <link xref=\"mem-swap\">swap space</link> in a system. It "
+"enables running processes to access <em>more</em> than the existing physical "
+"memory by <gui>mapping</gui> locations in physical memory to files on disk."
+msgstr ""
+"<gui>Виртуалната памет</gui> представлява комбинираната <gui>физическа "
+"памет</gui> и <link xref=\"mem-swap\">пейджинг паметта</link> в дадена "
+"система. То позволява на работещите процеси да имат достъп до <em>повече</"
+"em> от съществуващата физическа памет чрез <gui>задаване</gui> на места във "
+"физическата памет към файлове на диска."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:46
+msgid ""
+"When a program is launched, the system assigns it a unique process ID (PID) "
+"and its <em>instructions</em> and <em>data</em> are loaded into memory in "
+"<em>pages</em>. The page table of each process maps the correspondence "
+"between its pages in virtual memory and their location in physical memory. "
+"The <gui>memory map</gui> displays the total virtual memory use of the "
+"process, and can be used to determine the memory cost of running a single or "
+"multiple instances of the program, to ensure the use of the correct shared "
+"libraries, to see the results of adjusting various performance tuning "
+"parameters the program may have, or to diagnose issues such as memory leaks."
+msgstr ""
+"Когато се стартира програма, системата ѝ присвоява уникален идентификатор на "
+"процеса (PID или ИдПр) и нейните <em>инструкции</em> и <em>данни</em> се "
+"зареждат в паметта в <em>страници</em>. Таблицата на страниците на всеки "
+"процес задава съответствието между неговите страници във виртуалната памет и "
+"местоположението им във физическата памет. <gui>Картата на паметта</gui> "
+"показва общото ползване на виртуалната памет от процеса и може да се "
+"използва за определяне на разходите за памет при стартиране на една или "
+"няколко инстанции на програмата, за да се гарантира използването на "
+"правилните споделени библиотеки, за да се видят резултатите от настройването "
+"на различни параметри за настройка на производителността, които програмата "
+"може да има, или за оправяне на проблеми като изтичане на памет."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:57
+msgid ""
+"If multiple copies of a program are running, the instructions (or <em>text</"
+"em>) of the program only need to be loaded once into physical memory. Each "
+"time a new instance of the program is launched (as a unique process with its "
+"own virtual memory pages), its page table maps the location of the text in "
+"virtual memory to those instructions in the original real memory location. "
+"In addition, any dynamic shared libraries used by the process appear as "
+"distinct in virtual memory, but are shared references to a single copy of "
+"the library's text segment in real memory. When accounting for the total "
+"memory use of a process, it is important to note that the cost of shared "
+"libraries loaded into memory can be spread across all processes currently "
+"using them."
+msgstr ""
+"Ако се изпълняват няколко копия на дадена програма, инструкциите (или "
+"<em>текстът</em>) на програмата трябва да се заредят само веднъж във "
+"физическата памет. Всеки път, когато се стартира нова инстанция на "
+"програмата (като уникален процес със свои собствени страници във виртуалната "
+"памет), неговата таблица на страниците задава местоположението на текста във "
+"виртуалната памет с тези инструкции в оригиналното място в реалната памет. "
+"Освен това всички динамично споделени библиотеки, използвани от процеса, се "
+"появяват като отделни във виртуалната памет, но са споделени препратки към "
+"едно копие на текстовия сегмент на библиотеката в реалната памет. При "
+"отчитане на общото използване на паметта от даден процес е важно да се "
+"отбележи, че разходите за заредените в паметта споделени библиотеки могат да "
+"бъдат разпределени между всички процеси, които ги използват в момента."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:69
+msgid ""
+"When the system needs more pages of memory than are available, some of the "
+"existing pages will be <em>paged out</em> or written to the <gui>swap space</"
+"gui>. Text pages are flagged read-execute in memory and don't need to be "
+"written to swap since they can be re-loaded from their original location on "
+"disk. Data pages have read-write permissions, and if modified when in "
+"memory, they are labeled <em>dirty</em>, and when designated for swapping, "
+"must be paged out. When a page in swap space is required by a running "
+"process, it needs to be swapped back in before use, perhaps causing another "
+"page to be paged out."
+msgstr ""
+"Когато системата се нуждае от повече страници памет, отколкото са налични, "
+"някои от съществуващите страници ще бъдат <em>прехвърлени</em> или записани "
+"в <gui>пейджинг паметта</gui>. Текстовите страници са маркирани като четене "
+"и изпълнение в паметта и не е необходимо да се записват в пейджинг паметта, "
+"тъй като могат да бъдат заредени отново от оригиналното си местоположение на "
+"диска. Страниците с данни имат права за четене и запис и ако бъдат "
+"променени, когато са в паметта, те се маркират като <em>променени</em> и "
+"когато са предназначени за пейджинг паметта, трябва да бъдат прехвърлени. "
+"Когато дадена страница в пейджинг пространството е необходима на работещ "
+"процес, тя трябва да бъде прехвърлена обратно преди да бъде използвана, "
+"което може да доведе до прехвърляне на друга страница."
+
+#. (itstool) path: info/desc
+#: C/process-identify-file.page:22
+msgid "Search for a file that's open to display which process is using it."
+msgstr "Търсене на отворен файл, за да се покаже кой процес го използва."
+
+#. (itstool) path: page/title
+#: C/process-identify-file.page:25
+msgid "Find which program is using a specific file"
+msgstr "Намиране на коя програма използва определен файл"
+
+#. (itstool) path: page/p
+#: C/process-identify-file.page:33
+msgid ""
+"Sometimes an error message will tell you a device (like the sound device or "
+"the DVD ROM) is busy, or the file you want to edit is in use. To find the "
+"process or processes responsible:"
+msgstr ""
+"Понякога съобщението за грешка ще во казва, че дадено устройство (например "
+"звуковото устройство или DVD ROM) е заето или че файлът, който искате да "
+"редактирате, се използва. За да намерите процеса или процесите:"
+
+#. (itstool) path: item/p
+#: C/process-identify-file.page:38
+msgid ""
+"Click <guiseq><gui>System Monitor</gui><gui>Search for Open Files</gui></"
+"guiseq>."
+msgstr ""
+"Натиснете <guiseq><gui>Наблюдение на системата</gui><gui>Търсене за отворени "
+"файлове</gui></guiseq>."
+
+#. (itstool) path: item/p
+#: C/process-identify-file.page:41
+msgid ""
+"Enter a filename or part of a filename. This could be <file>/dev/snd</file> "
+"for the sound device or <file>/media/cdrom</file> for the DVD ROM."
+msgstr ""
+"Въведете име на файл или част от име на файл. Това може да бъде <file>/dev/"
+"snd</file> за звуковото устройство или <file>/media/cdrom</file> за DVD ROM."
+
+#. (itstool) path: item/p
+#: C/process-identify-file.page:45
+msgid "Click <gui>Find</gui>."
+msgstr "Натиснете <gui>Търсене</gui>."
+
+#. (itstool) path: page/p
+#: C/process-identify-file.page:49
+msgid ""
+"This will display a list of running processes that are currently accessing "
+"the file or files that match the search. Quitting the program should allow "
+"you to access the device or edit the file."
+msgstr ""
+"Това ще покаже списък на изпълняващите се процеси, които в момента имат "
+"достъп до файла или файловете, които отговарят на търсенето. Спирането на "
+"програмата трябва да ви позволи да получите достъп до устройството или да "
+"редактирате файла."
+
+#. (itstool) path: info/desc
+#: C/process-explain.page:22
+msgid "A process can be manipulated from the process list."
+msgstr "Процес може да бъде манипулиран от списъка с процеси."
+
+#. (itstool) path: page/title
+#: C/process-explain.page:25
+msgid "What is a process?"
+msgstr "Какво е процес?"
+
+#. (itstool) path: page/p
+#: C/process-explain.page:34
+msgid ""
+"A <gui>process</gui> is a program or application being executed by the "
+"system. When an application is launched, the system assigns a unique process "
+"ID (PID), and its instructions and data are loaded into memory."
+msgstr ""
+"<gui>Процес</gui> е програма или приложение, което се изпълнява от "
+"системата. Когато се стартира програма, системата задава уникален "
+"идентификатор на процеса (PID) и неговите инструкции и данни се зареждат в "
+"паметта."
+
+#. (itstool) path: page/p
+#: C/process-explain.page:38
+msgid ""
+"The <gui>Processes</gui> tab displays information on processes, and allows "
+"you to <gui>Stop</gui>, <gui>Continue</gui>, <gui>End</gui>, <gui>Kill</"
+"gui>, or change the priority of a process. If you choose to display <gui>All "
+"Processes</gui>, the process list will include <em>system processes</em>, "
+"which run in the background providing various services that keep a computer "
+"running."
+msgstr ""
+"Разделът <gui>Процеси</gui> показва информация за процесите и ви позволява "
+"да <gui>Спирате</gui>, <gui>Продължавате</gui>, <gui>Прекратявате</gui>, "
+"<gui>Убивате</gui> или да промените приоритета на даден процес. Ако изберете "
+"да покажете <gui>Всички процеси</gui>, списъкът на процесите ще включва "
+"<em>системните процеси</em>, които се изпълняват във фонов режим, "
+"предоставяйки различни услуги, които поддържат работата на компютъра."
+
+#. (itstool) path: credit/years
+#: C/process-columns.page:13 C/cpu-multicore.page:13 C/process-many.page:13
+#: C/process-priority-change.page:16 C/commandline.page:18
+#: C/process-files.page:13 C/cpu-check.page:17 C/fs-device.page:15
+#: C/fs-diskusage.page:15 C/cpu-mem-normal.page:13 C/fs-info.page:15
+#: C/index.page:16 C/process-kill.page:14 C/process-status.page:16
+#: C/fs-showall.page:13
+msgid "2014"
+msgstr "2014"
+
+#. (itstool) path: info/desc
+#: C/process-columns.page:22
+msgid "Various other columns can be shown in the <gui>Processes</gui> tab."
+msgstr "Различни колони могат да бъдат показани в раздела <gui>Процеси</gui>."
+
+#. (itstool) path: page/title
+#: C/process-columns.page:25
+msgid "Display different information about processes"
+msgstr "Показване на различна информация за процесите"
+
+#. (itstool) path: page/p
+#: C/process-columns.page:27
+msgid "To display different or additional information in the process list:"
+msgstr ""
+"За показване на различна или допълнителна информация в списъка с процеси:"
+
+#. (itstool) path: item/p
+#: C/process-columns.page:30 C/process-update-speed.page:38 C/net-bits.page:38
+#: C/mem-check.page:65
+msgid "Click <guiseq><gui>System Monitor</gui><gui>Preferences</gui></guiseq>."
+msgstr ""
+"Натиснете <guiseq><gui>Наблюдение на системата</gui><gui>Настройки</gui></"
+"guiseq>."
+
+#. (itstool) path: item/p
+#: C/process-columns.page:32 C/solaris-mode.page:44
+#: C/process-identify-hog.page:40 C/memory-map-use.page:53 C/mem-check.page:83
+msgid "Click the <gui>Processes</gui> tab."
+msgstr "Натиснете върху раздела <gui>Процеси</gui>."
+
+#. (itstool) path: item/p
+#: C/process-columns.page:33
+msgid "Select the desired headings in the <gui>Information Fields</gui> list."
+msgstr "Изберете желаните заглавия в списъка <gui>Полета с информация</gui>."
+
+#. (itstool) path: page/p
+#: C/process-columns.page:37
+msgid ""
+"For each process listed in the <gui>Processes</gui> tab, <app>System "
+"Monitor</app> provides information in a number of categories. For detailed "
+"descriptions of what the columns mean, check the <link href=\"man:"
+"ps\"><cmd>ps</cmd> man page</link>."
+msgstr ""
+"За всеки процес, посочен в раздела <gui>Процеси</gui>, „<app>Наблюдение на "
+"системата</app>“ предоставя информация в няколко категории. За подробни "
+"описания на значението на колоните вижте <link href=\"man:ps\"><cmd>ps</cmd> "
+"man страницата</link>."
+
+#. (itstool) path: info/desc
+#: C/process-update-speed.page:22
+msgid ""
+"Refresh the information shown in the System Monitor with a longer or shorter "
+"interval."
+msgstr ""
+"Опреснявайте информацията, показана в „Наблюдение на системата“, на по-дълъг "
+"или по-кратък интервал."
+
+#. (itstool) path: page/title
+#: C/process-update-speed.page:26
+msgid "Make the information update faster or slower"
+msgstr "Направете обновяването на информацията по-бърза или по-бавна"
+
+#. (itstool) path: page/p
+#: C/process-update-speed.page:35
+msgid "To change the information refresh speed:"
+msgstr "За променяне на скоростта на обновяване на информацията:"
+
+#. (itstool) path: item/p
+#: C/process-update-speed.page:41
+msgid ""
+"Click the desired tab (<gui>Processes</gui>, <gui>Resources</gui> or "
+"<gui>File Systems</gui>)."
+msgstr ""
+"Натиснете върху желания раздел (<gui>Процеси</gui>, <gui>Ресурси</gui> или "
+"<gui>Файлови системи</gui>)."
+
+#. (itstool) path: item/p
+#: C/process-update-speed.page:44 C/mem-check.page:72
+msgid "Enter a value for <gui>Update interval in seconds</gui>."
+msgstr "Въведете стойност за <gui>Интервал на обновяване в секунди</gui>."
+
+#. (itstool) path: note/p
+#: C/process-update-speed.page:48
+msgid ""
+"Setting the <gui>Update interval</gui> to a lower value will cause "
+"<gui>System Monitor</gui> itself to use more of the CPU."
+msgstr ""
+"Задаването на <gui>Интервала на обновяване</gui> на по-ниска стойност ще "
+"накара „<gui>Наблюдение на системата</gui>“ да използва повече от процесора."
+
+#. (itstool) path: info/desc
+#: C/cpu-multicore.page:16
+msgid ""
+"Computers with more processors find it easier to run many programs at the "
+"same time."
+msgstr ""
+"Компютрите с повече процесори могат по-лесно да изпълняват много програми "
+"едновременно."
+
+#. (itstool) path: page/title
+#: C/cpu-multicore.page:19
+msgid "Why do I have more than one processor?"
+msgstr "Защо имам повече от един процесор?"
+
+#. (itstool) path: page/p
+#: C/cpu-multicore.page:21
+msgid ""
+"Many computers have more than one processor (CPU). These are sometimes "
+"referred to as multi-core systems."
+msgstr ""
+"Много компютри имат повече от един процесор (ЦП). Понякога те се наричат "
+"многоядрени системи."
+
+#. (itstool) path: page/p
+#: C/cpu-multicore.page:23
+msgid ""
+"The workload of running all of the programs on your computer is shared "
+"between the processors. The more processors you have, the more the work can "
+"be shared out. This reduces the load on each processor, which can help make "
+"the computer run faster."
+msgstr ""
+"Работата, свързана с изпълнението на всички програми на компютъра, се "
+"разпределя между процесорите. Колкото повече процесори имате, толкова повече "
+"работа може да се разпредели. Това намалява натоварването на всеки процесор, "
+"което може да помогне за по-бързата работа на компютъра."
+
+#. (itstool) path: page/p
+#: C/cpu-multicore.page:25
+msgid ""
+"The computer automatically decides how best to share the work between "
+"processors; you don't need to do this yourself."
+msgstr ""
+"Компютърът автоматично решава как най-добре да разпредели работата между "
+"процесорите; не е необходимо да правите това сами."
+
+#. (itstool) path: info/desc
+#: C/process-many.page:16
+msgid "Lots of system processes run automatically in the background."
+msgstr "Много системни процеси се изпълняват автоматично във фонов режим."
+
+#. (itstool) path: page/title
+#: C/process-many.page:19
+msgid "Why are there processes listed that I did not start?"
+msgstr "Защо има изброени процеси, които не съм стартирал?"
+
+#. (itstool) path: page/p
+#: C/process-many.page:21
+msgid ""
+"There are usually lots of processes listed under the <gui>Processes</gui> "
+"tab. Only a few of these will be programs that you started yourself. The "
+"others are mostly processes that are needed by the operating system to make "
+"the computer run correctly. These are started automatically when you log in, "
+"and typically run quietly in the background."
+msgstr ""
+"Обикновено има много процеси, изброени в раздела <gui>Процеси</gui>. Само "
+"някои от тях ще са програми, които сте стартирали сами. Останалите са "
+"предимно процеси, които са необходими на операционната система, за да работи "
+"компютърът правилно. Те се стартират автоматично, когато влезете в "
+"системата, и обикновено работят тихо във фонов режим."
+
+#. (itstool) path: info/desc
+#: C/process-priority-change.page:19
+msgid ""
+"Decide whether a process should get a bigger or smaller share of the "
+"processor's time."
+msgstr ""
+"Решете дали даден процес трябва да получи по-голям или по-малък дял от "
+"времето на процесора."
+
+#. (itstool) path: page/title
+#: C/process-priority-change.page:22
+msgid "Change the priority of a process"
+msgstr "Променяне на приоритета на даден процес"
+
+#. (itstool) path: page/p
+#: C/process-priority-change.page:24
+msgid ""
+"You can tell the computer that certain processes should have a higher "
+"priority than others, and so should be given a bigger share of the available "
+"computing time. This can make them run faster, but only in certain cases. "
+"You can also give a process a <em>lower</em> priority if you think it is "
+"taking up too much processing power."
+msgstr ""
+"Може да кажете на компютъра, че определени процеси трябва да имат по-висок "
+"приоритет от други и затова трябва да им се предостави по-голям дял от "
+"наличното изчислително време. Това може да ги накара да работят по-бързо, но "
+"само в определени случаи. Може също така да дадете <em>по-нисък приоритет</"
+"em> на даден процес, ако смятате, че той отнема твърде много изчислителна "
+"мощ."
+
+#. (itstool) path: item/p
+#: C/process-priority-change.page:27
+msgid ""
+"Go to the <gui>Processes</gui> tab and click on the process you want to have "
+"a different priority."
+msgstr ""
+"Отидете в раздела <gui>Процеси</gui> и натиснете върху процеса, на който "
+"искате да зададете различен приоритет."
+
+#. (itstool) path: item/p
+#: C/process-priority-change.page:28
+msgid ""
+"Right-click the process, and use the <gui>Change Priority</gui> menu to "
+"assign the process a higher or lower priority."
+msgstr ""
+"Натиснете с десния бутон на мишката върху процеса и използвайте менюто "
+"<gui>Промяна на приоритет</gui>, за да зададете на процеса по-висок или по-"
+"нисък приоритет."
+
+#. (itstool) path: page/p
+#: C/process-priority-change.page:31
+msgid ""
+"There is typically little need to change process priorities manually. The "
+"computer will usually do a good job of managing them itself. (The system for "
+"managing the priority of processes is called <link xref=\"process-priority-"
+"what\">nice</link>.)"
+msgstr ""
+"Обикновено не е необходимо да се променят на ръка приоритетите на процесите. "
+"Компютърът обикновено се справя добре с управлението им сам. (Системата за "
+"управление на приоритетите на процесите се нарича „<link xref=\"process-"
+"priority-what\">nice</link>.)"
+
+#. (itstool) path: section/title
+#: C/process-priority-change.page:35
+msgid "Does higher priority make a process run faster?"
+msgstr "По-високият приоритет прави ли процеса по-бърз?"
+
+#. (itstool) path: section/p
+#: C/process-priority-change.page:37
+msgid ""
+"The computer shares its processing time between all of the running "
+"processes. This is normally shared intelligently, so programs that are doing "
+"more work automatically get a bigger share of the resources. Most of the "
+"time, processes will get as much processing time as they need, and so will "
+"already be running as fast as possible. Changing their priority won't make a "
+"difference."
+msgstr ""
+"Компютърът разпределя времето си за обработка между всички стартирани "
+"процеси. Обикновено то се разпределя интелигентно, така че програмите, които "
+"извършват повече работа, автоматично получават по-голям дял от ресурсите. "
+"През повечето време процесите получават толкова време за обработка, колкото "
+"им е необходимо, и така вече работят възможно най-бързо. Промяната на техния "
+"приоритет няма да има значение."
+
+#. (itstool) path: section/p
+#: C/process-priority-change.page:39
+msgid ""
+"If your computer is running several computationally-intensive programs at "
+"once, however, its processing time may be \"over-subscribed\" (that is, the "
+"<link xref=\"process-identify-hog\">processor's full capacity</link> will be "
+"in use). You may notice that other programs run slower than usual because "
+"there is not enough processing time to share between all of them."
+msgstr ""
+"Ако обаче компютърът ви работи с няколко интензивни изчислителни програми "
+"едновременно, времето за обработка може да бъде претоварено (т.е. ще се "
+"използва целият капацитет на <link xref=\"process-identify-hog\">процесора</"
+"link>). Може да забележите, че други програми работят по-бавно от "
+"обикновено, тъй като няма достатъчно време за обработка, което да се "
+"разпредели между всички тях."
+
+#. (itstool) path: section/p
+#: C/process-priority-change.page:41
+msgid ""
+"In this case, changing the priority of processes can be helpful. You could "
+"lower the priority of one of the computationally-intensive processes to free "
+"up more processing time for other programs. Alternatively, you could "
+"increase the priority of a process that is more important to you, and that "
+"you want to run faster."
+msgstr ""
+"В този случай промяната на приоритета на процесите може да бъде полезна. "
+"Може да намалите приоритета на един от процесите, изискващи много "
+"изчисления, за да освободите повече време за обработка за други програми. "
+"Като алтернатива може да увеличите приоритета на процес, който е по-важен за "
+"вас и който искате да работи по-бързо."
+
+#. (itstool) path: info/desc
+#: C/commandline.page:21
+msgid ""
+"Information in System Monitor can also be found using command line tools."
+msgstr ""
+"Информацията в „Наблюдение на системата“ може да бъде намерена и с "
+"инструменти от командния ред."
+
+#. (itstool) path: page/title
+#: C/commandline.page:25
+msgid "Get the same information from the command line"
+msgstr "Получаване на същата информация от командния ред"
+
+#. (itstool) path: page/p
+#: C/commandline.page:33
+msgid ""
+"Most of the information displayed by System Monitor can also be obtained "
+"using these command line tools."
+msgstr ""
+"По-голямата част от информацията, показвана от „Наблюдение на системата“, "
+"може да бъде получена и с помощта на тези инструменти от командния ред."
+
+#. (itstool) path: td/p
+#: C/commandline.page:39
+msgid "<cmd>top</cmd>"
+msgstr "<cmd>top</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:40
+msgid ""
+"provides a continually updated list of running processes, and allows you to "
+"manipulate them."
+msgstr ""
+"предоставя постоянно обновен списък на изпълняващите се процеси и ви "
+"позволява да ги управлявате."
+
+#. (itstool) path: td/p
+#: C/commandline.page:45
+msgid "<cmd>lsof</cmd>"
+msgstr "<cmd>lsof</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:46
+msgid "provides a list of open files and the processes that opened them."
+msgstr ""
+"предоставя списък на отворените файлове и процесите, които са ги отворили."
+
+#. (itstool) path: td/p
+#: C/commandline.page:51
+msgid "<cmd>free -m</cmd>"
+msgstr "<cmd>free -m</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:52
+msgid "shows you how much memory is available."
+msgstr "показва колко памет е налична."
+
+#. (itstool) path: td/p
+#: C/commandline.page:56
+msgid "<cmd>vmstat</cmd>"
+msgstr "<cmd>vmstat</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:57
+msgid "provides information about current virtual memory use."
+msgstr "предоставя информация за текущото използване на виртуалната памет."
+
+#. (itstool) path: td/p
+#: C/commandline.page:61
+msgid "<cmd>df -h</cmd>"
+msgstr "<cmd>df -h</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:62
+msgid "displays available disk space on mounted filesystems."
+msgstr "показва наличното дисково пространство в монтираните файлови системи."
+
+#. (itstool) path: td/p
+#: C/commandline.page:66
+msgid "<cmd>pmap</cmd>"
+msgstr "<cmd>pmap</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:67
+msgid "displays the memory map of a process."
+msgstr "показва картата на паметта на даден процес."
+
+#. (itstool) path: info/desc
+#: C/mem-swap.page:23
+msgid ""
+"Swap memory allows your computer to run more applications at the same time "
+"than will fit into the system memory (RAM)."
+msgstr ""
+"Пейджинг паметта позволява на компютъра ви да изпълнява повече програми "
+"едновременно, отколкото се побират в системната памет (RAM)."
+
+#. (itstool) path: page/title
+#: C/mem-swap.page:27
+msgid "What is \"swap\" memory?"
+msgstr "Какво е „пейджинг“ памет?"
+
+#. (itstool) path: page/p
+#: C/mem-swap.page:35
+msgid ""
+"Swap memory or <em>swap space</em> is the on-disk component of the virtual "
+"memory system. It is pre-configured as a <em>swap partition</em> or a "
+"<em>swap file</em> when Linux is first installed, but can also be added "
+"later."
+msgstr ""
+"Пейджинг паметта или <em>пейджинг пространство</em> е компонентът на диска "
+"на системата за виртуална памет. При първоначалната инсталация на Linux то е "
+"предварително настроено като <em>пейджинг дял</em> или <em>пейджинг файл</"
+"em>, но може да бъде добавено и по-късно."
+
+#. (itstool) path: note/p
+#: C/mem-swap.page:41
+msgid ""
+"Disk access is <em>very</em> slow compared to memory access. The system runs "
+"more slowly if there is excessive swapping, or <em>thrashing</em>, when the "
+"system is unable to find enough free memory. In this situation the only "
+"solution is to add more RAM."
+msgstr ""
+"Достъпът до диска е <em>много</em> бавен в сравнение с достъпа до паметта. "
+"Системата работи по-бавно, ако се <em>използва много</em> от пейджинг "
+"паметта, или когато системата не може да намери достатъчно свободна памет. В "
+"тази ситуация единственото решение е да се добави повече RAM памет."
+
+#. (itstool) path: page/p
+#: C/mem-swap.page:47
+msgid ""
+"To see whether swapping, or <em>paging</em>, has become a performance issue:"
+msgstr ""
+"За да проверите дали <em>пейджинг паметта</em> е станала проблем за "
+"производителността:"
+
+#. (itstool) path: item/p
+#: C/mem-swap.page:52 C/net-bits.page:41 C/mem-check.page:45
+#: C/mem-check.page:69 C/net-check.page:38
+msgid "Click the <gui>Resources</gui> tab."
+msgstr "Натиснете върху раздела <gui>Ресурси</gui>."
+
+#. (itstool) path: item/p
+#: C/mem-swap.page:55
+msgid ""
+"The <gui>Memory and Swap History</gui> graph shows memory and swap use as "
+"percentages."
+msgstr ""
+"Диаграмата <gui>История на паметта и пейджинг</gui> показва използването на "
+"паметта и пейджинг в проценти."
+
+#. (itstool) path: info/desc
+#: C/solaris-mode.page:22
+msgid "Use Solaris mode to reflect the number of CPUs."
+msgstr "Използвайте режим „Solaris“, за да отразите броя на процесорите."
+
+#. (itstool) path: page/title
+#: C/solaris-mode.page:25
+msgid "What is Solaris mode?"
+msgstr "Какво е режим „Solaris“?"
+
+#. (itstool) path: page/p
+#: C/solaris-mode.page:33
+msgid ""
+"In a system that has multiple CPUs or <link xref=\"cpu-multicore\">cores</"
+"link>, processes can use more than one at the same time. It is possible for "
+"the <gui>% CPU</gui> column to display values that total greater than 100% "
+"(i.e. 400% in a 4-CPU system). <gui>Solaris mode</gui> divides the <gui>% "
+"CPU</gui> for each process by the number of CPUs in the system so that the "
+"total will be 100%."
+msgstr ""
+"В система, която има няколко процесора или <link xref=\"cpu-"
+"multicore\">ядра</link>, процесите могат да използват повече от един "
+"едновременно. Възможно е колоната <gui>% ЦП</gui> да показва стойности, "
+"които общо са по-големи от 100% (напр. 400% в система с 4 ЦП). <gui>Режимът "
+"„Solaris“</gui> разделя <gui>% ЦП</gui> за всеки процес на броя на "
+"процесорите в системата, така че общата сума да бъде 100%."
+
+#. (itstool) path: page/p
+#: C/solaris-mode.page:40
+msgid "To display the <gui>% CPU</gui> in <gui>Solaris mode</gui>:"
+msgstr "За показване на <gui>% ЦП</gui> в <gui>режим „Solaris“</gui>:"
+
+#. (itstool) path: item/p
+#: C/solaris-mode.page:43
+msgid "Click <gui>Preferences</gui> in the app menu."
+msgstr "Натиснете върху <gui>Настройки</gui> в менюто на програмата."
+
+#. (itstool) path: item/p
+#: C/solaris-mode.page:45
+msgid "Select <gui>Divide CPU Usage by CPU Count</gui>."
+msgstr ""
+"Изберете <gui>Разделяне на използването на процесорите на броя им</gui>."
+
+#. (itstool) path: note/p
+#: C/solaris-mode.page:48
+msgid ""
+"The term <gui>Solaris mode</gui> derives from Sun's UNIX, compared to the "
+"Linux default of IRIX mode, named for SGI's UNIX."
+msgstr ""
+"Терминът <gui>режим „Solaris“</gui> произлиза от UNIX на Sun, в сравнение с "
+"режима „IRIX“ стандартен на Linux, наречен на UNIX на SGI."
+
+#. (itstool) path: info/desc
+#: C/process-priority-what.page:22
+msgid "The <em>nice</em> value of a process is used to adjust its priority."
+msgstr ""
+"Стойността <em>nice</em> на даден процес се използва за нагласяне на неговия "
+"приоритет."
+
+#. (itstool) path: page/title
+#: C/process-priority-what.page:25
+msgid "What is the <em>nice</em> value of a process?"
+msgstr "Каква е <em>nice</em> стойността на даден процес?"
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:27
+msgid ""
+"The priority of a process determines the share of time the process is "
+"alotted on a system's one or more processors (CPUs or cores). A <em>nice</"
+"em> process, or one with a higher nice value, concedes priority to other "
+"processes. Adjusting the nice value will increase or decrease the scheduling "
+"priority."
+msgstr ""
+"Приоритетът на даден процес определя частта от времето, която процесът "
+"получава на един или повече процесори (процесори или ядра) на системата. "
+"Процесът с по-висока <em>nice</em> стойност отстъпва приоритет на други "
+"процеси. Нагласянето на nice стойността ще увеличи или намали приоритета на "
+"насрочването."
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:32
+msgid ""
+"The lower the nice value, the higher the priority of the process. The nice "
+"value ranges from -20 (low nice, higher priority) to 20 (lower priority). "
+"The default value of nice is usually 0."
+msgstr ""
+"Колкото по-ниска е стойността nice, толкова по-висок е приоритетът на "
+"процеса. Стойността nice варира от -20 (ниско nice ниво, по-висок приоритет) "
+"до 20 (по-нисък приоритет). Стандартната nice стойност обикновено е 0."
+
+#. (itstool) path: info/desc
+#: C/process-files.page:16
+msgid "View files being accessed by processes."
+msgstr "Преглед на файловете, които процесите достъпват."
+
+#. (itstool) path: page/title
+#: C/process-files.page:19
+msgid "List which files a process has open"
+msgstr "Списък на отворените файлове на даден процес"
+
+#. (itstool) path: page/p
+#: C/process-files.page:21
+msgid ""
+"Processes sometimes need to keep files open. They could be files that you "
+"are viewing or editing, or temporary or system files that the process needs "
+"to work properly."
+msgstr ""
+"Понякога процесите трябва да държат файловете отворени. Това може да са "
+"файлове, които разглеждате или редактирате, или временни или системни "
+"файлове, от които процесът се нуждае, за да работи правилно."
+
+#. (itstool) path: page/p
+#: C/process-files.page:23
+msgid "To see which files a process has open:"
+msgstr "За да видите кои файлове са отворени от даден процес:"
+
+#. (itstool) path: item/p
+#: C/process-files.page:25
+msgid ""
+"Find the process in the <gui>Processes</gui> tab and click once to select it."
+msgstr ""
+"Намерете процеса в раздела <gui>Процеси</gui> и натиснете веднъж, за да го "
+"изберете."
+
+#. (itstool) path: item/p
+#: C/process-files.page:26
+msgid "Right-click the process and select <gui>Open Files</gui>."
+msgstr ""
+"Натиснете с десния бутон на мишката върху процеса и изберете <gui>Отворени "
+"файлове</gui>."
+
+#. (itstool) path: page/p
+#: C/process-files.page:29
+msgid ""
+"In the list of open files that appears, you might find some special files "
+"called <em>sockets</em>. These are actually a way for processes to "
+"communicate with one another, and are not normal files that you can view or "
+"edit."
+msgstr ""
+"В списъка с отворени файлове, който се появява, може да откриете някои "
+"специални файлове, наречени <em>гнезда</em>. Те всъщност са начин за "
+"комуникация на процесите помежду им и не са нормални файлове, които може да "
+"разглеждате или редактирате."
+
+#. (itstool) path: info/desc
+#: C/process-identify-hog.page:22
+msgid ""
+"Sort the list of processes by <gui>% CPU</gui> to see which application is "
+"using up the computer's resources."
+msgstr ""
+"Подреждане на списъка с процеси по <gui>% ЦП</gui>, за да видите коя "
+"програма използва ресурсите на компютъра."
+
+#. (itstool) path: page/title
+#: C/process-identify-hog.page:26
+msgid "Which program is making the computer run slowly?"
+msgstr "Коя програма кара компютъра да работи бавно?"
+
+#. (itstool) path: page/p
+#: C/process-identify-hog.page:35
+msgid ""
+"A program that is using more than its share of the CPU may slow down the "
+"whole computer. To find which process could be doing this:"
+msgstr ""
+"Програма, която използва повече от своя дял от процесора, може да забави "
+"работата на целия компютър. За да откриете кой процес може да причинява това:"
+
+#. (itstool) path: item/p
+#: C/process-identify-hog.page:43
+msgid ""
+"Click the <gui>% CPU</gui> column header to sort the processes according to "
+"CPU use."
+msgstr ""
+"Натиснете върху заглавието на колоната <gui>% ЦП</gui>, за да подредите "
+"процесите според ползването на процесора."
+
+#. (itstool) path: note/p
+#: C/process-identify-hog.page:46
+msgid ""
+"The arrow in the column header shows the sort direction; click again to "
+"reverse it. The arrow should point up."
+msgstr ""
+"Стрелката в заглавието на колоната показва посоката на подреждане; натиснете "
+"отново, за да я обърнете. Стрелката трябва да сочи нагоре."
+
+#. (itstool) path: page/p
+#: C/process-identify-hog.page:52
+msgid ""
+"The processes at the top of the list are using the highest percentage CPU. "
+"Once you identify which one might be using more resources than it should, "
+"you can decide whether to close the program itself, or close other programs "
+"to try to reduce the CPU load."
+msgstr ""
+"Процесите в горната част на списъка използват най-голям процент от "
+"процесора. След като установите кой от тях използва повече ресурси, "
+"отколкото трябва, може да решите дали да спрете самата програма или да "
+"спрете други програми, за да се опитате да намалите натоварването на "
+"процесора."
+
+#. (itstool) path: note/p
+#: C/process-identify-hog.page:58
+msgid ""
+"A process that has hung or crashed might use 100% CPU. If this happens you "
+"may need to <link xref=\"process-kill\">kill</link> the process."
+msgstr ""
+"Процес, който е спрял или е забил, може да използва 100% от процесора. Ако "
+"това се случи, може да се наложи да <link xref=\"process-kill\">убиете</"
+"link> процеса."
+
+#. (itstool) path: info/desc
+#: C/units.page:22
+msgid "Units of measure for memory and disk space"
+msgstr "Мерни единици за памет и дисково пространство"
+
+#. (itstool) path: page/title
+#: C/units.page:25
+msgid "Is GiB the same as GB (gigabyte)?"
+msgstr "GiB същото ли е като GB (гигабайт)?"
+
+#. (itstool) path: page/p
+#: C/units.page:32
+msgid ""
+"The memory and disk space statistics are displayed using <em>IEC binary "
+"prefixes</em>, KiB, MiB, GiB, TiB (for kibi, mebi, gibi and tebi). These are "
+"intended to distinguish binary reporting of sizes used in System Monitor "
+"(multiples of 1024) from decimal sizes (multiples of 1000) commonly used, "
+"for instance, in packaging of hard disks."
+msgstr ""
+"Данните за статистиката за паметта и дисковото пространство се показват с "
+"<em>IEC двоични представки</em>, KiB, MiB, GiB, TiB (за kibi, mebi, gibi и "
+"tebi). Те имат за цел да разграничат двоичното отчитане на размерите, "
+"използвани в „Наблюдение на системата“ (кратни на 1024), от десетичните "
+"размери (кратни на 1000), които обикновено се използват например при "
+"опаковането на твърди дискове."
+
+#. (itstool) path: page/p
+#: C/units.page:38
+msgid "Typical binary units:"
+msgstr "Типични двоични единици:"
+
+#. (itstool) path: item/p
+#: C/units.page:40
+msgid "1 KiB = 1024 bytes"
+msgstr "1 KiB = 1024 байта"
+
+#. (itstool) path: item/p
+#: C/units.page:41
+msgid "1 MiB = 1048576 bytes"
+msgstr "1 MiB = 1048576 байта"
+
+#. (itstool) path: item/p
+#: C/units.page:42
+msgid "1 GiB = 1073741842 bytes"
+msgstr "1 GiB = 1073741842 байта"
+
+#. (itstool) path: page/p
+#: C/units.page:45
+msgid ""
+"An external hard drive, advertised as 1.0 TB (terabytes), would display as "
+"0.909 TiB (tebibytes)."
+msgstr ""
+"Външен твърд диск, рекламиран като 1,0 TB (терабайта), ще се покаже като "
+"0,909 TiB (тебибайта)."
+
+#. (itstool) path: info/desc
+#: C/cpu-check.page:20
+msgid ""
+"The amount of CPU being used tells you how much work the computer is trying "
+"to do."
+msgstr ""
+"Натоварването на процесора показва колко работа се опитва да свърши "
+"компютърът."
+
+#. (itstool) path: page/title
+#: C/cpu-check.page:23
+msgid "Check how much processor (CPU) capacity is being used"
+msgstr "Проверете колко капацитет на процесора (ЦП) се използва"
+
+#. (itstool) path: page/p
+#: C/cpu-check.page:25
+msgid ""
+"To check how much of your computer's processor is currently being used, go "
+"to the <gui>Resources</gui> tab and look at the <gui>CPU History</gui> "
+"chart. This tells you how much work the computer is currently doing."
+msgstr ""
+"За да проверите каква част от процесора на компютъра ви се използва в "
+"момента, отидете в раздела <gui>Ресурси</gui> и разгледайте диаграмата "
+"<gui>История на процесора</gui>. Тя ви показва колко работа извършва "
+"компютърът в момента."
+
+#. (itstool) path: page/p
+#: C/cpu-check.page:27
+msgid ""
+"Many computers have more than one processor (sometimes called <em>multi-"
+"core</em> systems). Each processor is shown separately on the chart. If you "
+"want, you can change the color used for each processor by clicking one of "
+"the colored blocks below the chart."
+msgstr ""
+"Много компютри имат повече от един процесор (понякога се наричат "
+"<em>многоядрени</em> системи). Всеки процесор е показан поотделно в "
+"таблицата. Ако искате, може да промените цвета, използван за всеки процесор, "
+"като натиснете върху един от цветните блокове под диаграмата."
+
+#. (itstool) path: page/p
+#: C/cpu-check.page:29
+msgid ""
+"You can also change how rapidly the chart is updated (the update interval), "
+"and how the lines for each processor are displayed (e.g. as a stacked area "
+"chart). Change the relevant options by clicking <gui>System Monitor</gui>, "
+"then select <gui>Preferences</gui>, and then the <gui>Resources</gui> tab."
+msgstr ""
+"Може също така да променяте скоростта на обновяване на диаграмата (интервала "
+"на обновяване) и начина на показване на линиите за всеки процесор (например "
+"като площна диаграма с наслагване на процесорите). Променете съответните "
+"опции, като натиснете върху <gui>Наблюдение на системата</gui>, след това "
+"изберете <gui>Настройки</gui> и след това раздела <gui>Ресурси</gui>."
+
+#. (itstool) path: info/desc
+#: C/net-bits.page:22
+msgid "Choose the units to display your network speed."
+msgstr "Изберете единиците за показване на скоростта на мрежата."
+
+#. (itstool) path: page/title
+#: C/net-bits.page:25
+msgid "Show the network speed in bits instead of bytes per second"
+msgstr "Показване на скоростта на мрежата в битове вместо в байтове в секунда"
+
+#. (itstool) path: page/p
+#: C/net-bits.page:32
+msgid ""
+"Network speed is often shown in bits per second, rather than bytes per "
+"second. This is called the <em>bit rate</em>, or <em>data rate</em>."
+msgstr ""
+"Скоростта на мрежата често се показва в битове в секунда, а не в байтове в "
+"секунда. Това се нарича <em>битова скорост</em> или <em>скорост на предаване "
+"на данни</em>."
+
+#. (itstool) path: page/p
+#: C/net-bits.page:35
+msgid "To display the network speed in bits:"
+msgstr "За да покажете скоростта на мрежата в битове:"
+
+#. (itstool) path: item/p
+#: C/net-bits.page:42
+msgid "Select <gui>Show network speed in bits</gui>."
+msgstr "Изберете <gui>Извеждане на скоростта на мрежата в битове</gui>."
+
+#. (itstool) path: info/desc
+#: C/fs-device.page:18
+msgid "Each device corresponds to a <em>partition</em> on a hard disk."
+msgstr "Всяко устройство съответства на <em>дял</em> на твърдия диск."
+
+#. (itstool) path: page/title
+#: C/fs-device.page:21
+msgid "What are the different devices in the File Systems tab?"
+msgstr "Какви са различните устройства в раздела „Файлови системи“?"
+
+#. (itstool) path: page/p
+#: C/fs-device.page:23
+msgid ""
+"Each device listed under the <gui>File Systems</gui> tab is a storage disk "
+"(like a hard drive or USB memory stick), or a disk partition. For each "
+"device, you can see what its total capacity is, how much of its capacity has "
+"been used, and some technical information about what <link xref=\"fs-"
+"info\">type of filesystem it is</link> and <link xref=\"fs-info\">where it "
+"is \"mounted\"</link>."
+msgstr ""
+"Всяко устройство, изброено в раздела <gui>Файлови системи</gui>, е диск за "
+"съхранение (като твърд диск или USB памет) или дял от диска. За всяко "
+"устройство може да видите какъв е общият му капацитет, каква част от "
+"капацитета му е използвана, както и някои технически данни за това какъв "
+"<link xref=\"fs-info\">вид файлова система е</link> и <link xref=\"fs-"
+"info\">къде е „монтирана“</link>."
+
+#. (itstool) path: page/p
+#: C/fs-device.page:25
+msgid ""
+"The disk space on a single physical hard disk can be split up into multiple "
+"chunks, called <em>partitions</em>, each of which can be used as if it were "
+"a separate disk. If your hard disk has been partitioned (perhaps by you or "
+"the computer manufacturer), each partition will be listed separately in the "
+"File Systems list."
+msgstr ""
+"Дисковото пространство на един физически твърд диск може да бъде разделено "
+"на няколко части, наречени <em>дялове</em>, всеки от които може да се "
+"използва като отделен диск. Ако вашият твърд диск е бил разделен на дялове "
+"(може би от вас или от производителя на компютъра), всеки дял ще бъде "
+"посочен отделно в списъка „Файлови системи“."
+
+#. (itstool) path: note/p
+#: C/fs-device.page:28
+msgid ""
+"You can manage disks and partitions and see more detailed disk information "
+"with the <app>Disks</app> application."
+msgstr ""
+"Може да управлявате дискове и дялове и да видите по-подробна информация за "
+"дисковете с програмата <app>Дискове</app>."
+
+#. (itstool) path: info/desc
+#: C/fs-diskusage.page:18
+msgid ""
+"The <gui>File Systems</gui> tab shows how much space is being used on each "
+"hard disk."
+msgstr ""
+"Разделът <gui>Файлови системи</gui> показва колко пространство се използва "
+"на всеки твърд диск."
+
+#. (itstool) path: page/title
+#: C/fs-diskusage.page:21
+msgid "Check how much disk space is being used"
+msgstr "Проверете колко дисково пространство се използва"
+
+#. (itstool) path: page/p
+#: C/fs-diskusage.page:23
+msgid ""
+"To check how much space is available on a disk, go to the <gui>File Systems</"
+"gui> tab and look at the <gui>Used</gui> and <gui>Available</gui> columns."
+msgstr ""
+"За да проверите колко пространство е налично на даден диск, отидете в "
+"раздела <gui>Файлови системи</gui> и погледнете колоните <gui>Използвани</"
+"gui> и <gui>Налични</gui>."
+
+#. (itstool) path: page/p
+#: C/fs-diskusage.page:25
+msgid ""
+"If several devices are shown, and you are looking for the one that has your "
+"Home folder on it, look for the disk that has <file>/</file> or <file>/home</"
+"file> listed under <gui>Directory</gui>. This is usually (but not always) "
+"the disk where your personal files are stored."
+msgstr ""
+"Ако са показани няколко устройства и търсите устройството, на което има "
+"вашата домашна папка, потърсете диска, на който има <file>/</file> или "
+"<file>/home</file>, изброени в <gui>Папка</gui>. Това обикновено (но не "
+"винаги) е дискът, на който се съхраняват личните ви файлове."
+
+#. (itstool) path: section/title
+#: C/fs-diskusage.page:29
+msgid "Freeing-up disk space"
+msgstr "Освобождаване на пространство"
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:31
+msgid ""
+"If you don't have much disk space left, there are a few things you can do to "
+"try and free up some space."
+msgstr ""
+"Ако не ви е останало много място на диска, може да направите няколко неща, "
+"за да се опитате да освободите малко място."
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:33
+msgid ""
+"One is to delete unwanted files manually. You can use the <app>Disk Usage "
+"Analyzer</app> application to tell you which files and folders are taking up "
+"the most space. After deleting some files, you should then empty the "
+"<gui>Trash</gui> to make sure they are fully removed from the computer."
+msgstr ""
+"Едното е да изтриете нежеланите файлове на ръка. Може да използвате "
+"програмата <app>Анализатор на ползването на диска</app>, която ще ви покаже "
+"кои файлове и папки заемат най-много пространство. След като изтриете някои "
+"файлове, трябва да изпразните <gui>Кошчето</gui>, за да сте сигурни, че те "
+"са напълно премахнати от компютъра."
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:35
+msgid ""
+"You can also remove temporary files in various applications. For example, "
+"web browsers and software managers often keep sizeable temporary files "
+"around. (How you remove them depends on the application.)"
+msgstr ""
+"Може също така да премахвате временни файлове в различни програми. Например "
+"уеб браузърите и софтуерните мениджъри често поддържат големи временни "
+"файлове. (Начинът на премахването им зависи от програмата.)"
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:37
+msgid ""
+"You can also try uninstalling some unwanted applications. Use your usual "
+"software manager to do this."
+msgstr ""
+"Може също така да опитате да деинсталирате някои нежелани приложения. "
+"Използвайте обичайния си софтуерен мениджър, за да направите това."
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:39
+msgid ""
+"Another way of freeing disk space is to \"archive\" old files by moving them "
+"to an external hard disk or online \"cloud\" storage, for example."
+msgstr ""
+"Друг начин за освобождаване на дисково пространство е да „архивирате“ "
+"старите файлове, като ги преместите например на външен твърд диск или в "
+"онлайн хранилище в „облака“."
+
+#. (itstool) path: info/desc
+#: C/process-forcequit.page:14
+msgid ""
+"If an application has frozen, you can force it to close by \"killing\" it."
+msgstr ""
+"Ако дадена програма е замръзнала, може да я накарате да се спре, като я "
+"„убиете“."
+
+#. (itstool) path: page/title
+#: C/process-forcequit.page:17
+msgid "Close an application that's not responding"
+msgstr "Спиране на програма, която не отговаря"
+
+#. (itstool) path: page/p
+#: C/process-forcequit.page:28
+msgid "Short introductory text..."
+msgstr "Кратък текст за въведение…"
+
+#. (itstool) path: item/p
+#: C/process-forcequit.page:31
+msgid "First step..."
+msgstr "Първа стъпка…"
+
+#. (itstool) path: item/p
+#: C/process-forcequit.page:32
+msgid "Second step..."
+msgstr "Втора стъпка…"
+
+#. (itstool) path: item/p
+#: C/process-forcequit.page:33
+msgid "Third step..."
+msgstr "Трета стъпка…"
+
+#. (itstool) path: info/desc
+#: C/memory-map-use.page:24
+msgid "View the memory map of a process."
+msgstr "Преглеждане на картата на паметта на даден процес."
+
+#. (itstool) path: page/title
+#: C/memory-map-use.page:27
+msgid "Using memory maps"
+msgstr "Работа с карти на паметта"
+
+#. (itstool) path: page/p
+#: C/memory-map-use.page:34
+msgid ""
+"<gui>Virtual memory</gui> is a representation of the combined <gui>physical "
+"memory</gui> and <link xref=\"mem-swap\">swap space</link> in a system. It "
+"enables running processes to access <em>more</em> than the existing physical "
+"memory by <gui>mapping</gui> locations in physical memory to files on disk. "
+"When the system needs more pages of memory than are available, some of the "
+"existing pages will be <em>paged out</em> or written to the swap space."
+msgstr ""
+"<gui>Виртуалната памет</gui> представлява комбинираната <gui>физическа "
+"памет</gui> и <link xref=\"mem-swap\">пейджинг пространство</link> в дадена "
+"система. То позволява на работещите процеси да имат достъп до <em>повече</"
+"em> от съществуващата физическа памет чрез <gui>задаване</gui> на места във "
+"физическата памет към файлове на диска. Когато системата се нуждае от повече "
+"страници памет, отколкото са налични, някои от съществуващите страници ще "
+"бъдат <em>прехвърлени</em> или записани в пейджинг пространството."
+
+#. (itstool) path: page/p
+#: C/memory-map-use.page:42
+msgid ""
+"The <gui>memory map</gui> displays the total virtual memory use of the "
+"process, and can be used to determine the memory cost of running a single or "
+"multiple instances of the program, to ensure the use of the correct shared "
+"libraries, to see the results of adjusting various performance tuning "
+"parameters the program may have, or to diagnose issues such as memory leaks."
+msgstr ""
+"<gui>Картата на паметта</gui> показва общата виртуална памет, използвана от "
+"процеса, и може да се използва за определяне на разходите за памет при "
+"стартиране на един или няколко процеси на програмата, за да се гарантира "
+"използването на правилните споделени библиотеки, за да се видят резултатите "
+"от нагласянето на различни параметри за настройка на производителността на "
+"програмата или за поправяне на проблеми като изтичане на памет."
+
+#. (itstool) path: page/p
+#: C/memory-map-use.page:49
+msgid ""
+"To display the <link xref=\"memory-map-what\">memory map</link> of a process:"
+msgstr ""
+"За показване на <link xref=\"memory-map-what\">картата на паметта</link> на "
+"даден процес:"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:54
+msgid "Right click the desired process in the <gui>process list</gui>."
+msgstr ""
+"Натиснете с десния бутон на мишката върху желания процес в <gui>списъка на "
+"процесите</gui>."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:55
+msgid "Click <gui>Memory Maps</gui>."
+msgstr "Натиснете <gui>Карти на паметта</gui>."
+
+#. (itstool) path: section/title
+#: C/memory-map-use.page:59
+msgid "Reading the memory map"
+msgstr "Разчитане на карта с памет"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:63
+msgid "Addresses are displayed in hexadecimal (base 16)."
+msgstr "Адресите се показват в шестнайсетична бройна система."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:66
+msgid "Sizes are displayed in <link xref=\"units\">IEC binary prefixes</link>."
+msgstr ""
+"Размерите са представени в <link xref=\"units\">IEC двоични представки</"
+"link>."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:70
+msgid ""
+"At runtime the process can allocate more memory dynamically into an area "
+"called the <em>heap</em>, and store arguments and variables into another "
+"area called the <em>stack</em>."
+msgstr ""
+"По време на изпълнение процесът може динамично да заделя повече памет в "
+"област, наречена <em>динамична памет</em>, и да съхранява аргументи и "
+"променливи в друга област, наречена <em>стек</em>."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:75
+msgid ""
+"The program itself and each of the shared libraries has three entries each, "
+"one for the read-execute text segment, one for the read-write data segment "
+"and one for a read-only data segment. Both data segments need to be paged "
+"out at swap time."
+msgstr ""
+"Самата програма и всяка от споделените библиотеки имат по три записа — един "
+"за текстовия сегмент за четене и изпълнение, един за сегмента с данни за "
+"четене и запис и един за сегмента с данни само за четене. И двата сегмента "
+"за данни трябва да бъдат прехвърлени при работа с пейджинг памет."
+
+#. (itstool) path: table/title
+#: C/memory-map-use.page:83
+msgid "Properties"
+msgstr "Свойства"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:85
+msgid "Filename"
+msgstr "Име на файл"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:86
+msgid ""
+"The location of a shared library that is currently used by the process. If "
+"this field is blank, the memory information in this row describes memory "
+"that is owned by the process whose name is displayed above the memory-map "
+"table."
+msgstr ""
+"Местоположението на споделена библиотека, която в момента се използва от "
+"процеса. Ако това поле е празно, информацията за паметта в този ред описва "
+"паметта, която е собственост на процеса, чието име е показано над таблицата "
+"с картата на паметта."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:92
+msgid "VM Start"
+msgstr "Начало на ВП"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:93
+msgid ""
+"The address at which the memory segment begins. VM Start, VM End and VM "
+"Offset together specify the location on disk to which the shared library is "
+"mapped."
+msgstr ""
+"Адресът, от който започва сегментът от паметта. Начало на ВП, Край на ВП и "
+"Отместване на ВП заедно определят местоположението на диска, към което е "
+"зададена споделената библиотека."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:98
+msgid "VM End"
+msgstr "Край на ВП"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:99
+msgid "The address at which the memory segment ends."
+msgstr "Адресът, на който завършва сегментът от паметта."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:102
+msgid "VM Size"
+msgstr "ВП Размер"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:103
+msgid "The size of the memory segment."
+msgstr "Размерът на сегмента от паметта."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:106
+msgid "Flags"
+msgstr "Флагове"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:107
+msgid ""
+"The following flags describe the different types of memory-segment access "
+"that the process can have:"
+msgstr ""
+"Следните флагове описват различните видове достъп до сегменти от паметта, "
+"които процесът може да има:"
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:111
+msgid "<gui>p</gui>"
+msgstr "<gui>p</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:112
+msgid ""
+"The memory segment is private to the process, and is not accessible to other "
+"processes."
+msgstr ""
+"Сегментът от паметта е несподелен за процеса и не е достъпен за други "
+"процеси."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:116
+msgid "<gui>r</gui>"
+msgstr "<gui>r</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:117
+msgid "The process has permission to read from the memory segment."
+msgstr "Процесът има достъп да чете от сегмента на паметта."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:120
+msgid "<gui>s</gui>"
+msgstr "<gui>s</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:121
+msgid "The memory segment is shared with other processes."
+msgstr "Сегментът от паметта се споделя с други процеси."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:124
+msgid "<gui>w</gui>"
+msgstr "<gui>w</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:125
+msgid "The process has permission to write into the memory segment."
+msgstr "Процесът има достъп за запис в сегмента от паметта."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:128
+msgid "<gui>x</gui>"
+msgstr "<gui>x</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:129
+msgid ""
+"The process has permission to execute instructions that are contained within "
+"the memory segment."
+msgstr ""
+"Процесът има достъп да изпълнява инструкции, които се съдържат в сегмента от "
+"паметта."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:136
+msgid "VM Offset"
+msgstr "Отместване на ВП"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:137
+msgid ""
+"The location of the address within the memory segment, measured from VM "
+"Start."
+msgstr ""
+"Местоположението на адреса в сегмента на паметта, измерено от „Начало на ВП“."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:141
+msgid "Private, Shared, Clean, Dirty"
+msgstr "Несподелена, Споделена, Чиста, Променена"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:148
+msgid "<em>private</em> pages are accessed by one process"
+msgstr "<em>несподелените</em> страници се достъпват от един процес"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:150
+msgid "<em>shared</em> pages can be accessed by more than one process"
+msgstr "<em>споделените</em> страници се достъпват от повече от един процес"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:152
+msgid ""
+"<em>clean</em> pages have not yet been modified while in memory and can be "
+"discarded when designated to be swapped out"
+msgstr ""
+"<em>чистите</em> страници все още не са променяни, докато са в паметта, и "
+"могат да бъдат отхвърлени, когато са предназначени за подмяна."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:155
+msgid ""
+"<em>dirty</em> pages have been modified while in memory and must be written "
+"to disk when designated to be swapped out"
+msgstr ""
+"<em>променените</em> страници са били променени, докато са били в паметта, и "
+"трябва да бъдат записани на диска, когато са предназначени за подмяна."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:160
+msgid "Device"
+msgstr "Устройство"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:161
+msgid ""
+"The major and minor numbers of the device on which the shared library "
+"filename is located. Together these specify a partition on the system."
+msgstr ""
+"Основният и второстепенният номер на устройството, на което се намира името "
+"на файла на споделената библиотека. Заедно те определят един дял в системата."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:166
+msgid "Inode"
+msgstr "I-възел"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:167
+msgid ""
+"The inode on the device from which the shared library location is loaded "
+"into memory. An inode is the structure the filesystem uses to store a file, "
+"and the number assigned to it is unique."
+msgstr ""
+"I-възелът на устройството, от което местоположението на споделената "
+"библиотека е заредено в паметта. I-възелът е структурата, която файловата "
+"система използва за съхранение на даден файл, и номерът, който му е зададен, "
+"е уникален."
+
+#. (itstool) path: credit/name
+#: C/mem-check.page:24
+msgid "Ekaterina Gerasimova"
+msgstr "Ekaterina Gerasimova"
+
+#. (itstool) path: info/desc
+#: C/mem-check.page:28
+msgid ""
+"The <gui>Resources</gui> tab tells you how much of your computer's memory "
+"(RAM) is being used."
+msgstr ""
+"Разделът <gui>Ресурси</gui> показва каква част от паметта (RAM) на компютъра "
+"ви се използва."
+
+#. (itstool) path: page/title
+#: C/mem-check.page:32
+msgid "How much memory is being used?"
+msgstr "Колко памет се използва?"
+
+#. (itstool) path: page/p
+#: C/mem-check.page:41
+msgid "To check the current memory usage of your computer:"
+msgstr "За да проверите текущото ползване на паметта на вашия компютър:"
+
+#. (itstool) path: page/p
+#: C/mem-check.page:49
+msgid ""
+"<gui>Memory and Swap History</gui> displays a running line graph for memory "
+"and swap as a percentage of the total available. These are plotted against "
+"time, with the current time at the right."
+msgstr ""
+"<gui>История на паметта и пейджинг</gui> показва линейна графа за паметта и "
+"пейджинг като процент от общата налична памет. Те се изобразяват в "
+"зависимост от времето, като текущото време е вдясно."
+
+#. (itstool) path: note/p
+#: C/mem-check.page:54
+msgid ""
+"The color of each line is indicated by the pie graphs below. Click the pie "
+"graph to change the color of the line graph."
+msgstr ""
+"Цветът на всяка линия е показан на кръговите графи по-долу. Натиснете върху "
+"кръговата диаграма, за да промените цвета на линейната графа."
+
+#. (itstool) path: page/p
+#: C/mem-check.page:58
+msgid ""
+"The <gui>Memory</gui> pie graph shows memory usage in <link "
+"xref=\"units\">GiB</link> and as a percentage of the total available."
+msgstr ""
+"Кръговата графа <gui>Памет</gui> показва ползването на паметта в <link "
+"xref=\"units\">GiB</link> и като процент от общата налична памет."
+
+#. (itstool) path: page/p
+#: C/mem-check.page:61
+msgid "To change the <gui>update interval</gui>:"
+msgstr "За да промените <gui>интервала за обновяване</gui>:"
+
+#. (itstool) path: section/title
+#: C/mem-check.page:77
+msgid "Which processes are using the most memory?"
+msgstr "Кои процеси използват най-много памет?"
+
+#. (itstool) path: section/p
+#: C/mem-check.page:79
+msgid "To check which processes are using the most memory:"
+msgstr "За да проверите кои процеси използват най-много памет:"
+
+#. (itstool) path: item/p
+#: C/mem-check.page:86
+msgid ""
+"Click the <gui>Memory</gui> column header to sort the processes according to "
+"memory use."
+msgstr ""
+"Натиснете върху заглавието на колоната <gui>Памет</gui>, за да подредите "
+"процесите според ползването на памет."
+
+#. (itstool) path: note/p
+#: C/mem-check.page:89
+msgid ""
+"The arrow in the column header shows the sort direction; click again to "
+"reverse it. If the arrow points up, the processes using the most memory "
+"appear at the top of the list."
+msgstr ""
+"Стрелката в заглавната част на колоната показва посоката на подреждане; "
+"натиснете отново, за да я обърнете. Ако стрелката сочи нагоре, процесите, "
+"използващи най-много памет, се появяват в горната част на списъка."
+
+#. (itstool) path: info/desc
+#: C/cpu-mem-normal.page:16
+msgid ""
+"If the computer is doing a lot of work, it will use more processor time and "
+"more memory."
+msgstr ""
+"Ако компютърът извършва много работа, той ще използва повече процесорно "
+"време и повече памет."
+
+#. (itstool) path: page/title
+#: C/cpu-mem-normal.page:19
+msgid "Is it normal for my computer to be using this much CPU or memory?"
+msgstr ""
+"Нормално ли е компютърът ми да ползва толкова много от процесора или паметта?"
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:21
+msgid ""
+"All of the programs running on your computer share CPU (processor) time and "
+"memory. If you run many programs at once, or if some programs are doing a "
+"lot of work, a higher percentage of both of these things will be used."
+msgstr ""
+"Всички програми, работещи на вашия компютър, споделят ЦП (процесорно) време "
+"и паметта. Ако стартирате много програми едновременно или ако някои програми "
+"извършват много работа, ще се използва по-голям процент от двете неща."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:23
+msgid ""
+"If the CPU usage is around 100%, this means that your computer is trying to "
+"do more work than it has the capacity for. This is usually OK, but it means "
+"that programs may slow down a little. Computers tend to use close to 100% of "
+"the CPU when they are doing computationally-intensive things like running "
+"games."
+msgstr ""
+"Ако ползването на процесора е около 100%, това означава, че компютърът ви се "
+"опитва да свърши повече работа, отколкото има възможност. По принцип това е "
+"нормално, но означава, че програмите може да се забавят малко. Компютрите са "
+"склонни да използват почти 100% от процесора, когато извършват интензивни "
+"изчисления, като например стартиране на игри."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:25
+msgid ""
+"If the processor is running at 100% for a long time, this could make your "
+"computer annoyingly slow. In this case, you should <link xref=\"process-"
+"identify-hog\">find out which program is using up so much CPU time</link>."
+msgstr ""
+"Ако процесорът работи на 100% дълго време, това може да направи компютъра ви "
+"досадно бавен. В този случай трябва да <link xref=\"process-identify-"
+"hog\">разберете коя програма използва толкова много процесорно време</link>."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:27
+msgid ""
+"If the memory usage is close to 100%, this can slow things down a lot. This "
+"is because the computer will then try to use your hard disk as a temporary "
+"memory store, called <link xref=\"mem-swap\">swap memory</link>. Hard disks "
+"are much slower than the system memory."
+msgstr ""
+"Ако ползването на паметта е близо до 100%, това може да забави много "
+"работата. Това се дължи на факта, че компютърът се опитва да използва "
+"твърдия ви диск като временно хранилище на памет, наречено <link xref=\"mem-"
+"swap\">„пейджинг памет“</link>. Твърдите дискове са много по-бавни от "
+"системната памет."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:29
+msgid ""
+"You can try to free up some system memory by closing some programs. If "
+"things get too slow, try restarting the computer."
+msgstr ""
+"Може да се опитате да освободите малко системна памет, като спрете някои "
+"програми. Ако работата става твърде бавна, опитайте да рестартирате "
+"компютъра."
+
+#. (itstool) path: note/p
+#: C/cpu-mem-normal.page:32
+msgid ""
+"The memory shown in the <gui>Resources</gui> tab is <em>system memory</em> "
+"(also called RAM). This is used to hold programs temporarily, while they are "
+"running on the computer. This is not the same as a hard disk or other kinds "
+"of memory, which are used to store files and programs more permanently."
+msgstr ""
+"Паметта, показана в раздела <gui>Ресурси</gui>, е <em>системна памет</em> "
+"(наричана също RAM). Тя се използва за временно съхраняване на програмите, "
+"докато те работят на компютъра. Това не е същото като твърдия диск или други "
+"видове памет, които се използват за по-трайно съхранение на файлове и "
+"програми."
+
+#. (itstool) path: info/desc
+#: C/fs-info.page:18
+msgid ""
+"Explanations of all of the fields shown in the <gui>File System</gui> tab."
+msgstr ""
+"Обяснения на всички полета, показани в раздела <gui>Файлови системи</gui>."
+
+#. (itstool) path: page/title
+#: C/fs-info.page:21
+msgid "Learn what the File Systems information means"
+msgstr "Научете какво означава информацията за „Файловите системи“"
+
+#. (itstool) path: page/p
+#: C/fs-info.page:23
+msgid ""
+"The File Systems tab lists which disks are attached to the computer, what "
+"they are named, and how much disk space is available on them."
+msgstr ""
+"Разделът „Файлови системи“ показва кои дискове са свързани към компютъра, "
+"как се наричат и колко дисково пространство е налично на тях."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:27
+msgid ""
+"<gui>Device</gui> lists the name that the operating system has assigned to "
+"the disk. Every bit of computer hardware that is attached to the computer is "
+"given an entry in the <file>/dev</file> directory that is used to identify "
+"it. For hard disks, it will usually look something like <file>/dev/sda</"
+"file>."
+msgstr ""
+"<gui>Устройство</gui> изброява името, което операционната система е зададено "
+"на диска. На всяко парче компютърен хардуер, което е свързано с компютъра, "
+"се дава запис в папката <file>/dev</file>, който се използва за "
+"идентифицирането му. За твърдите дискове той обикновено изглежда по следния "
+"начин: <file>/dev/sda</file>."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:31
+msgid ""
+"<gui>Directory</gui> tells you where the disk or partition is <em>mounted</"
+"em>. Mounting is the technical term for making a disk or partition available "
+"for use. A disk can be physically connected to the computer, but unless it "
+"is also mounted, the files on it cannot be accessed. When a disk is mounted, "
+"it will be linked to a folder that you can then go to in order to access the "
+"files on the disk. For example, if the <gui>Directory</gui> is listed as "
+"<file>/media/disk</file>, you can access the files by going to the <file>/"
+"media/disk</file> folder on your computer."
+msgstr ""
+"<gui>Папка</gui> ви казва къде е <em>монтиран</em> дискът или дялът. "
+"Монтирането е технически термин за предоставяне на диск или дял за "
+"използване. Дискът може да бъде физически свързан към компютъра, но ако не е "
+"и монтиран, файловете на него не могат да бъдат достъпни. Когато дискът е "
+"монтиран, той ще бъде свързан с папка, в която може да отидете, за да "
+"получите достъп до файловете на диска. Например, ако <gui>Папка</gui> е "
+"посочена като <file>/media/disk</file>, може да получите достъп до "
+"файловете, като отидете в папката <file>/media/disk</file> на компютъра си."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:35
+msgid ""
+"<gui>Type</gui> tells you the type of <em>filesystem</em> that is used on "
+"the disk or partition. A filesystem specifies how the computer should store "
+"files on the disk. Some operating systems can only understand some "
+"filesystem types and not others, so it can be useful to check which "
+"filesystem an external hard disk uses, for example."
+msgstr ""
+"<gui>Вид</gui> ви казва вида на <em>файловата система</em>, която се "
+"използва на диска или дяла. Файловата система определя как компютърът да "
+"съхранява файловете на диска. Някои операционни системи могат да разбират "
+"само някои видове файлови системи, но не и други, така че може да е полезно "
+"да се провери коя файлова система използва даден външен твърд диск."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:39
+msgid ""
+"<gui>Total</gui> shows the total capacity of the disk and <gui>Available</"
+"gui> shows how much of that capacity is available to use for files and "
+"programs. <gui>Used</gui> shows how much disk space is already being used."
+msgstr ""
+"<gui>Общо</gui> показва общия капацитет на диска, а <gui>Налични</gui> "
+"показва каква част от този капацитет е налична за използване за файлове и "
+"програми. <gui>Използвани</gui> показва колко дисково пространство вече се "
+"използва."
+
+#. (itstool) path: page/p
+#: C/fs-info.page:44
+msgid ""
+"The sum of Used and Available will not necessarily add up to the Total. This "
+"is because some disk space might be reserved for use by the system. The "
+"important number to look at is the Available column, as this tells you how "
+"much disk space you can actually use."
+msgstr ""
+"Не е задължително сборът от „Използвани“ и „Налични“ да се равнява на "
+"“Общата“ сума. Това е така, защото част от дисковото пространство може да е "
+"запазено за използване от системата. Важното число, което трябва да "
+"погледнете, е колоната „Налични“, тъй като тя ви показва колко дисково "
+"пространство може да използвате в действителност."
+
+#. (itstool) path: page/p
+#: C/fs-info.page:45
+msgid ""
+"You might also find that the Total doesn't match up with the advertised "
+"capacity of your hard disk. This is normal, and happens for a couple of "
+"reasons. One is that hard disk manufacturers use a slightly different way of "
+"counting disk capacity to everyone else. Another is that some disk space "
+"might be reserved for use by the operating system. If there is a big "
+"difference from the capacity you expect, it might be because your disk has "
+"been split up into multiple partitions."
+msgstr ""
+"Възможно е също така да установите, че общият брой не съответства на "
+"обявения капацитет на твърдия диск. Това е нормално и се случва по няколко "
+"причини. Една от тях е, че производителите на твърди дискове използват малко "
+"по-различен начин за отчитане на капацитета на диска от всички останали. "
+"Друга причина е, че част от дисковото пространство може да е запазено за "
+"използване от операционната система. Ако има голяма разлика от очаквания "
+"капацитет, това може да се дължи на факта, че дискът ви е разделен на "
+"няколко дяла."
+
+#. (itstool) path: info/desc
+#: C/net-check.page:22
+msgid ""
+"The <gui>Resources</gui> tab shows you the volume of data that's passing "
+"over your network connections."
+msgstr ""
+"Разделът <gui>Ресурси</gui> ви показва обема на данните, които преминават "
+"през мрежовите ви връзки."
+
+#. (itstool) path: page/title
+#: C/net-check.page:27
+msgid "Check network usage and connection speed"
+msgstr "Проверяване на ползването на мрежата и скоростта на връзката"
+
+#. (itstool) path: page/p
+#: C/net-check.page:35
+msgid "To check the current network usage of your computer:"
+msgstr "За да проверите текущото ползване на мрежата от вашия компютър:"
+
+# Network History запис няма в UI-a, да се обнови след нова версия на тази документацията.
+#. (itstool) path: item/p
+#: C/net-check.page:42
+msgid ""
+"<gui>Network History</gui> displays a running line graph for the volume of "
+"data passing over your network connections, split up into data received and "
+"sent. These are plotted against time, with the current time at the right."
+msgstr ""
+"<gui>Мрежова история</gui> показва линейна графа за обема на данните, "
+"преминаващи през мрежовите ви връзки, разделени на получени и изпратени "
+"данни. Тези данни се изобразяват в зависимост от времето, като текущото "
+"време е вдясно."
+
+#. (itstool) path: note/p
+#: C/net-check.page:46
+msgid ""
+"The color of each line is indicated by the down and up arrows (for "
+"<gui>Receiving</gui> and <gui>Sending</gui> respectively) underneath the "
+"graph. Click an arrow to change the color of the corresponding line graph."
+msgstr ""
+"Цветът на всяка линия се обозначава със стрелките надолу и нагоре (съответно "
+"за <gui>Получаване</gui> и <gui>Изпращане</gui>) под графата. Натиснете "
+"върху стрелка, за да промените цвета на съответната линейна графата."
+
+#. (itstool) path: item/p
+#: C/net-check.page:52
+msgid ""
+"Below the graph is shown <gui>Receiving</gui> and <gui>Sending</gui> <link "
+"xref=\"net-bits\">bit rate</link> or connection speed, as well as total data "
+"transferred in each direction."
+msgstr ""
+"Под графата са показани <gui>Получаване</gui> и <gui>Изпращане</gui> <link "
+"xref=\"net-bits\">битова скорост</link> или скорост на връзката, както и "
+"общият обем данни, прехвърлени във всяка посока."
+
+#. (itstool) path: info/title
+#: C/index.page:7
+msgctxt "link:trail"
+msgid "System Monitor"
+msgstr "Наблюдение на системата"
+
+#. (itstool) path: info/title
+#: C/index.page:8
+msgctxt "link"
+msgid "System Monitor"
+msgstr "Наблюдение на системата"
+
+#. (itstool) path: info/title
+#: C/index.page:9
+msgctxt "text"
+msgid "System Monitor"
+msgstr "Наблюдение на системата"
+
+#. (itstool) path: credit/name
+#: C/index.page:20
+msgid "Patrick Pace"
+msgstr "Patrick Pace"
+
+#. (itstool) path: credit/years
+#: C/index.page:22
+msgid "2017"
+msgstr "2017"
+
+#. (itstool) path: info/desc
+#: C/index.page:25
+msgid ""
+"System Monitor shows you what programs are running and how much processor "
+"time, memory, and disk space are being used."
+msgstr ""
+"„Наблюдение на системата“ показва кои програми се изпълняват и колко "
+"процесорно време, памет и дисково пространство се използват."
+
+#. (itstool) path: page/title
+#: C/index.page:29
+msgid "<_:media-1/> System Monitor"
+msgstr "<_:media-1/> Наблюдение на системата"
+
+#. (itstool) path: page/p
+#: C/index.page:34
+msgid ""
+"<app>System Monitor</app> shows you what programs are running and how much "
+"processor time, memory, and disk space are being used."
+msgstr ""
+"„<app>Наблюдение на системата</app>“ показва кои програми се изпълняват и "
+"колко процесорно време, памет и дисково пространство се използват."
+
+#. (itstool) path: section/title
+#: C/index.page:37
+msgid "Monitoring the CPU"
+msgstr "Наблюдаване на ЦП"
+
+#. (itstool) path: section/title
+#: C/index.page:42
+msgid "Memory usage"
+msgstr "Ползвана памет"
+
+#. (itstool) path: section/title
+#: C/index.page:47
+msgid "Questions about processes"
+msgstr "Въпроси за процесите"
+
+#. (itstool) path: section/title
+#: C/index.page:52
+msgid "Common tasks with processes"
+msgstr "Често срещани задачи с процеси"
+
+#. (itstool) path: section/title
+#: C/index.page:57
+msgid "Information about file systems"
+msgstr "Информация за файлови системи"
+
+#. (itstool) path: section/title
+#: C/index.page:62
+msgid "Network information"
+msgstr "Мрежова информация"
+
+#. (itstool) path: section/title
+#: C/index.page:67
+msgid "Miscellaneous"
+msgstr "Други"
+
+#. (itstool) path: info/desc
+#: C/process-kill.page:17
+msgid "If a program stops working or freezes, you can force it to close."
+msgstr ""
+"Ако дадена програма спре да работи или замръзне, може да я принудите да спре."
+
+#. (itstool) path: page/title
+#: C/process-kill.page:21
+msgid "Kill (close) a program immediately"
+msgstr "Незабавно убиване (спиране) на програма"
+
+#. (itstool) path: page/p
+#: C/process-kill.page:23
+msgid ""
+"If a program stops working or freezes, you can force it to close (\"kill\" "
+"it) using <app>System Monitor</app>. Go to the <gui>Processes</gui> tab and "
+"click to select the process you want to kill. Then, click <gui>End Process</"
+"gui>."
+msgstr ""
+"Ако дадена програма спре да работи или замръзне, може да я принудите да спре "
+"(„убие“) с „<app>Наблюдение на системата</app>“. Отидете на раздела "
+"<gui>Процеси</gui> и натиснете върху него, за да изберете процеса, който "
+"искате да убиете. След това натиснете върху <gui>Прекратяване на процеса</"
+"gui>."
+
+#. (itstool) path: page/p
+#: C/process-kill.page:25
+msgid ""
+"If the process does not close after a few seconds, right-click it and select "
+"<gui>Kill</gui> from the menu that appears."
+msgstr ""
+"Ако процесът не се затвори след няколко секунди, натиснете върху него с "
+"десния бутон на мишката и изберете <gui>Убиване</gui> от появилото се меню."
+
+#. (itstool) path: page/p
+#: C/process-kill.page:27
+msgid ""
+"Using <gui>End Process</gui> tries to close the process properly, giving it "
+"time to save files and so on, whereas <gui>Kill</gui> forces it to close "
+"straight away. For some programs, this might mean that you lose unsaved "
+"files. You should always try <gui>End Process</gui> first."
+msgstr ""
+"При използване на <gui>Прекратяване на процеса</gui> процесът се спира "
+"правилно, като му се дава време да запази файлове и т.н., докато "
+"<gui>Убиване</gui> го принуждава да спре веднага. За някои програми това "
+"може да означава, че ще загубите незаписани файлове. Винаги трябва първо да "
+"опитате <gui>Прекратяване на процеса</gui>."
+
+#. (itstool) path: info/desc
+#: C/process-status.page:19
+msgid "The status of a process can be running, sleeping, stopped, or zombie."
+msgstr ""
+"Състоянието на даден процес може да бъде работещ, спящ, спрян или зомби."
+
+#. (itstool) path: page/title
+#: C/process-status.page:22
+msgid "What do the process statuses mean?"
+msgstr "Какво означават състоянията на процесите?"
+
+#. (itstool) path: page/p
+#: C/process-status.page:24
+msgid ""
+"The status of a process tells you whether it is currently doing something or "
+"not. There are four statuses that a process can have:"
+msgstr ""
+"Състоянието на даден процес показва дали в момента той прави нещо или не. "
+"Процесът може да има четири състояния:"
+
+#. (itstool) path: item/title
+#: C/process-status.page:28
+msgid "Running"
+msgstr "Работещ"
+
+#. (itstool) path: item/p
+#: C/process-status.page:29
+msgid ""
+"Processes that are currently doing something (for example, a web browser "
+"loading a web page). Running processes are those that are actively using the "
+"processor (CPU)."
+msgstr ""
+"Процеси, които в момента правят нещо (например уеб браузър, който зарежда "
+"уеб страница). Изпълняващите се процеси са тези, които активно използват "
+"процесора (ЦП)."
+
+#. (itstool) path: item/title
+#: C/process-status.page:34
+msgid "Sleeping"
+msgstr "Спящ"
+
+#. (itstool) path: item/p
+#: C/process-status.page:35
+msgid ""
+"Processes that are not currently doing anything (for example, because they "
+"are waiting for something to happen). They don't use any of the processor's "
+"time, but still take up memory. If they need to do something, they will "
+"\"wake up\" and change their status to <em>running</em>."
+msgstr ""
+"Процеси, които в момента не правят нищо (например защото чакат нещо да се "
+"случи). Те не използват никаква част от времето на процесора, но все пак "
+"заемат памет. Ако трябва да направят нещо, те ще се „събудят“ и ще променят "
+"състоянието си на <em>работещ</em>"
+
+#. (itstool) path: item/title
+#: C/process-status.page:41
+msgid "Stopped"
+msgstr "Спрян"
+
+#. (itstool) path: item/p
+#: C/process-status.page:42
+msgid ""
+"A <em>stopped</em> process is one that has been put to sleep manually. You "
+"might want to stop a process temporarily if it is using too much processing "
+"time, for example."
+msgstr ""
+"<em>Спрян</em> процес е процес, който е бил приспан ръчно. Може да искате да "
+"спрете временно даден процес, ако той използва твърде много време за "
+"обработка."
+
+#. (itstool) path: item/p
+#: C/process-status.page:45
+msgid ""
+"To do this, click the process in the <gui>Processes</gui> tab, then right-"
+"click it and select <gui>Stop</gui> from the menu that appears. You can wake "
+"it up again by clicking <gui>Continue</gui> on the same menu."
+msgstr ""
+"За да направите това, натиснете върху процеса в раздела <gui>Процеси</gui>, "
+"след това натиснете върху него с десния бутон на мишката и изберете "
+"<gui>Спиране</gui> от появилото се меню. Може да го събудите отново, като "
+"натиснете върху <gui>Продължаване на процеса</gui> от същото меню."
+
+#. (itstool) path: item/title
+#: C/process-status.page:51
+msgid "Zombie"
+msgstr "Зомби"
+
+#. (itstool) path: item/p
+#: C/process-status.page:52
+msgid ""
+"A zombie process is one that has finished running and will never start "
+"again, but is being kept in the list of processes for some reason. This "
+"usually happens because it was started by another program that needs to know "
+"if it finished successfully or not, but which has not checked on the process "
+"yet."
+msgstr ""
+"Зомби процес е процес, който е приключил работа и никога повече няма да се "
+"стартира, но по някаква причина се запазва в списъка с процеси. Обикновено "
+"това се случва, защото е бил стартиран от друга програма, която трябва да "
+"знае дали е завършила успешно или не, но която все още не е проверила "
+"процеса."
+
+#. (itstool) path: item/p
+#: C/process-status.page:57
+msgid ""
+"Zombie processes do not use any memory or processing time, and will "
+"eventually go away. You do not need to do anything to get rid of them."
+msgstr ""
+"Зомби процеси не използват памет или време за обработка и в крайна сметка ще "
+"изчезнат. Не е необходимо да правите нищо, за да се отървете от тях."
+
+#. (itstool) path: page/p
+#: C/process-status.page:62
+msgid "The majority of processes will either be running or sleeping."
+msgstr "По-голямата част от процесите ще бъдат или работещи, или спящи."
+
+#. (itstool) path: info/desc
+#: C/fs-showall.page:16
+msgid "There are hidden file systems that the operating system uses."
+msgstr "Има скрити файлови системи, които операционната система използва."
+
+#. (itstool) path: page/title
+#: C/fs-showall.page:19
+msgid "Show all file systems, including hidden and system ones"
+msgstr "Показване на всички файлови системи, включително скритите и системните"
+
+#. (itstool) path: page/p
+#: C/fs-showall.page:21
+msgid ""
+"By default, the <gui>File Systems</gui> tab only shows disks and partitions "
+"that hold your files and applications. There are also a number of special "
+"filesystems that the operating system uses, but these are hidden by default."
+msgstr ""
+"Стандартно в раздела <gui>Файлови системи</gui> се показват само дисковете и "
+"дяловете, на които се намират вашите файлове и програми. Съществуват и "
+"редица специални файлови системи, които операционната система използва, но "
+"те стандартно са скрити."
+
+#. (itstool) path: page/p
+#: C/fs-showall.page:23
+msgid ""
+"To see these special filesystems, click <guiseq><gui>System Monitor</"
+"gui><gui>Preferences</gui></guiseq>, and under the <gui>File Systems</gui> "
+"tab, check <gui>Show all file systems</gui>."
+msgstr ""
+"За да видите тези специални файлови системи, натиснете върху "
+"<guiseq><gui>Наблюдение на системата</gui><gui>Настройки</gui></guiseq> и в "
+"раздела <gui>Файлови системи</gui> изберете <gui>Показване на всички файлови "
+"системи</gui>."
+
+#. (itstool) path: page/p
+#: C/fs-showall.page:25
+msgid ""
+"Most of the entries in the list are \"virtual\" filesystems. These are not "
+"real disks or partitions. Instead, they are used by the operating system as "
+"a convenient layer of abstraction for various things, like managing hardware "
+"devices and storing temporary files. The system manages these automatically, "
+"so there is rarely any need for you to look at them yourself."
+msgstr ""
+"Повечето от записите в списъка са „виртуални“ файлови системи. Те не са "
+"истински дискове или дялове. Вместо това те се използват от операционната "
+"система като удобно ниво на абстракция за различни неща, като управление на "
+"хардуерни устройства и съхранение на временни файлове. Системата ги "
+"управлява автоматично, така че рядко има нужда да ги разглеждате сами."
