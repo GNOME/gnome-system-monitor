@@ -134,7 +134,4 @@ guint               gsm_graph_get_num_bars (GsmGraph*, gint);
 
 G_END_DECLS
 
-// not intended to be exported
-void                _gsm_graph_set_draw (GsmGraph*, gboolean);
-
 #endif /* _GSM_GRAPH_H_ */

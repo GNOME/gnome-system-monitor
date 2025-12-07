@@ -269,7 +269,9 @@ gsm_graph_new (void)
   return g_object_new (GSM_TYPE_GRAPH, NULL);
 }
 
-void _gsm_graph_set_draw (GsmGraph *self, gboolean draw)
+
+static inline void
+_gsm_graph_set_draw (GsmGraph *self, gboolean draw)
 {
   g_return_if_fail (GSM_IS_GRAPH (self));
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
@@ -277,6 +279,7 @@ void _gsm_graph_set_draw (GsmGraph *self, gboolean draw)
   if (priv->draw != draw)
     priv->draw = draw;
 }
+
 
 void gsm_graph_set_font_size (GsmGraph *self, double fontsize)
 {
