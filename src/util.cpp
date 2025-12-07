@@ -247,7 +247,7 @@ get_size_from_column (GtkTreeModel*model,
                       GtkTreeIter *first,
                       const guint  index)
 {
-  GValue value = { 0 };
+  GValue value = G_VALUE_INIT;
 
   gtk_tree_model_get_value (model, first, index, &value);
 
@@ -405,7 +405,7 @@ size_cell_data_func (GtkTreeViewColumn *,
   const guint index = GPOINTER_TO_UINT (user_data);
 
   guint64 size;
-  GValue value = { 0 };
+  GValue value = G_VALUE_INIT;
 
   gtk_tree_model_get_value (model, iter, index, &value);
 
@@ -441,7 +441,7 @@ percentage_cell_data_func (GtkTreeViewColumn *,
   const guint index = GPOINTER_TO_UINT (user_data);
 
   gdouble size;
-  GValue value = { 0 };
+  GValue value = G_VALUE_INIT;
 
   gtk_tree_model_get_value (model, iter, index, &value);
   size = g_value_get_double (&value);
@@ -467,7 +467,7 @@ size_na_cell_data_func (GtkTreeViewColumn *,
   const guint index = GPOINTER_TO_UINT (user_data);
 
   guint64 size;
-  GValue value = { 0 };
+  GValue value = G_VALUE_INIT;
 
   gtk_tree_model_get_value (model, iter, index, &value);
 
@@ -513,7 +513,7 @@ io_rate_cell_data_func (GtkTreeViewColumn *,
   const guint index = GPOINTER_TO_UINT (user_data);
 
   guint64 size;
-  GValue value = { 0 };
+  GValue value = G_VALUE_INIT;
 
   gtk_tree_model_get_value (model, iter, index, &value);
 
@@ -553,7 +553,7 @@ duration_cell_data_func (GtkTreeViewColumn *,
   const guint index = GPOINTER_TO_UINT (user_data);
 
   unsigned time;
-  GValue value = { 0 };
+  GValue value = G_VALUE_INIT;
 
   gtk_tree_model_get_value (model, iter, index, &value);
 
@@ -591,7 +591,7 @@ time_cell_data_func (GtkTreeViewColumn *,
   const guint index = GPOINTER_TO_UINT (user_data);
 
   time_t time;
-  GValue value = { 0 };
+  GValue value = G_VALUE_INIT;
 
   gtk_tree_model_get_value (model, iter, index, &value);
 
@@ -623,7 +623,7 @@ status_cell_data_func (GtkTreeViewColumn *,
   const guint index = GPOINTER_TO_UINT (user_data);
 
   guint state;
-  GValue value = { 0 };
+  GValue value = G_VALUE_INIT;
 
   gtk_tree_model_get_value (model, iter, index, &value);
 
@@ -653,7 +653,7 @@ priority_cell_data_func (GtkTreeViewColumn *,
 {
   const guint index = GPOINTER_TO_UINT (user_data);
 
-  GValue value = { 0 };
+  GValue value = G_VALUE_INIT;
 
   gtk_tree_model_get_value (model, iter, index, &value);
 
@@ -671,8 +671,8 @@ priority_compare_func (GtkTreeModel*model,
                        gpointer     user_data)
 {
   const guint index = GPOINTER_TO_UINT (user_data);
-  GValue value1 = { 0 };
-  GValue value2 = { 0 };
+  GValue value1 = G_VALUE_INIT;
+  GValue value2 = G_VALUE_INIT;
 
   gtk_tree_model_get_value (model, first, index, &value1);
   gtk_tree_model_get_value (model, second, index, &value2);
