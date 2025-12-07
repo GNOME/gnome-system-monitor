@@ -1,4 +1,5 @@
 subdir('action-impls')
+subdir('actions')
 subdir('legacy')
 
 system_monitor_sources = [
@@ -8,9 +9,6 @@ system_monitor_sources = [
   'column-view-persister.c',
   'disk.c',
   'disks.c',
-  'gsm_gksu.cpp',
-  'gsm_gnomesu.cpp',
-  'gsm_pkexec.cpp',
   'gsm-graph.c',
   'interface.cpp',
   'load-graph.cpp',
@@ -46,9 +44,6 @@ system_monitor_headers = [
   'defaulttable.h',
   'disk.h',
   'disks.h',
-  'gsm_gksu.h',
-  'gsm_gnomesu.h',
-  'gsm_pkexec.h',
   'gsm-graph.h',
   'interface.h',
   'join.h',
@@ -124,7 +119,7 @@ system_monitor_dependencies = [
   libgtop,
   libadwaita,
   libsystemd,
-  libgsm_actions_impl_dep,
+  libgsm_actions_dep,
 ]
 libgsm = static_library(
   'libgsm',
