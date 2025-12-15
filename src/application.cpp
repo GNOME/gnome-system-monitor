@@ -18,7 +18,6 @@
 #include "proctable.h"
 #include "load-graph.h"
 #include "settings-keys.h"
-#include "argv.h"
 #include "util.h"
 #include "lsof.h"
 #include "disks.h"
@@ -352,21 +351,6 @@ GsmApplication::load_settings ()
     this->settings->signal_changed (k).connect (cbcc);
 }
 
-void GsmApplication::load_command_line_options ()
-{
-  for ( auto entry : option_group.entries() ) 
-  {
-    this->add_main_option_entry (
-      OptionType::BOOL, 
-      entry.get_long_name(),
-      entry.get_short_name(),
-      entry.get_description(),
-      entry.get_arg_description(),
-      entry.get_flags()
-    );
-  }
-}
-
 
 GsmApplication::GsmApplication()
   : Gtk::Application (APP_ID, Gio::Application::Flags::HANDLES_COMMAND_LINE),
@@ -406,9 +390,20 @@ GsmApplication::GsmApplication()
   smooth_refresh (NULL)
 {
   Glib::set_application_name (_("System Monitor"));
+  this->set_version (VERSION);
   this->set_option_context_summary (_("A simple process and system monitor."));
-  this->signal_handle_local_options().connect(sigc::mem_fun(*this, &GsmApplication::handle_local_options), false);
-  load_command_line_options ();
+  this->add_main_option_entry (OptionType::BOOL,
+                               "show-processes-tab",
+                               'p',
+                               _("Show the Processes tab"));
+  this->add_main_option_entry (OptionType::BOOL,
+                               "show-resources-tab",
+                               'r',
+                               _("Show the Resources tab"));
+  this->add_main_option_entry (OptionType::BOOL,
+                               "show-file-systems-tab",
+                               'f',
+                               _("Show the File Systems tab"));
 }
 
 GsmApplication&
@@ -427,36 +422,25 @@ GsmApplication::on_activate ()
   gtk_window_present (GTK_WINDOW (main_window));
 }
 
-int
-GsmApplication::handle_local_options (const Glib::RefPtr<Glib::VariantDict> &content)
-{
-  option_group.load ( content );
-
-  if (option_group.print_version)
-  {
-    g_print ("%s %s\n", _("GNOME System Monitor"), VERSION);
-    return 0;
-  }
-
-  return -1;
-}
 
 int
 GsmApplication::on_command_line (const Glib::RefPtr<Gio::ApplicationCommandLine>&command_line)
 {
-  option_group.load ( command_line->get_options_dict () );
+  auto args = command_line->get_options_dict ();
 
   const char*tab = NULL;
-  if (option_group.show_processes_tab)
+  if (args->contains ("show-processes-tab")) {
     tab = "processes";
-  else if (option_group.show_resources_tab)
+  } else if (args->contains ("show-resources-tab")) {
     tab = "resources";
-  else if (option_group.show_file_systems_tab)
+  } else if (args->contains ("show-file-systems-tab")) {
     tab = "disks";
-  if (tab)
-    adw_view_stack_set_visible_child_name (this->stack, tab);
+  }
 
   on_activate ();
+
+  if (tab)
+    adw_view_stack_set_visible_child_name (this->stack, tab);
 
   return 0;
 }

@@ -11,7 +11,6 @@
 struct LoadGraph;
 
 #include "legacy/treeview.h"
-#include "argv.h"
 #include "disks.h"
 #include "prettytable.h"
 #include "procinfo.h"
@@ -133,7 +132,6 @@ public:
   GtkTreeSelection *selection;
 
   SmoothRefresh *smooth_refresh;
-  procman::OptionGroup option_group;
 };
 
 #endif /* _GSM_APPLICATION_H_ */

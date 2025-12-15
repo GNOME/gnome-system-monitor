@@ -3,7 +3,6 @@ subdir('legacy')
 
 system_monitor_sources = [
   'application.cpp',
-  'argv.cpp',
   'cgroups.cpp',
   'column-view-persister.c',
   'disk.c',
@@ -40,7 +39,6 @@ system_monitor_headers = [
   'legacy/gsm_color_button.h',
   'legacy/treeview.h',
   'application.h',
-  'argv.h',
   'cgroups.h',
   'column-view-persister.h',
   'defaulttable.h',
