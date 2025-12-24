@@ -117,27 +117,6 @@ fill_image_buffer_from_resource (cairo_t    *cr,
   return tmp_surface;
 }
 
-static void
-set_color_icon (GtkDragSource *drag_source,
-                GdkRGBA       *color)
-{
-  GdkPixbuf *pixbuf;
-  GdkTexture *texture;
-  guint32 pixel;
-
-  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, 48, 32);
-
-  pixel = ((guint32)(color->red * 0xff) << 24) |
-          ((guint32)(color->green * 0xff) << 16) |
-          ((guint32)(color->blue * 0xff) << 8);
-
-  gdk_pixbuf_fill (pixbuf, pixel);
-
-  texture = gdk_texture_new_for_pixbuf (pixbuf);
-
-  gtk_drag_source_set_icon (drag_source, GDK_PAINTABLE (texture), -2, -2);
-  g_object_unref (pixbuf);
-}
 
 static void
 gsm_color_button_draw_colored_icon (cairo_t         *cr,
@@ -447,15 +426,27 @@ gsm_color_button_drag_data_drop (GtkDropTarget*,
   return TRUE;
 }
 
+
 static void
 gsm_color_button_drag_begin (GtkDragSource  *drag_source,
                              GdkDrag*,
                              GsmColorButton *color_button)
 {
-  GsmColorButtonPrivate *priv = gsm_color_button_get_instance_private (color_button);
+  GsmColorButtonPrivate *priv =
+    gsm_color_button_get_instance_private (color_button);
+  g_autoptr (GtkSnapshot) snapshot = gtk_snapshot_new ();
+  g_autoptr (GdkPaintable) paintable = NULL;
 
-  set_color_icon (drag_source, &priv->color);
+  gtk_snapshot_append_color (snapshot,
+                             &priv->color,
+                             &GRAPHENE_RECT_INIT (0, 0, 32, 24));
+
+  paintable =
+    gtk_snapshot_free_to_paintable (g_steal_pointer (&snapshot), NULL);
+
+  gtk_drag_source_set_icon (drag_source, paintable, -2, -2);
 }
+
 
 static GdkContentProvider *
 gsm_color_button_prepare (GtkDragSource*,
