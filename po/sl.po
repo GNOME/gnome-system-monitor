@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2025-12-08 10:11+0000\n"
-"PO-Revision-Date: 2025-12-09 18:03+0100\n"
+"POT-Creation-Date: 2026-01-31 12:21+0000\n"
+"PO-Revision-Date: 2026-01-31 13:41+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
 msgid "Device"
@@ -30,7 +30,7 @@ msgstr "Naprava"
 msgid "Directory"
 msgstr "Mapa"
 
-#: data/disks.ui:120 data/openfiles.ui:79 src/legacy/gsm_color_button.c:601
+#: data/disks.ui:120 data/openfiles.ui:79 src/legacy/gsm_color_button.c:592
 msgid "Type"
 msgstr "Vrsta"
 
@@ -50,7 +50,7 @@ msgstr "Na voljo"
 msgid "Used"
 msgstr "Uporabljeno"
 
-#: data/gnome-system-monitor-kde.desktop.in.in:2 src/application.cpp:437
+#: data/gnome-system-monitor-kde.desktop.in.in:2
 msgid "GNOME System Monitor"
 msgstr "Sistemski nadzornik za GNOME"
 
@@ -121,7 +121,7 @@ msgstr "Pošlje signal za končanje"
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
 msgid "Send Kill Signal"
-msgstr "Pošlje signal vsiljeno zaustavitev"
+msgstr "Pošlje signal vsiljene zaustavitve"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -178,7 +178,7 @@ msgctxt "shortcuts dialog"
 msgid "Quit"
 msgstr "Izhod"
 
-#: data/interface.ui:6 data/org.gnome.SystemMonitor.metainfo.xml.in.in:7 data/org.gnome.SystemMonitor.desktop.in.in:2 src/application.cpp:408
+#: data/interface.ui:6 data/org.gnome.SystemMonitor.metainfo.xml.in.in:7 data/org.gnome.SystemMonitor.desktop.in.in:2 src/application.cpp:392
 msgid "System Monitor"
 msgstr "Nadzornik sistema"
 
@@ -475,7 +475,7 @@ msgstr "Predmet"
 
 #: data/org.gnome.gnome-system-monitor.policy.in.in:11
 msgid "Kill process"
-msgstr "Uniči opravilo"
+msgstr "Vsili ustavitev opravila"
 
 #: data/org.gnome.gnome-system-monitor.policy.in.in:12
 msgid "Privileges are required to control other users’ processes"
@@ -683,7 +683,7 @@ msgstr "Več dejanj"
 msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
 msgstr "Prednost opravila je podana z oceno prednostni delovanja. Nižja vrednost ustreza višji prednosti."
 
-#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:191
+#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:194
 msgid "_Cancel"
 msgstr "_Prekliči"
 
@@ -735,31 +735,27 @@ msgstr "Raven pripenjanja ni podprta"
 msgid "Priority failed on %i: %s"
 msgstr "Prednost spodletela na %i: %s"
 
-#: src/application.cpp:409
+#: src/application.cpp:394
 msgid "A simple process and system monitor."
 msgstr "Enostaven nadzornik sistema in dejavnih opravil"
 
-#: src/argv.cpp:20
+#: src/application.cpp:398
 msgid "Show the Processes tab"
 msgstr "Pokaži zavihek opravil"
 
-#: src/argv.cpp:24
+#: src/application.cpp:402
 msgid "Show the Resources tab"
 msgstr "Pokaži zavihek virov"
 
-#: src/argv.cpp:28
+#: src/application.cpp:406
 msgid "Show the File Systems tab"
 msgstr "Pokaži zavihek datotečnih sistemov"
-
-#: src/argv.cpp:31
-msgid "Show the application’s version"
-msgstr "Pokaži različico programa"
 
 #: src/disks.c:377
 msgid "Open Failed"
 msgstr "Odpiranje ni uspelo"
 
-#: src/disks.c:381 src/setaffinity.cpp:127
+#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224 src/setaffinity.cpp:124
 msgid "_Close"
 msgstr "_Zapri"
 
@@ -770,7 +766,7 @@ msgid "Pick a Color for “%s”"
 msgstr "Izbor barve za »%s«"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:274 src/setaffinity.cpp:317
+#: src/interface.cpp:274 src/setaffinity.cpp:274
 #, c-format
 msgid "CPU%d"
 msgstr "CPE%d"
@@ -808,40 +804,40 @@ msgstr "%b %d %l∶%M %p"
 msgid "%b %d %Y"
 msgstr "%d. %b %Y"
 
-#: src/legacy/gsm_color_button.c:577
+#: src/legacy/gsm_color_button.c:568
 msgid "Fraction"
 msgstr "Delež"
 
 #. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
-#: src/legacy/gsm_color_button.c:579
+#: src/legacy/gsm_color_button.c:570
 msgid "Percentage full for pie color pickers"
 msgstr "Odstotek za izbirnike barv v tortnem prikazu"
 
-#: src/legacy/gsm_color_button.c:586
+#: src/legacy/gsm_color_button.c:577
 msgid "Title"
 msgstr "Naslov"
 
-#: src/legacy/gsm_color_button.c:587
+#: src/legacy/gsm_color_button.c:578
 msgid "The title of the color selection dialog"
 msgstr "Naziv pogovornega okna izbire barv"
 
-#: src/legacy/gsm_color_button.c:588 src/legacy/gsm_color_button.c:626
+#: src/legacy/gsm_color_button.c:579 src/legacy/gsm_color_button.c:617
 msgid "Pick a Color"
 msgstr "Izbor barve"
 
-#: src/legacy/gsm_color_button.c:594
+#: src/legacy/gsm_color_button.c:585
 msgid "Current Color"
 msgstr "Trenutna barva"
 
-#: src/legacy/gsm_color_button.c:595
+#: src/legacy/gsm_color_button.c:586
 msgid "The selected color"
 msgstr "Izbrana barva"
 
-#: src/legacy/gsm_color_button.c:602
+#: src/legacy/gsm_color_button.c:593
 msgid "Type of color picker"
 msgstr "Vrsta izbirnika barv"
 
-#: src/legacy/gsm_color_button.c:649
+#: src/legacy/gsm_color_button.c:640
 msgid "Click to set graph colors"
 msgstr "Kliknite za nastavitev barv grafa"
 
@@ -880,23 +876,23 @@ msgstr[3] "%u sekunde"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:521
+#: src/load-graph.cpp:524
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f %%"
 
-#: src/load-graph.cpp:549
+#: src/load-graph.cpp:553
 msgid "not available"
 msgstr "ni na voljo"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:554
+#: src/load-graph.cpp:558
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) od %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:559
+#: src/load-graph.cpp:563
 #, c-format
 msgid "Cache %s"
 msgstr "Predpomnilnik %s"
@@ -920,7 +916,7 @@ msgstr[2] "%d odprti datoteki"
 msgstr[3] "%d odprte datoteke"
 
 #. Translators: process name and id
-#: src/memmaps.cpp:348 src/openfiles.cpp:129 src/setaffinity.cpp:291
+#: src/memmaps.cpp:348 src/openfiles.cpp:129 src/setaffinity.cpp:248
 #, c-format
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
@@ -1427,49 +1423,35 @@ msgstr "Način razvrščanja odprtih datotek"
 msgid "Icon"
 msgstr "Ikona"
 
-#: src/procactions.cpp:85 src/procactions.cpp:91
-#, c-format
-msgid ""
-"Cannot change the priority of process with PID %d to %d.\n"
-"%s"
-msgstr ""
-"Ni mogoče spremeniti prednosti opravila s PID %d na %d.\n"
-"%s"
+#: src/procactions.cpp:73
+msgid "Cannot Change Priority"
+msgstr "Prednosti ni mogoče spremeniti"
 
-#: src/procactions.cpp:103 src/procactions.cpp:185
-msgid "_OK"
-msgstr "_V redu"
-
-#: src/procactions.cpp:167 src/procactions.cpp:173
-#, c-format
-msgid ""
-"Cannot kill process with PID %d with signal %d.\n"
-"%s"
-msgstr ""
-"Ni mogoče uničiti opravila s PID %d s signalom %d.\n"
-"%s"
+#: src/procactions.cpp:219
+msgid "Cannot Kill Process"
+msgstr "Opravila ni možno prisilno ustaviti"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:119
+#: src/procdialogs.cpp:122
 #, c-format
 msgid "Force Stop %s?"
 msgstr "Ali želite prisilno ustaviti %s?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:125
+#: src/procdialogs.cpp:128
 #, c-format
 msgid "End %s?"
 msgstr "Ali želite končati %s?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:131
+#: src/procdialogs.cpp:134
 #, c-format
 msgid "Stop %s?"
 msgstr "Ali želite zaustaviti %s?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:142
+#: src/procdialogs.cpp:145
 #, c-format
 msgid "Force Stop Selected Process?"
 msgid_plural "Force Stop %d Selected Processes?"
@@ -1479,7 +1461,7 @@ msgstr[2] "Ali želite vsiliti ustavitev %d izbranih procesov?"
 msgstr[3] "Ali želite vsiliti ustavitev %d izbranih procesov?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:149
+#: src/procdialogs.cpp:152
 #, c-format
 msgid "End Selected Process?"
 msgid_plural "End %d Selected Processes?"
@@ -1490,7 +1472,7 @@ msgstr[3] "Ali želite končati %d izbrana opravila?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:156
+#: src/procdialogs.cpp:159
 #, c-format
 msgid "Stop Selected Process?"
 msgid_plural "Stop %d Selected Processes?"
@@ -1500,39 +1482,39 @@ msgstr[2] "Ali želite zaustaviti %d izbrani opravili?"
 msgstr[3] "Ali želite zaustaviti %d izbrana opravila?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:167
+#: src/procdialogs.cpp:170
 msgid "Force stopping processes can result in data loss, crashes, and system failures"
 msgstr "Prisilno ustavljanje procesov lahko povzroči izgubo podatkov, zrušitve in okvare sistema"
 
-#: src/procdialogs.cpp:169
+#: src/procdialogs.cpp:172
 msgid "_Force Stop"
 msgstr "Vsili _zaustavitev"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:174
+#: src/procdialogs.cpp:177
 msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr "Končanje procesov lahko povzroči izgubo podatkov, zrušitve in sistemske napake"
 
-#: src/procdialogs.cpp:176
+#: src/procdialogs.cpp:179
 msgid "_End"
 msgstr "_Končaj"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:181
+#: src/procdialogs.cpp:184
 msgid "Stopping processes can result in data loss, crashes, and system failures"
 msgstr "Zaustavitev procesov lahko povzroči izgubo podatkov, zrušitve in sistemske napake"
 
-#: src/procdialogs.cpp:183
+#: src/procdialogs.cpp:186
 msgid "_Stop"
 msgstr "_Zaustavi"
 
-#: src/procdialogs.cpp:275
+#: src/procdialogs.cpp:278
 #, c-format
 msgid "Change Priority of %s (PID %u)"
 msgstr "Spremeni prednost »%s« (PID %u)"
 
-#: src/procdialogs.cpp:278
+#: src/procdialogs.cpp:281
 #, c-format
 msgid "Change Priority of the Selected Process"
 msgid_plural "Change Priority of %d Selected Processes"
@@ -1601,7 +1583,7 @@ msgid "Disk Write"
 msgstr "Zapisovanje na disk"
 
 #. Create error alert dialog
-#: src/setaffinity.cpp:118
+#: src/setaffinity.cpp:115
 msgid "GNU CPU Affinity error"
 msgstr "Napaka pripenjanja GNU CPU"
 
