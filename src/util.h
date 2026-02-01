@@ -7,9 +7,6 @@
 
 using std::string;
 
-gboolean
-load_symbols (const char *module,
-              ...) G_GNUC_NULL_TERMINATED;
 
 const char*
 format_process_state (guint state);
