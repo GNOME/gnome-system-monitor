@@ -675,8 +675,9 @@ proctable_new (GsmApplication * const app)
     gsm_tree_view_add_excluded_column (proctree, COL_OWNER);
   }
 
-  if (!can_show_security_context_column ())
+  if (!gsm_selinux_is_enabled ()) {
     gsm_tree_view_add_excluded_column (proctree, COL_SECURITYCONTEXT);
+  }
 
   gsm_tree_view_load_state (proctree);
 

@@ -131,9 +131,9 @@ ProcInfo::ProcInfo(pid_t pid)
   info->cpu_time = cpu_time;
   info->start_time = proctime.start_time;
 
-  get_process_selinux_context (info);
   get_process_cgroup_info (*info);
 
+  gsm_proc_info_load_selinux (info);
   gsm_proc_info_load_systemd (info);
 }
 
@@ -151,6 +151,19 @@ ProcInfo::set_icon (Glib::RefPtr<Gdk::Texture> icon)
   gtk_tree_store_set (GTK_TREE_STORE (model), &this->node,
                       COL_ICON, (this->icon ? this->icon->gobj () : NULL),
                       -1);
+}
+
+
+void
+gsm_proc_info_load_selinux (ProcInfo *self)
+{
+  g_autofree char *context = NULL;
+
+  g_return_if_fail (self);
+
+  context = gsm_selinux_get_context (self->pid);
+
+  self->security_context = make_string (g_steal_pointer (&context));
 }
 
 

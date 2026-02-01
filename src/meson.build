@@ -2,6 +2,7 @@ subdir('action-impls')
 subdir('actions')
 subdir('legacy')
 subdir('systemd')
+subdir('selinux')
 
 system_monitor_sources = [
   'application.cpp',
@@ -25,7 +26,6 @@ system_monitor_sources = [
   'proclist.cpp',
   'procproperties.cpp',
   'proctable.cpp',
-  'selinux.cpp',
   'setaffinity.cpp',
   'smooth_refresh.cpp',
   'update_interval.cpp',
@@ -59,7 +59,6 @@ system_monitor_headers = [
   'proclist.h',
   'procproperties.h',
   'proctable.h',
-  'selinux.h',
   'setaffinity.h',
   'settings-keys.h',
   'smooth_refresh.h',
@@ -117,6 +116,7 @@ system_monitor_dependencies = [
   libadwaita,
   libgsm_actions_dep,
   libgsm_systemd_dep,
+  libgsm_selinux_dep,
 ]
 libgsm = static_library(
   'libgsm',
