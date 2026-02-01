@@ -241,7 +241,7 @@ gsm_graph_init (GsmGraph *self)
   priv->draw = FALSE;
   priv->background = NULL;
   priv->logarithmic_scale = FALSE;
-  
+
   // FIXME:
   // on configure, frames_per_unit = graph->draw_width/num_points;
   // knock FRAMES down to 10 until cairo gets faster
@@ -349,10 +349,10 @@ void gsm_graph_set_data_function (GsmGraph *self, GSourceFunc function, gpointer
   if (priv->redraw_timeout) {
     g_source_remove (priv->redraw_timeout);
   }
-  
+
   priv->data_function = function;
   priv->update_data = data;
-  
+
   if (gsm_graph_is_started (self)) {
     if (priv->frames_per_unit && (priv->frames_per_unit > 0)) {
       drawing_refresh_speed = (priv->speed / priv->frames_per_unit);
@@ -363,11 +363,23 @@ void gsm_graph_set_data_function (GsmGraph *self, GSourceFunc function, gpointer
   }
 }
 
+
 static void
-_gsm_graph_run_data_function (GsmGraphPrivate *priv) {
-  g_return_if_fail ( priv != NULL && priv->data_function != NULL );
-  priv->data_function(priv->update_data);
+run_data_function (GsmGraph *self)
+{
+  GsmGraphPrivate *priv;
+
+  g_return_if_fail (GSM_IS_GRAPH (self));
+
+  priv = gsm_graph_get_instance_private (self);
+
+  g_return_if_fail (priv->data_function != NULL);
+
+  priv->data_function (priv->update_data);
+
+  g_object_unref (self);
 }
+
 
 void
 gsm_graph_start (GsmGraph *self)
@@ -380,11 +392,10 @@ gsm_graph_start (GsmGraph *self)
   if (priv->redraw_timeout == 0)
     {
       // space 2 calls with a small time interval so there's a delta for the CPU load graph
-      g_timeout_add_once(300,
-                         (GSourceOnceFunc)_gsm_graph_run_data_function,
-                         self
-                         );
-                         
+      g_timeout_add_once (300,
+                          (GSourceOnceFunc) run_data_function,
+                          g_object_ref (self));
+
       priv->data_function(priv->update_data);
       priv->redraw_timeout = g_timeout_add (priv->speed,
                                             (GSourceFunc)_gsm_graph_update,
@@ -497,7 +508,7 @@ gsm_graph_is_background_set (GsmGraph *self)
 
 gboolean
 gsm_graph_is_started (GsmGraph *self)
-{   
+{
   g_return_val_if_fail (GSM_IS_GRAPH (self), FALSE);
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
@@ -506,7 +517,7 @@ gsm_graph_is_started (GsmGraph *self)
 
 cairo_surface_t*
 gsm_graph_get_background (GsmGraph *self)
-{   
+{
   g_return_val_if_fail (GSM_IS_GRAPH (self), NULL);
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
@@ -515,7 +526,7 @@ gsm_graph_get_background (GsmGraph *self)
 
 guint
 gsm_graph_get_speed (GsmGraph *self)
-{   
+{
   g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
@@ -524,7 +535,7 @@ gsm_graph_get_speed (GsmGraph *self)
 
 guint
 gsm_graph_get_frames_per_unit (GsmGraph *self)
-{   
+{
   g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
@@ -533,7 +544,7 @@ gsm_graph_get_frames_per_unit (GsmGraph *self)
 
 guint
 gsm_graph_get_render_counter (GsmGraph *self)
-{   
+{
   g_return_val_if_fail (GSM_IS_GRAPH (self), 0);
   GsmGraphPrivate *priv = gsm_graph_get_instance_private (self);
 
