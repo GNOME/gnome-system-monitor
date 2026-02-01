@@ -10,9 +10,13 @@
 #include "proctable.h"
 #include "selinux.h"
 #include "settings-keys.h"
-#include "systemd.h"
 #include "util.h"
 #include "update_interval.h"
+
+#ifdef HAVE_SYSTEMD
+#include "systemd.h"
+#endif
+
 
 static AdwPreferencesDialog *prefs_dialog = NULL;
 
@@ -91,13 +95,21 @@ create_field_page (GtkBuilder  *builder,
       if ((column_id == COL_SECURITYCONTEXT) && (!can_show_security_context_column ()))
         continue;
 
-      if ((column_id == COL_UNIT ||
-           column_id == COL_SESSION ||
-           column_id == COL_SEAT ||
-           column_id == COL_OWNER)
-          && !procman::systemd_logind_running ()
-          )
-        continue;
+      switch (column_id) {
+        case COL_UNIT:
+        case COL_SESSION:
+        case COL_SEAT:
+        case COL_OWNER:
+#ifdef HAVE_SYSTEMD
+          /* Hide is systemd isn't actually running */
+          if (!gsm_systemd_is_running ()) {
+            continue;
+          }
+#else
+          /* No systemd support, always hide */
+          continue;
+#endif
+      }
 
       row = adw_switch_row_new ();
       adw_preferences_row_set_title (ADW_PREFERENCES_ROW (row), title);

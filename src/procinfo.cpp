@@ -1,4 +1,10 @@
- #include "procinfo.h"
+/*
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
+#include "config.h"
+
+#include "procinfo.h"
 
 #include <map>
 #include <string>
@@ -15,7 +21,11 @@
 #include "cgroups.h"
 #include "proctable.h"
 #include "selinux.h"
+
+#ifdef HAVE_SYSTEMD
 #include "systemd.h"
+#endif
+
 
 std::string
 ProcInfo::lookup_user (guint uid)
@@ -124,8 +134,9 @@ ProcInfo::ProcInfo(pid_t pid)
   get_process_selinux_context (info);
   get_process_cgroup_info (*info);
 
-  get_process_systemd_info (info);
+  gsm_proc_info_load_systemd (info);
 }
+
 
 void
 ProcInfo::set_icon (Glib::RefPtr<Gdk::Texture> icon)
@@ -140,4 +151,31 @@ ProcInfo::set_icon (Glib::RefPtr<Gdk::Texture> icon)
   gtk_tree_store_set (GTK_TREE_STORE (model), &this->node,
                       COL_ICON, (this->icon ? this->icon->gobj () : NULL),
                       -1);
+}
+
+
+void
+gsm_proc_info_load_systemd (ProcInfo *self)
+{
+#ifdef HAVE_SYSTEMD
+  g_autofree char *sd_unit = NULL;
+  g_autofree char *sd_session = NULL;
+  g_autofree char *sd_seat = NULL;
+  uid_t sd_owner;
+
+  g_return_if_fail (self);
+
+  if (gsm_systemd_get_process_info (self->pid,
+                                    &sd_unit,
+                                    &sd_session,
+                                    &sd_seat,
+                                    &sd_owner)) {
+    self->unit = make_string (g_steal_pointer (&sd_unit));
+    self->session = make_string (g_steal_pointer (&sd_session));
+    self->seat = make_string (g_steal_pointer (&sd_seat));
+    self->owner = self->lookup_user (sd_owner);
+  }
+#else
+  g_return_if_fail (self);
+#endif
 }

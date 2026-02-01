@@ -1,3 +1,7 @@
+/*
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
 #pragma once
 
 #include <string>
@@ -88,3 +92,9 @@ public:
   pid_t ppid;
   guint uid;
 };
+
+G_BEGIN_DECLS
+
+void        gsm_proc_info_load_systemd   (ProcInfo     *self);
+
+G_END_DECLS

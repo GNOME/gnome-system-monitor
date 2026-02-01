@@ -52,7 +52,11 @@
 #include "settings-keys.h"
 #include "cgroups.h"
 #include "legacy/treeview.h"
+
+#ifdef HAVE_SYSTEMD
 #include "systemd.h"
+#endif
+
 
 static void
 cb_save_tree_state (gpointer,
@@ -483,7 +487,7 @@ proctable_new (GsmApplication * const app)
           /* Don't insert a second label */
           break;
       }
-      
+
       gtk_tree_view_column_set_resizable (col, TRUE);
       gtk_tree_view_column_set_sort_column_id (col, i);
       gtk_tree_view_column_set_reorderable (col, TRUE);
@@ -660,13 +664,16 @@ proctable_new (GsmApplication * const app)
   if (!cgroups_enabled ())
     gsm_tree_view_add_excluded_column (proctree, COL_CGROUP);
 
-  if (!procman::systemd_logind_running ())
-    {
-      gsm_tree_view_add_excluded_column (proctree, COL_UNIT);
-      gsm_tree_view_add_excluded_column (proctree, COL_SESSION);
-      gsm_tree_view_add_excluded_column (proctree, COL_SEAT);
-      gsm_tree_view_add_excluded_column (proctree, COL_OWNER);
-    }
+#ifdef HAVE_SYSTEMD
+  if (!gsm_systemd_is_running ()) {
+#else
+  {
+#endif
+    gsm_tree_view_add_excluded_column (proctree, COL_UNIT);
+    gsm_tree_view_add_excluded_column (proctree, COL_SESSION);
+    gsm_tree_view_add_excluded_column (proctree, COL_SEAT);
+    gsm_tree_view_add_excluded_column (proctree, COL_OWNER);
+  }
 
   if (!can_show_security_context_column ())
     gsm_tree_view_add_excluded_column (proctree, COL_SECURITYCONTEXT);
@@ -966,8 +973,9 @@ update_info (GsmApplication *app,
   /* get cgroup data */
   get_process_cgroup_info (*info);
 
-  procman::get_process_systemd_info (info);
+  gsm_proc_info_load_systemd (info);
 }
+
 
 void
 proctable_refresh_summary_headers(GsmApplication * app)
@@ -1028,8 +1036,8 @@ proctable_refresh_summary_headers(GsmApplication * app)
   };
 
   // Accumulate totals
-  calc_summary = [&model, 
-                  &total_mem, 
+  calc_summary = [&model,
+                  &total_mem,
                   &total_cpu,
                   &total_vmsize,
                   &total_memres,
@@ -1039,7 +1047,7 @@ proctable_refresh_summary_headers(GsmApplication * app)
                   &total_disk_write_bytes_total,
                   &total_disk_read_bytes_current,
                   &total_disk_write_bytes_current,
-                  &calc_summary](GtkTreeIter &iter) 
+                  &calc_summary](GtkTreeIter &iter)
   {
     GtkTreeIter child_iter;
     // take out value
