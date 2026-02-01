@@ -8,7 +8,7 @@
 #include "application.h"
 #include "cgroups.h"
 #include "proctable.h"
-#include "selinux.h"
+#include "gsm-selinux.h"
 #include "settings-keys.h"
 #include "util.h"
 #include "update_interval.h"
@@ -92,10 +92,12 @@ create_field_page (GtkBuilder  *builder,
       column_id = gtk_tree_view_column_get_sort_column_id (column);
       if ((column_id == COL_CGROUP) && (!cgroups_enabled ()))
         continue;
-      if ((column_id == COL_SECURITYCONTEXT) && (!can_show_security_context_column ()))
-        continue;
 
       switch (column_id) {
+        case COL_SECURITYCONTEXT:
+          if (!gsm_selinux_is_enabled ()) {
+            continue;
+          }
         case COL_UNIT:
         case COL_SESSION:
         case COL_SEAT:

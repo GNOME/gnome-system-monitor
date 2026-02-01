@@ -95,6 +95,7 @@ public:
 
 G_BEGIN_DECLS
 
+void        gsm_proc_info_load_selinux   (ProcInfo     *self);
 void        gsm_proc_info_load_systemd   (ProcInfo     *self);
 
 G_END_DECLS
