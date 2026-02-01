@@ -1,6 +1,7 @@
 subdir('action-impls')
 subdir('actions')
 subdir('legacy')
+subdir('systemd')
 
 system_monitor_sources = [
   'application.cpp',
@@ -27,7 +28,6 @@ system_monitor_sources = [
   'selinux.cpp',
   'setaffinity.cpp',
   'smooth_refresh.cpp',
-  'systemd.cpp',
   'update_interval.cpp',
   'util.cpp',
 ]
@@ -63,7 +63,6 @@ system_monitor_headers = [
   'setaffinity.h',
   'settings-keys.h',
   'smooth_refresh.h',
-  'systemd.h',
   'update_interval.h',
   'util.h',
 ]
@@ -116,8 +115,8 @@ system_monitor_dependencies = [
   gtkmm,
   libgtop,
   libadwaita,
-  libsystemd,
   libgsm_actions_dep,
+  libgsm_systemd_dep,
 ]
 libgsm = static_library(
   'libgsm',

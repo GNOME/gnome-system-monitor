@@ -67,10 +67,11 @@ librsvg    = dependency('librsvg-2.0', version: '>=2.46')
 
 if get_option('systemd')
   libsystemd = dependency('libsystemd', version: '>=44')
+  conf.set('HAVE_SYSTEMD', libsystemd.found())
 else
   libsystemd = dependency('', required: false)
+  conf.set('HAVE_SYSTEMD', false)
 endif
-conf.set('HAVE_SYSTEMD', libsystemd.found())
 
 
 ################################################################################
