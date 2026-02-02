@@ -131,8 +131,7 @@ ProcInfo::ProcInfo(pid_t pid)
   info->cpu_time = cpu_time;
   info->start_time = proctime.start_time;
 
-  get_process_cgroup_info (*info);
-
+  gsm_proc_info_load_cgroups (info);
   gsm_proc_info_load_selinux (info);
   gsm_proc_info_load_systemd (info);
 }
@@ -151,6 +150,19 @@ ProcInfo::set_icon (Glib::RefPtr<Gdk::Texture> icon)
   gtk_tree_store_set (GTK_TREE_STORE (model), &this->node,
                       COL_ICON, (this->icon ? this->icon->gobj () : NULL),
                       -1);
+}
+
+
+void
+gsm_proc_info_load_cgroups (ProcInfo *self)
+{
+  g_autofree char *cgroup = NULL;
+
+  g_return_if_fail (self);
+
+  cgroup = gsm_cgroups_get_name (self->pid);
+
+  self->cgroup_name = make_string (g_steal_pointer (&cgroup));
 }
 
 

@@ -1,4 +1,8 @@
-#include "cgroups.h"
+/*
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
+#include "config.h"
 
 #include <algorithm>
 #include <filesystem>
@@ -9,15 +13,15 @@
 #include <utility>
 #include <vector>
 
-#include <gtkmm.h>
+#include <glib.h>
 
-#include "join.h"
-#include "procinfo.h"
+#include "cgroups.h"
 
 using namespace std::string_view_literals;
 
-bool
-cgroups_enabled ()
+
+gboolean
+gsm_cgroups_is_enabled ()
 {
   static const bool has_cgroups = std::filesystem::exists ("/proc/cgroups");
   return has_cgroups;
@@ -41,7 +45,7 @@ make_parsed_cgroup_line (const std::string_view line)
     {
       return CGroupLineData();
     }
-  
+
   const std::string_view::size_type name_start = line.find (':', cat_start + 1);
   if (name_start == std::string_view::npos)
     {
@@ -80,9 +84,11 @@ parse_cgroup_line (const std::string_view line)
   return it->second;
 }
 
-std::string
-make_process_cgroup_name(const std::string_view cgroup_file_text)
+
+static inline char *
+make_process_cgroup_name (const std::string_view cgroup_file_text)
 {
+  g_autoptr (GString) groups = g_string_new (NULL);
   // name -> [cat...], sorted by name;
   std::map<std::string_view, std::vector<std::string_view> > names;
 
@@ -95,65 +101,88 @@ make_process_cgroup_name(const std::string_view cgroup_file_text)
       last = eol + 1;
 
       const auto line_data = parse_cgroup_line (line);
-      if (!line_data.name.empty ())
-        names[line_data.name].push_back (line_data.cat);
+      if (!line_data.name.empty ()) {
+        if (!line_data.cat.empty ()) {
+          names[line_data.name].push_back (line_data.cat);
+        } else {
+          names.try_emplace (line_data.name, std::vector<std::string_view> ());
+        }
+      }
     }
 
 
   // name (cat1, cat2), ...
   // sorted by name, categories
-  std::vector<std::string> groups;
 
-  for (auto&i : names)
-    {
-      std::sort (begin (i.second), end (i.second));
-      groups.push_back (std::string(i.first) + " (" + procman::join<std::string> (i.second, ", "sv) + ')');
+  for (auto&i : names) {
+    std::sort (begin (i.second), end (i.second));
+
+    if (groups->len > 0) {
+      g_string_append (groups, ", ");
     }
 
-  return procman::join<std::string> (groups, ", "sv);
+    g_string_append_len (groups, i.first.data (), i.first.size ());
+
+    if (i.second.empty ()) {
+      continue;
+    }
+
+    g_string_append (groups, " (");
+    for (size_t j = 0; j < i.second.size (); j++) {
+      if (j != 0) {
+        g_string_append (groups, ", ");
+      }
+
+      g_string_append_len (groups, i.second[j].data (), i.second[j].size ());
+    }
+    g_string_append_c (groups, ')');
+  }
+
+  return g_string_free_and_steal (g_steal_pointer (&groups));
 }
 
 } // namespace
 
-std::string_view
-get_process_cgroup_name(std::string cgroup_file_text)
+
+const char *
+gsm_cgroups_extract_name (const char *file_text)
 {
   static std::unordered_map<std::string, std::string> file_cache;
 
-  const auto [it, inserted] = file_cache.try_emplace (std::move(cgroup_file_text), "");
+  const auto [it, inserted] = file_cache.try_emplace (std::string (file_text), "");
 
-  if (inserted)
-    {
-      it->second = make_process_cgroup_name(it->first);
-    }
+  if (inserted) {
+    g_autofree char *name = make_process_cgroup_name (it->first);
 
-  return it->second;
+    it->second = name ? std::string (name) : "";
+  }
+
+  return it->second.c_str ();
 }
 
-namespace
-{
 
-std::string_view
+static inline const char *
 get_process_cgroup_string (pid_t pid)
 {
-  auto path = "/proc/" + std::to_string (pid) + "/cgroup";
-  std::string text;
+  g_autoptr (GError) error = NULL;
+  g_autofree char *path = g_strdup_printf ("/proc/%i/cgroup", pid);
+  g_autofree char *text = NULL;
 
-  try {
-      text = Glib::file_get_contents (path);
-    } catch (...) {
-      return ""sv;
-    }
-    return get_process_cgroup_name(std::move(text));
+  g_file_get_contents (path, &text, NULL, &error);
+  if (error) {
+    return NULL;
+  }
+
+  return gsm_cgroups_extract_name (text);
 }
 
-} // namespace
 
-void
-get_process_cgroup_info (ProcInfo&info)
+char *
+gsm_cgroups_get_name (pid_t pid)
 {
-  if (not cgroups_enabled ())
-    return;
+  if (!gsm_cgroups_is_enabled ()) {
+    return NULL;
+  }
 
-  info.cgroup_name = std::string(get_process_cgroup_string (info.pid));
+  return g_strdup (get_process_cgroup_string (pid));
 }
