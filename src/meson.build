@@ -3,10 +3,10 @@ subdir('actions')
 subdir('legacy')
 subdir('systemd')
 subdir('selinux')
+subdir('cgroups')
 
 system_monitor_sources = [
   'application.cpp',
-  'cgroups.cpp',
   'column-view-persister.c',
   'disk.c',
   'disks.c',
@@ -37,14 +37,12 @@ system_monitor_headers = [
   'legacy/gsm_color_button.h',
   'legacy/treeview.h',
   'application.h',
-  'cgroups.h',
   'column-view-persister.h',
   'defaulttable.h',
   'disk.h',
   'disks.h',
   'gsm-graph.h',
   'interface.h',
-  'join.h',
   'load-graph.h',
   'lsof.h',
   'mem-map.h',
@@ -117,6 +115,7 @@ system_monitor_dependencies = [
   libgsm_actions_dep,
   libgsm_systemd_dep,
   libgsm_selinux_dep,
+  libgsm_cgroups_dep,
 ]
 libgsm = static_library(
   'libgsm',
@@ -140,7 +139,6 @@ executable(meson.project_name(),
 unit_tests = executable('unit_tests',
   [
     'test/cgroups.cpp',
-    'test/join.cpp'
   ],
   dependencies: [
     catch2,

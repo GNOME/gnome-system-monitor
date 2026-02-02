@@ -50,7 +50,7 @@
 #include "procinfo.h"
 #include "gsm-selinux.h"
 #include "settings-keys.h"
-#include "cgroups.h"
+#include "gsm-cgroups.h"
 #include "legacy/treeview.h"
 
 #ifdef HAVE_SYSTEMD
@@ -661,8 +661,9 @@ proctable_new (GsmApplication * const app)
   app->last_vscroll_max = 0;
   app->last_vscroll_value = 0;
 
-  if (!cgroups_enabled ())
+  if (!gsm_cgroups_is_enabled ()) {
     gsm_tree_view_add_excluded_column (proctree, COL_CGROUP);
+  }
 
 #ifdef HAVE_SYSTEMD
   if (!gsm_systemd_is_running ()) {
@@ -971,9 +972,7 @@ update_info (GsmApplication *app,
   g_assert (info->pid != info->ppid);
   g_assert (info->ppid != -1 || info->pid == 0);
 
-  /* get cgroup data */
-  get_process_cgroup_info (*info);
-
+  gsm_proc_info_load_cgroups (info);
   gsm_proc_info_load_systemd (info);
 }
 
