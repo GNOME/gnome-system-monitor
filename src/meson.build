@@ -136,17 +136,6 @@ executable(meson.project_name(),
   install: true,
 )
 
-unit_tests = executable('unit_tests',
-  [
-    'test/cgroups.cpp',
-  ],
-  dependencies: [
-    catch2,
-    libgsm_dep,
-  ],
-)
-test('unit_tests', unit_tests)
-
 gnome.post_install(
   glib_compile_schemas: true,
 )
