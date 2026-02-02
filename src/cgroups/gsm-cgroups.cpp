@@ -144,8 +144,8 @@ make_process_cgroup_name (const std::string_view cgroup_file_text)
 } // namespace
 
 
-const char *
-gsm_cgroups_extract_name (const char *file_text)
+static const char *
+extract_name (const char *file_text)
 {
   static std::unordered_map<std::string, std::string> file_cache;
 
@@ -173,7 +173,7 @@ get_process_cgroup_string (pid_t pid)
     return NULL;
   }
 
-  return gsm_cgroups_extract_name (text);
+  return extract_name (text);
 }
 
 

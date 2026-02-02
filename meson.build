@@ -53,7 +53,6 @@ datadir = join_paths(prefix, get_option('datadir'))
 ################################################################################
 # Dependencies
 
-catch2     = dependency('catch2-with-main')
 giomm      = dependency('giomm-2.68',  version: '>=2.80')
 glib       = dependency('glib-2.0',    version: '>=2.80')
 gio_unix   = dependency('gio-unix-2.0', version: '>=2.84')
