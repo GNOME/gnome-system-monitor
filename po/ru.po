@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor trunk\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2026-01-04 15:15+0000\n"
-"PO-Revision-Date: 2026-01-25 16:56+0300\n"
+"POT-Creation-Date: 2026-01-31 12:21+0000\n"
+"PO-Revision-Date: 2026-01-31 16:40+0300\n"
 "Last-Translator: Artur So <arturios2005@mail.ru>\n"
 "Language-Team: Русский <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -693,7 +693,7 @@ msgid "The priority of a process is given by its nice value. A lower nice value 
 msgstr ""
 "Приоритет процесса задаётся фактором уступчивости (nice). Чем меньше фактор уступчивости, тем выше приоритет процесса."
 
-#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:191
+#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:194
 msgid "_Cancel"
 msgstr "_Отменить"
 
@@ -765,7 +765,7 @@ msgstr "Показать вкладку «Файловые системы»"
 msgid "Open Failed"
 msgstr "Не удалось открыть"
 
-#: src/disks.c:381 src/setaffinity.cpp:127
+#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224 src/setaffinity.cpp:124
 msgid "_Close"
 msgstr "_Закрыть"
 
@@ -776,7 +776,7 @@ msgid "Pick a Color for “%s”"
 msgstr "Выбрать цвет для «%s»"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:274 src/setaffinity.cpp:317
+#: src/interface.cpp:274 src/setaffinity.cpp:274
 #, c-format
 msgid "CPU%d"
 msgstr "ЦП%d"
@@ -882,23 +882,23 @@ msgstr[2] "%u сек"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:521
+#: src/load-graph.cpp:524
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f%%"
 
-#: src/load-graph.cpp:549
+#: src/load-graph.cpp:553
 msgid "not available"
 msgstr "недоступно"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:554
+#: src/load-graph.cpp:558
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) из %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:559
+#: src/load-graph.cpp:563
 #, c-format
 msgid "Cache %s"
 msgstr "Кэш %s"
@@ -920,7 +920,7 @@ msgstr[1] "%d открытых файла"
 msgstr[2] "%d открытых файлов"
 
 #. Translators: process name and id
-#: src/memmaps.cpp:348 src/openfiles.cpp:129 src/setaffinity.cpp:291
+#: src/memmaps.cpp:348 src/openfiles.cpp:129 src/setaffinity.cpp:248
 #, c-format
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
@@ -1437,49 +1437,35 @@ msgstr "Порядок сортировки списка открытых фай
 msgid "Icon"
 msgstr "Значок"
 
-#: src/procactions.cpp:85 src/procactions.cpp:91
-#, c-format
-msgid ""
-"Cannot change the priority of process with PID %d to %d.\n"
-"%s"
-msgstr ""
-"Не удаётся изменить приоритет процесса с PID %d на %d.\n"
-"%s"
+#: src/procactions.cpp:73
+msgid "Cannot Change Priority"
+msgstr "Невозможно изменить приоритет"
 
-#: src/procactions.cpp:103 src/procactions.cpp:185
-msgid "_OK"
-msgstr "_OK"
-
-#: src/procactions.cpp:167 src/procactions.cpp:173
-#, c-format
-msgid ""
-"Cannot kill process with PID %d with signal %d.\n"
-"%s"
-msgstr ""
-"Не удаётся прервать процесс с PID %d при помощи сигнала %d.\n"
-"%s"
+#: src/procactions.cpp:219
+msgid "Cannot Kill Process"
+msgstr "Невозможно прервать процесс"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:119
+#: src/procdialogs.cpp:122
 #, c-format
 msgid "Force Stop %s?"
 msgstr "Принудительно остановить %s?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:125
+#: src/procdialogs.cpp:128
 #, c-format
 msgid "End %s?"
 msgstr "Завершить %s?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:131
+#: src/procdialogs.cpp:134
 #, c-format
 msgid "Stop %s?"
 msgstr "Остановить %s?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:142
+#: src/procdialogs.cpp:145
 #, c-format
 msgid "Force Stop Selected Process?"
 msgid_plural "Force Stop %d Selected Processes?"
@@ -1488,7 +1474,7 @@ msgstr[1] "Принудительно остановить %d выбранных
 msgstr[2] "Принудительно остановить %d выбранных процессов?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:149
+#: src/procdialogs.cpp:152
 #, c-format
 msgid "End Selected Process?"
 msgid_plural "End %d Selected Processes?"
@@ -1498,7 +1484,7 @@ msgstr[2] "Завершить %d выбранных процессов?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:156
+#: src/procdialogs.cpp:159
 #, c-format
 msgid "Stop Selected Process?"
 msgid_plural "Stop %d Selected Processes?"
@@ -1507,39 +1493,39 @@ msgstr[1] "Остановить %d выбранных процесса?"
 msgstr[2] "Остановить %d выбранных процессов?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:167
+#: src/procdialogs.cpp:170
 msgid "Force stopping processes can result in data loss, crashes, and system failures"
 msgstr "Принудительная остановка процессов может привести к потере данных, сбоям и отказу системы"
 
-#: src/procdialogs.cpp:169
+#: src/procdialogs.cpp:172
 msgid "_Force Stop"
 msgstr "_Принудительно остановить"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:174
+#: src/procdialogs.cpp:177
 msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr "Завершение процессов может привести к потере данных, сбоям и отказу системы"
 
-#: src/procdialogs.cpp:176
+#: src/procdialogs.cpp:179
 msgid "_End"
 msgstr "Завер_шить"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:181
+#: src/procdialogs.cpp:184
 msgid "Stopping processes can result in data loss, crashes, and system failures"
 msgstr "Остановка процессов может привести к потере данных, сбоям и отказу системы"
 
-#: src/procdialogs.cpp:183
+#: src/procdialogs.cpp:186
 msgid "_Stop"
 msgstr "Ос_тановить"
 
-#: src/procdialogs.cpp:275
+#: src/procdialogs.cpp:278
 #, c-format
 msgid "Change Priority of %s (PID %u)"
 msgstr "Изменить приоритет %s (PID %u)"
 
-#: src/procdialogs.cpp:278
+#: src/procdialogs.cpp:281
 #, c-format
 msgid "Change Priority of the Selected Process"
 msgid_plural "Change Priority of %d Selected Processes"
@@ -1605,7 +1591,7 @@ msgid "Disk Write"
 msgstr "Запись на диск"
 
 #. Create error alert dialog
-#: src/setaffinity.cpp:118
+#: src/setaffinity.cpp:115
 msgid "GNU CPU Affinity error"
 msgstr "Ошибка GNU CPU Affinity"
 
@@ -1698,6 +1684,25 @@ msgstr "Очень низкий приоритет"
 #, c-format
 msgid "%s/s"
 msgstr "%s/с"
+
+#, c-format
+#~ msgid ""
+#~ "Cannot change the priority of process with PID %d to %d.\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Не удаётся изменить приоритет процесса с PID %d на %d.\n"
+#~ "%s"
+
+#~ msgid "_OK"
+#~ msgstr "_OK"
+
+#, c-format
+#~ msgid ""
+#~ "Cannot kill process with PID %d with signal %d.\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Не удаётся прервать процесс с PID %d при помощи сигнала %d.\n"
+#~ "%s"
 
 #~ msgctxt "shortcut window"
 #~ msgid "General"
@@ -1819,12 +1824,6 @@ msgstr "%s/с"
 #~ msgstr ""
 #~ "Прерывание процесса может привести к повреждению данных, прерыванию сеанса, а также может представлять угрозу для "
 #~ "безопасности системы. Рекомендуется прерывать только те процессы, которые не отвечают на действия пользователя."
-
-#~ msgid "_Kill Process"
-#~ msgid_plural "_Kill Processes"
-#~ msgstr[0] "_Прервать процесс"
-#~ msgstr[1] "_Прервать процессы"
-#~ msgstr[2] "_Прервать процессы"
 
 #~ msgid ""
 #~ "Ending a process may destroy data, break the session or introduce a security risk. Only unresponsive processes should "
