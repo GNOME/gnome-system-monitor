@@ -14,6 +14,6 @@ G_BEGIN_DECLS
 G_MODULE_EXPORT
 gboolean    gsm_cgroups_is_enabled       (void);
 G_MODULE_EXPORT
-char       *gsm_cgroups_get_name         (pid_t       pid);
+const char *gsm_cgroups_get_name         (pid_t       pid);
 
 G_END_DECLS
