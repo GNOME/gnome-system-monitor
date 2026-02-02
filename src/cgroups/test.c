@@ -6,14 +6,17 @@
 
 #include <glib.h>
 
-#include "cgroups.cpp"
+#include "cgroups.c"
 
 
 static void
 test_cgroups_v2 (void)
 {
+  g_assert_cmpstr (extract_name (NULL), ==, "");
+  g_assert_cmpstr (extract_name (""), ==, "");
+  g_assert_cmpstr (extract_name ("0::/"), ==, "");
   g_assert_cmpstr (extract_name ("0::/\n"), ==, "");
-  g_assert_cmpstr (extract_name ("0::/\n"), ==, "");
+  g_assert_cmpstr (extract_name ("0::/a\n"), ==, "/a");
 }
 
 

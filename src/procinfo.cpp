@@ -156,13 +156,13 @@ ProcInfo::set_icon (Glib::RefPtr<Gdk::Texture> icon)
 void
 gsm_proc_info_load_cgroups (ProcInfo *self)
 {
-  g_autofree char *cgroup = NULL;
+  const char *cgroup = NULL;
 
   g_return_if_fail (self);
 
   cgroup = gsm_cgroups_get_name (self->pid);
 
-  self->cgroup_name = make_string (g_steal_pointer (&cgroup));
+  self->cgroup_name = cgroup ? cgroup : "";
 }
 
 
