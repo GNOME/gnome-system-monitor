@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2026-01-04 15:15+0000\n"
-"PO-Revision-Date: 2026-01-28 13:51+0100\n"
+"POT-Creation-Date: 2026-02-02 05:43+0000\n"
+"PO-Revision-Date: 2026-02-02 13:34+0100\n"
 "Last-Translator: Antonio Marin <gnmer.6qxyg@slmail.me>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -716,7 +716,7 @@ msgstr ""
 "Prioritatea unui proces este dată de valoarea „nice” asociată. O valoare "
 "„nice” mică corespunde unei priorități mari."
 
-#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:191
+#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:194
 msgid "_Cancel"
 msgstr "_Anulează"
 
@@ -788,7 +788,8 @@ msgstr "Arată fila Sisteme de fișiere"
 msgid "Open Failed"
 msgstr "Nu s-a putut deschide"
 
-#: src/disks.c:381 src/setaffinity.cpp:127
+#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224
+#: src/setaffinity.cpp:124
 msgid "_Close"
 msgstr "În_chide"
 
@@ -799,7 +800,7 @@ msgid "Pick a Color for “%s”"
 msgstr "Alege o culoare pentru „%s”"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:274 src/setaffinity.cpp:317
+#: src/interface.cpp:274 src/setaffinity.cpp:274
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
@@ -911,23 +912,23 @@ msgstr[2] "%u de sec"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:521
+#: src/load-graph.cpp:524
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f%%"
 
-#: src/load-graph.cpp:549
+#: src/load-graph.cpp:553
 msgid "not available"
 msgstr "indisponibil"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:554
+#: src/load-graph.cpp:558
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f %%) din %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:559
+#: src/load-graph.cpp:563
 #, c-format
 msgid "Cache %s"
 msgstr "Cache %s"
@@ -949,7 +950,7 @@ msgstr[1] "%d fișiere deschise"
 msgstr[2] "%d de fișiere deschise"
 
 #. Translators: process name and id
-#: src/memmaps.cpp:348 src/openfiles.cpp:129 src/setaffinity.cpp:291
+#: src/memmaps.cpp:348 src/openfiles.cpp:129 src/setaffinity.cpp:248
 #, c-format
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
@@ -1481,49 +1482,35 @@ msgstr "Ordinea fișierelor deschise"
 msgid "Icon"
 msgstr "Simbol"
 
-#: src/procactions.cpp:85 src/procactions.cpp:91
-#, c-format
-msgid ""
-"Cannot change the priority of process with PID %d to %d.\n"
-"%s"
-msgstr ""
-"Nu s-a putut schimba prioritatea procesului cu PID-ul %d în %d.\n"
-"%s"
+#: src/procactions.cpp:73
+msgid "Cannot Change Priority"
+msgstr "Nu se poate schimba prioritatea"
 
-#: src/procactions.cpp:103 src/procactions.cpp:185
-msgid "_OK"
-msgstr "_Bine"
-
-#: src/procactions.cpp:167 src/procactions.cpp:173
-#, c-format
-msgid ""
-"Cannot kill process with PID %d with signal %d.\n"
-"%s"
-msgstr ""
-"Nu s-a putut termina forțat procesul cu PID-ul %d cu semnalul %d.\n"
-"%s"
+#: src/procactions.cpp:219
+msgid "Cannot Kill Process"
+msgstr "Nu se poate termina forțat procesul"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:119
+#: src/procdialogs.cpp:122
 #, c-format
 msgid "Force Stop %s?"
 msgstr "Se oprește forțat %s?"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:125
+#: src/procdialogs.cpp:128
 #, c-format
 msgid "End %s?"
 msgstr "Se termină %s?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:131
+#: src/procdialogs.cpp:134
 #, c-format
 msgid "Stop %s?"
 msgstr "Se oprește %s?"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:142
+#: src/procdialogs.cpp:145
 #, c-format
 msgid "Force Stop Selected Process?"
 msgid_plural "Force Stop %d Selected Processes?"
@@ -1532,7 +1519,7 @@ msgstr[1] "Se opresc forțat cele %d procese alese?"
 msgstr[2] "Se opresc forțat cele %d de procese alese?"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:149
+#: src/procdialogs.cpp:152
 #, c-format
 msgid "End Selected Process?"
 msgid_plural "End %d Selected Processes?"
@@ -1542,7 +1529,7 @@ msgstr[2] "Se termină cele %d de procese alese?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:156
+#: src/procdialogs.cpp:159
 #, c-format
 msgid "Stop Selected Process?"
 msgid_plural "Stop %d Selected Processes?"
@@ -1551,7 +1538,7 @@ msgstr[1] "Se opresc cele %d procese alese?"
 msgstr[2] "Se opresc cele %d de procese alese?"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:167
+#: src/procdialogs.cpp:170
 msgid ""
 "Force stopping processes can result in data loss, crashes, and system "
 "failures"
@@ -1559,40 +1546,40 @@ msgstr ""
 "Oprirea forțată a proceselor poate duce la pierderea datelor, blocări și "
 "defectări ale sistemului"
 
-#: src/procdialogs.cpp:169
+#: src/procdialogs.cpp:172
 msgid "_Force Stop"
 msgstr "_Forțează oprirea"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:174
+#: src/procdialogs.cpp:177
 msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr ""
 "Terminarea proceselor poate duce la pierderea datelor, blocări și defectări "
 "ale sistemului"
 
-#: src/procdialogs.cpp:176
+#: src/procdialogs.cpp:179
 msgid "_End"
 msgstr "_Termină"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:181
+#: src/procdialogs.cpp:184
 msgid ""
 "Stopping processes can result in data loss, crashes, and system failures"
 msgstr ""
 "Oprirea proceselor poate duce la pierderea datelor, blocări și defectări ale "
 "sistemului"
 
-#: src/procdialogs.cpp:183
+#: src/procdialogs.cpp:186
 msgid "_Stop"
 msgstr "_Oprește"
 
-#: src/procdialogs.cpp:275
+#: src/procdialogs.cpp:278
 #, c-format
 msgid "Change Priority of %s (PID %u)"
 msgstr "Schimbă prioritatea pentru „%s” (PID: %u)"
 
-#: src/procdialogs.cpp:278
+#: src/procdialogs.cpp:281
 #, c-format
 msgid "Change Priority of the Selected Process"
 msgid_plural "Change Priority of %d Selected Processes"
@@ -1658,7 +1645,7 @@ msgid "Disk Write"
 msgstr "Scris pe disc"
 
 #. Create error alert dialog
-#: src/setaffinity.cpp:118
+#: src/setaffinity.cpp:115
 msgid "GNU CPU Affinity error"
 msgstr "Eroare de afinitate GNU CPU"
 
