@@ -19,3 +19,14 @@ libgsm_cgroups_dep = declare_dependency(
   dependencies: libgsm_cgroups_dependencies,
   link_with: libgsm_cgroups,
 )
+
+test(
+  'cgroups',
+  executable(
+    'test-cgroups',
+    [config_h, 'test.cpp'],
+    include_directories: [rootInclude, '.'],
+    dependencies: libgsm_cgroups_dependencies,
+  ),
+  protocol: 'tap',
+)
