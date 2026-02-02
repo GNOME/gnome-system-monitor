@@ -31,7 +31,7 @@
 #include "procactions.h"
 #include "procinfo.h"
 #include "util.h"
-#include "cgroups.h"
+#include "gsm-cgroups.h"
 
 static AdwAlertDialog *renice_dialog = NULL;
 static gint new_nice_value = 0;
