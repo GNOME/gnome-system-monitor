@@ -1,6 +1,6 @@
 libgsm_cgroups_sources = [
   config_h,
-  'gsm-cgroups.cpp',
+  'gsm-cgroups.c',
   'gsm-cgroups.h',
 ]
 
@@ -24,7 +24,7 @@ test(
   'cgroups',
   executable(
     'test-cgroups',
-    [config_h, 'test.cpp'],
+    [config_h, 'test.c'],
     include_directories: [rootInclude, '.'],
     dependencies: libgsm_cgroups_dependencies,
   ),
