@@ -1,0 +1,2123 @@
+# Kazakh translation for gnome-system-monitor.
+# Copyright (C) 2026 gnome-system-monitor's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-system-monitor package.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>,  2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-system-monitor main\n"
+"POT-Creation-Date: 2026-02-13 23:54+0000\n"
+"PO-Revision-Date: 2026-02-14 14:07+0500\n"
+"Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
+"Language-Team: Kazakh <Kazakh>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
+
+#. (itstool) path: credit/name
+#: C/memory-map-what.page:12 C/process-identify-file.page:11
+#: C/process-explain.page:11 C/process-columns.page:11
+#: C/process-update-speed.page:11 C/cpu-multicore.page:11 C/process-many.page:11
+#: C/process-priority-change.page:14 C/commandline.page:11 C/mem-swap.page:12
+#: C/solaris-mode.page:11 C/process-priority-what.page:11 C/process-files.page:11
+#: C/process-identify-hog.page:11 C/units.page:11 C/cpu-check.page:15
+#: C/net-bits.page:11 C/fs-device.page:13 C/fs-diskusage.page:13
+#: C/process-forcequit.page:9 C/memory-map-use.page:13 C/mem-check.page:12
+#: C/cpu-mem-normal.page:11 C/fs-info.page:13 C/net-check.page:11 C/index.page:14
+#: C/process-kill.page:12 C/process-status.page:14 C/fs-showall.page:11
+msgid "Phil Bull"
+msgstr "Phil Bull"
+
+#. (itstool) path: credit/years
+#: C/memory-map-what.page:14 C/process-identify-file.page:13
+#: C/process-explain.page:13 C/process-update-speed.page:13 C/commandline.page:13
+#: C/mem-swap.page:14 C/solaris-mode.page:13 C/process-priority-what.page:19
+#: C/process-identify-hog.page:13 C/units.page:13 C/net-bits.page:13
+#: C/process-forcequit.page:11 C/memory-map-use.page:15 C/mem-check.page:14
+#: C/net-check.page:13
+msgid "2011"
+msgstr "2011"
+
+#. (itstool) path: credit/name
+#: C/memory-map-what.page:18 C/process-identify-file.page:17
+#: C/process-explain.page:17 C/process-columns.page:17
+#: C/process-update-speed.page:17 C/commandline.page:16 C/mem-swap.page:18
+#: C/solaris-mode.page:17 C/process-priority-what.page:17
+#: C/process-identify-hog.page:17 C/units.page:17 C/net-bits.page:17
+#: C/memory-map-use.page:19 C/mem-check.page:18 C/net-check.page:17
+msgid "Michael Hill"
+msgstr "Michael Hill"
+
+#. (itstool) path: credit/years
+#: C/memory-map-what.page:20 C/process-identify-file.page:19
+#: C/process-explain.page:19 C/process-columns.page:19
+#: C/process-update-speed.page:19 C/mem-swap.page:20 C/solaris-mode.page:19
+#: C/process-priority-what.page:13 C/process-identify-hog.page:19 C/units.page:19
+#: C/net-bits.page:19 C/memory-map-use.page:21 C/mem-check.page:20
+#: C/net-check.page:19
+msgid "2011, 2014"
+msgstr "2011, 2014"
+
+#. (itstool) path: info/desc
+#: C/memory-map-what.page:23
+msgid "The memory map of a process can help diagnose certain memory issues."
+msgstr "Процестің жады картасы кейбір жады мәселелерін анықтауға көмектесе алады."
+
+#. (itstool) path: page/title
+#: C/memory-map-what.page:27
+msgid "What is a memory map?"
+msgstr "Жады картасы дегеніміз не?"
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:40
+msgid ""
+"<gui>Virtual memory</gui> is a representation of the combined <gui>physical "
+"memory</gui> and <link xref=\"mem-swap\">swap space</link> in a system. It "
+"enables running processes to access <em>more</em> than the existing physical "
+"memory by <gui>mapping</gui> locations in physical memory to files on disk."
+msgstr ""
+"<gui>Виртуалды жады</gui> — бұл жүйедегі біріктірілген <gui>физикалық жады</"
+"gui> мен <link xref=\"mem-swap\">своп аймағының</link> көрінісі. Ол орындалып "
+"жатқан процестерге физикалық жадыдағы орындарды дискідегі файлдарға "
+"<gui>сәйкестендіру</gui> арқылы бар физикалық жадыдан <em>көбірек</em> қол "
+"жеткізуге мүмкіндік береді."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:46
+msgid ""
+"When a program is launched, the system assigns it a unique process ID (PID) and "
+"its <em>instructions</em> and <em>data</em> are loaded into memory in "
+"<em>pages</em>. The page table of each process maps the correspondence between "
+"its pages in virtual memory and their location in physical memory. The "
+"<gui>memory map</gui> displays the total virtual memory use of the process, and "
+"can be used to determine the memory cost of running a single or multiple "
+"instances of the program, to ensure the use of the correct shared libraries, to "
+"see the results of adjusting various performance tuning parameters the program "
+"may have, or to diagnose issues such as memory leaks."
+msgstr ""
+"Бағдарлама іске қосылғанда, жүйе оған бірегей процесс идентификаторын (PID) "
+"тағайындайды және оның <em>нұсқаулары</em> мен <em>деректері</em> жадыға "
+"<em>беттер</em> түрінде жүктеледі. Әр процестің беттер кестесі оның виртуалды "
+"жадыдағы беттері мен олардың физикалық жадыдағы орны арасындағы сәйкестікті "
+"көрсетеді. <gui>Жады картасы</gui> процестің жалпы виртуалды жады қолданысын "
+"көрсетеді және оны бағдарламаның бір немесе бірнеше данасын іске қосудың жады "
+"шығынын анықтау үшін, дұрыс ортақ кітапханалардың қолданылуын тексеру үшін, "
+"бағдарламаның әртүрлі өнімділікті баптау параметрлерінің нәтижелерін көру үшін "
+"немесе жадының жылыстауы сияқты мәселелерді анықтау үшін пайдалануға болады."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:57
+msgid ""
+"If multiple copies of a program are running, the instructions (or <em>text</"
+"em>) of the program only need to be loaded once into physical memory. Each time "
+"a new instance of the program is launched (as a unique process with its own "
+"virtual memory pages), its page table maps the location of the text in virtual "
+"memory to those instructions in the original real memory location. In addition, "
+"any dynamic shared libraries used by the process appear as distinct in virtual "
+"memory, but are shared references to a single copy of the library's text "
+"segment in real memory. When accounting for the total memory use of a process, "
+"it is important to note that the cost of shared libraries loaded into memory "
+"can be spread across all processes currently using them."
+msgstr ""
+"Егер бағдарламаның бірнеше көшірмесі орындалып жатса, бағдарламаның нұсқауларын "
+"(немесе <em>мәтінін</em>) физикалық жадыға тек бір рет жүктеу жеткілікті. "
+"Бағдарламаның әрбір жаңа данасы іске қосылған сайын (өзінің виртуалды жады "
+"беттері бар бірегей процесс ретінде), оның беттер кестесі виртуалды жадыдағы "
+"мәтіннің орнын түпнұсқа нақты жадыдағы сол нұсқауларға бағыттайды. Сонымен "
+"қатар, процесс қолданатын кез келген динамикалық ортақ кітапханалар виртуалды "
+"жадыда бөлек көрінеді, бірақ нақты жадыдағы кітапхана мәтіні сегментінің бір "
+"көшірмесіне ортақ сілтемелер болып табылады. Процестің жалпы жады қолданысын "
+"есептегенде, жадыға жүктелген ортақ кітапханалардың шығыны оларды қазіргі "
+"уақытта қолданып жатқан барлық процестерге бөлінуі мүмкін екенін ескеру маңызды."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:69
+msgid ""
+"When the system needs more pages of memory than are available, some of the "
+"existing pages will be <em>paged out</em> or written to the <gui>swap space</"
+"gui>. Text pages are flagged read-execute in memory and don't need to be "
+"written to swap since they can be re-loaded from their original location on "
+"disk. Data pages have read-write permissions, and if modified when in memory, "
+"they are labeled <em>dirty</em>, and when designated for swapping, must be "
+"paged out. When a page in swap space is required by a running process, it needs "
+"to be swapped back in before use, perhaps causing another page to be paged out."
+msgstr ""
+"Жүйеге қолжетімді жадыдан көбірек беттер қажет болғанда, кейбір бар беттер "
+"<em>свопқа шығарылады</em> немесе <gui>своп аймағына</gui> жазылады. Мәтін "
+"беттері жадыда оқу-орындау ретінде белгіленеді және оларды дискідегі түпнұсқа "
+"орнынан қайта жүктеуге болатындықтан, свопқа жазудың қажеті жоқ. Деректер "
+"беттерінің оқу-жазу рұқсаттары бар, егер олар жадыда болған кезде өзгертілсе, "
+"олар <em>лас</em> (dirty) деп белгіленеді және свопқа жіберілгенде, міндетті "
+"түрде жазылуы керек. Орындалып жатқан процеске своп аймағындағы бет қажет "
+"болса, оны қолданар алдында кері жүктеу керек, бұл басқа беттің свопқа "
+"шығарылуына әкелуі мүмкін."
+
+#. (itstool) path: info/desc
+#: C/process-identify-file.page:22
+msgid "Search for a file that's open to display which process is using it."
+msgstr "Қай процесс қолданып жатқанын көру үшін ашық файлды іздеу."
+
+#. (itstool) path: page/title
+#: C/process-identify-file.page:25
+msgid "Find which program is using a specific file"
+msgstr "Белгілі бір файлды қай бағдарлама қолданып жатқанын табу"
+
+#. (itstool) path: page/p
+#: C/process-identify-file.page:33
+msgid ""
+"Sometimes an error message will tell you a device (like the sound device or the "
+"DVD ROM) is busy, or the file you want to edit is in use. To find the process "
+"or processes responsible:"
+msgstr ""
+"Кейде қате туралы хабарлама құрылғы (дыбыс құрылғысы немесе DVD ROM сияқты) бос "
+"емес екенін немесе сіз түзеткіңіз келетін файл қолданыста екенін айтады. Бұған "
+"жауапты процесті немесе процестерді табу үшін:"
+
+#. (itstool) path: item/p
+#: C/process-identify-file.page:38
+msgid ""
+"Click <guiseq><gui>System Monitor</gui><gui>Search for Open Files</gui></"
+"guiseq>."
+msgstr ""
+"<guiseq><gui>Жүйелік бақылаушы</gui><gui>Ашық файлдарды іздеу</gui></guiseq> "
+"батырмасын шертіңіз."
+
+#. (itstool) path: item/p
+#: C/process-identify-file.page:41
+msgid ""
+"Enter a filename or part of a filename. This could be <file>/dev/snd</file> for "
+"the sound device or <file>/media/cdrom</file> for the DVD ROM."
+msgstr ""
+"Файл атын немесе оның бөлігін енгізіңіз. Бұл дыбыс құрылғысы үшін <file>/dev/"
+"snd</file> немесе DVD ROM үшін <file>/media/cdrom</file> болуы мүмкін."
+
+#. (itstool) path: item/p
+#: C/process-identify-file.page:45
+msgid "Click <gui>Find</gui>."
+msgstr "<gui>Табу</gui> батырмасын шертіңіз."
+
+#. (itstool) path: page/p
+#: C/process-identify-file.page:49
+msgid ""
+"This will display a list of running processes that are currently accessing the "
+"file or files that match the search. Quitting the program should allow you to "
+"access the device or edit the file."
+msgstr ""
+"Бұл іздеуге сәйкес келетін файлға немесе файлдарға қазір қол жеткізіп жатқан "
+"орындалудағы процестердің тізімін көрсетеді. Бағдарламадан шығу құрылғыға қол "
+"жеткізуге немесе файлды түзетуге мүмкіндік береді."
+
+#. (itstool) path: info/desc
+#: C/process-explain.page:22
+msgid "A process can be manipulated from the process list."
+msgstr "Процесті процесс тізімінен басқаруға болады."
+
+#. (itstool) path: page/title
+#: C/process-explain.page:25
+msgid "What is a process?"
+msgstr "Процесс дегеніміз не?"
+
+#. (itstool) path: page/p
+#: C/process-explain.page:34
+msgid ""
+"A <gui>process</gui> is a program or application being executed by the system. "
+"When an application is launched, the system assigns a unique process ID (PID), "
+"and its instructions and data are loaded into memory."
+msgstr ""
+"<gui>Процесс</gui> — бұл жүйе орындап жатқан бағдарлама немесе қолданба. "
+"Қолданба іске қосылғанда, жүйе бірегей процесс идентификаторын (PID) "
+"тағайындайды және оның нұсқаулары мен деректері жадыға жүктеледі."
+
+#. (itstool) path: page/p
+#: C/process-explain.page:38
+msgid ""
+"The <gui>Processes</gui> tab displays information on processes, and allows you "
+"to <gui>Stop</gui>, <gui>Continue</gui>, <gui>End</gui>, <gui>Kill</gui>, or "
+"change the priority of a process. If you choose to display <gui>All Processes</"
+"gui>, the process list will include <em>system processes</em>, which run in the "
+"background providing various services that keep a computer running."
+msgstr ""
+"<gui>Процестер</gui> беті процестер туралы ақпаратты көрсетеді және оларды "
+"<gui>Тоқтатуға</gui>, <gui>Жалғастыруға</gui>, <gui>Аяқтауға</gui>, <gui>Жоюға</"
+"gui> немесе басымдылығын өзгертуге мүмкіндік береді. Егер сіз <gui>Барлық "
+"процестерді</gui> көрсетуді таңдасаңыз, процесс тізіміне компьютердің жұмысын "
+"қамтамасыз ететін әртүрлі қызметтерді фонда орындайтын <em>жүйелік процестер</"
+"em> де кіреді."
+
+#. (itstool) path: credit/years
+#: C/process-columns.page:13 C/cpu-multicore.page:13 C/process-many.page:13
+#: C/process-priority-change.page:16 C/commandline.page:18 C/process-files.page:13
+#: C/cpu-check.page:17 C/fs-device.page:15 C/fs-diskusage.page:15
+#: C/cpu-mem-normal.page:13 C/fs-info.page:15 C/index.page:16
+#: C/process-kill.page:14 C/process-status.page:16 C/fs-showall.page:13
+msgid "2014"
+msgstr "2014"
+
+#. (itstool) path: info/desc
+#: C/process-columns.page:22
+msgid "Various other columns can be shown in the <gui>Processes</gui> tab."
+msgstr ""
+"<gui>Процестер</gui> бетінде басқа да әртүрлі бағандарды көрсетуге болады."
+
+#. (itstool) path: page/title
+#: C/process-columns.page:25
+msgid "Display different information about processes"
+msgstr "Процестер туралы әртүрлі ақпаратты көрсету"
+
+#. (itstool) path: page/p
+#: C/process-columns.page:27
+msgid "To display different or additional information in the process list:"
+msgstr "Процестер тізімінде әртүрлі немесе қосымша ақпаратты көрсету үшін:"
+
+#. (itstool) path: item/p
+#: C/process-columns.page:30 C/process-update-speed.page:38 C/net-bits.page:38
+#: C/mem-check.page:65
+msgid "Click <guiseq><gui>System Monitor</gui><gui>Preferences</gui></guiseq>."
+msgstr ""
+"<guiseq><gui>Жүйелік бақылаушы</gui><gui>Баптаулар</gui></guiseq> батырмасын "
+"шертіңіз."
+
+#. (itstool) path: item/p
+#: C/process-columns.page:32 C/solaris-mode.page:44 C/process-identify-hog.page:40
+#: C/memory-map-use.page:53 C/mem-check.page:83
+msgid "Click the <gui>Processes</gui> tab."
+msgstr "<gui>Процестер</gui> бетін шертіңіз."
+
+#. (itstool) path: item/p
+#: C/process-columns.page:33
+msgid "Select the desired headings in the <gui>Information Fields</gui> list."
+msgstr "<gui>Ақпараттық өрістер</gui> тізімінен қажетті тақырыптарды таңдаңыз."
+
+#. (itstool) path: page/p
+#: C/process-columns.page:37
+msgid ""
+"For each process listed in the <gui>Processes</gui> tab, <app>System Monitor</"
+"app> provides information in a number of categories. For detailed descriptions "
+"of what the columns mean, check the <link href=\"man:ps\"><cmd>ps</cmd> man "
+"page</link>."
+msgstr ""
+"<gui>Процестер</gui> бетінде көрсетілген әрбір процесс үшін <app>Жүйелік "
+"бақылаушы</app> бірнеше санат бойынша ақпарат береді. Бағандардың мағынасы "
+"туралы толық сипаттамаларды <link href=\"man:ps\"><cmd>ps</cmd> man бетінен</"
+"link> қараңыз."
+
+#. (itstool) path: info/desc
+#: C/process-update-speed.page:22
+msgid ""
+"Refresh the information shown in the System Monitor with a longer or shorter "
+"interval."
+msgstr ""
+"Жүйелік бақылаушыда көрсетілген ақпаратты ұзағырақ немесе қысқарақ интервалмен "
+"жаңарту."
+
+#. (itstool) path: page/title
+#: C/process-update-speed.page:26
+msgid "Make the information update faster or slower"
+msgstr "Ақпараттың жаңартылуын тезірек немесе баяуырақ ету"
+
+#. (itstool) path: page/p
+#: C/process-update-speed.page:35
+msgid "To change the information refresh speed:"
+msgstr "Ақпараттың жаңарту жылдамдығын өзгерту үшін:"
+
+#. (itstool) path: item/p
+#: C/process-update-speed.page:41
+msgid ""
+"Click the desired tab (<gui>Processes</gui>, <gui>Resources</gui> or <gui>File "
+"Systems</gui>)."
+msgstr ""
+"Қажетті бетті шертіңіз (<gui>Процестер</gui>, <gui>Ресурстар</gui> немесе "
+"<gui>Файлдық жүйелер</gui>)."
+
+#. (itstool) path: item/p
+#: C/process-update-speed.page:44 C/mem-check.page:72
+msgid "Enter a value for <gui>Update interval in seconds</gui>."
+msgstr "<gui>Жаңарту интервалы, секундпен</gui> үшін мәнді енгізіңіз."
+
+#. (itstool) path: note/p
+#: C/process-update-speed.page:48
+msgid ""
+"Setting the <gui>Update interval</gui> to a lower value will cause <gui>System "
+"Monitor</gui> itself to use more of the CPU."
+msgstr ""
+"<gui>Жаңарту интервалының</gui> мәнін азайту <gui>Жүйелік бақылаушының</gui> "
+"өзі процессорды (CPU) көбірек қолдануына әкеледі."
+
+#. (itstool) path: info/desc
+#: C/cpu-multicore.page:16
+msgid ""
+"Computers with more processors find it easier to run many programs at the same "
+"time."
+msgstr ""
+"Процессорлары көбірек компьютерлерге бір уақытта көптеген бағдарламаларды "
+"орындау оңайырақ."
+
+#. (itstool) path: page/title
+#: C/cpu-multicore.page:19
+msgid "Why do I have more than one processor?"
+msgstr "Неліктен менде бірнеше процессор бар?"
+
+#. (itstool) path: page/p
+#: C/cpu-multicore.page:21
+msgid ""
+"Many computers have more than one processor (CPU). These are sometimes referred "
+"to as multi-core systems."
+msgstr ""
+"Көптеген компьютерлерде бірнеше процессор (CPU) болады. Оларды кейде көп ядролы "
+"жүйелер деп атайды."
+
+#. (itstool) path: page/p
+#: C/cpu-multicore.page:23
+msgid ""
+"The workload of running all of the programs on your computer is shared between "
+"the processors. The more processors you have, the more the work can be shared "
+"out. This reduces the load on each processor, which can help make the computer "
+"run faster."
+msgstr ""
+"Компьютердегі барлық бағдарламаларды орындау жүктемесі процессорлар арасында "
+"бөлінеді. Процессорлар неғұрлым көп болса, жұмысты соғұрлым көп бөлуге болады. "
+"Бұл әр процессорға түсетін жүктемені азайтады, бұл компьютердің тезірек жұмыс "
+"істеуіне көмектеседі."
+
+#. (itstool) path: page/p
+#: C/cpu-multicore.page:25
+msgid ""
+"The computer automatically decides how best to share the work between "
+"processors; you don't need to do this yourself."
+msgstr ""
+"Компьютер жұмысты процессорлар арасында қалай жақсы бөлу керектігін автоматты "
+"түрде шешеді; мұны өзіңіз жасауыңыздың қажеті жоқ."
+
+#. (itstool) path: info/desc
+#: C/process-many.page:16
+msgid "Lots of system processes run automatically in the background."
+msgstr "Көптеген жүйелік процестер фонда автоматты түрде орындалады."
+
+#. (itstool) path: page/title
+#: C/process-many.page:19
+msgid "Why are there processes listed that I did not start?"
+msgstr "Неліктен тізімде мен бастамаған процестер бар?"
+
+#. (itstool) path: page/p
+#: C/process-many.page:21
+msgid ""
+"There are usually lots of processes listed under the <gui>Processes</gui> tab. "
+"Only a few of these will be programs that you started yourself. The others are "
+"mostly processes that are needed by the operating system to make the computer "
+"run correctly. These are started automatically when you log in, and typically "
+"run quietly in the background."
+msgstr ""
+"Әдетте <gui>Процестер</gui> бетінде көптеген процестер көрсетіледі. Олардың тек "
+"бірнешеуі ғана сіз өзіңіз бастаған бағдарламалар болады. Басқалары негізінен "
+"компьютердің дұрыс жұмыс істеуі үшін операциялық жүйеге қажетті процестер. Олар "
+"сіз жүйеге кіргенде автоматты түрде іске қосылады және әдетте фонда үнсіз "
+"орындалады."
+
+#. (itstool) path: info/desc
+#: C/process-priority-change.page:19
+msgid ""
+"Decide whether a process should get a bigger or smaller share of the "
+"processor's time."
+msgstr ""
+"Процесс процессор уақытының үлкен немесе кіші бөлігін алуы керектігін шешіңіз."
+
+#. (itstool) path: page/title
+#: C/process-priority-change.page:22
+msgid "Change the priority of a process"
+msgstr "Процестің басымдылығын өзгерту"
+
+#. (itstool) path: page/p
+#: C/process-priority-change.page:24
+msgid ""
+"You can tell the computer that certain processes should have a higher priority "
+"than others, and so should be given a bigger share of the available computing "
+"time. This can make them run faster, but only in certain cases. You can also "
+"give a process a <em>lower</em> priority if you think it is taking up too much "
+"processing power."
+msgstr ""
+"Компьютерге белгілі бір процестердің басқаларға қарағанда жоғарырақ басымдылығы "
+"болуы керектігін және оларға қолжетімді есептеу уақытының үлкенірек бөлігі "
+"берілуі керектігін айта аласыз. Бұл оларды тезірек орындауға мәжбүр етеді, "
+"бірақ тек белгілі бір жағдайларда. Егер процесс тым көп есептеу қуатын алып "
+"жатыр деп ойласаңыз, оған <em>төменірек</em> басымдылық бере аласыз."
+
+#. (itstool) path: item/p
+#: C/process-priority-change.page:27
+msgid ""
+"Go to the <gui>Processes</gui> tab and click on the process you want to have a "
+"different priority."
+msgstr ""
+"<gui>Процестер</gui> бетіне өтіп, басымдылығын өзгерткіңіз келетін процесті "
+"шертіңіз."
+
+#. (itstool) path: item/p
+#: C/process-priority-change.page:28
+msgid ""
+"Right-click the process, and use the <gui>Change Priority</gui> menu to assign "
+"the process a higher or lower priority."
+msgstr ""
+"Процесті оң жақ батырмамен шертіп, оған жоғарырақ немесе төменірек басымдылық "
+"тағайындау үшін <gui>Басымдылықты өзгерту</gui> мәзірін пайдаланыңыз."
+
+#. (itstool) path: page/p
+#: C/process-priority-change.page:31
+msgid ""
+"There is typically little need to change process priorities manually. The "
+"computer will usually do a good job of managing them itself. (The system for "
+"managing the priority of processes is called <link xref=\"process-priority-"
+"what\">nice</link>.)"
+msgstr ""
+"Әдетте процестердің басымдылығын қолмен өзгертудің қажеті шамалы. Компьютер "
+"әдетте оларды басқару жұмысын өзі жақсы атқарады. (Процестердің басымдылығын "
+"басқару жүйесі <link xref=\"process-priority-what\">nice</link> деп аталады.)"
+
+#. (itstool) path: section/title
+#: C/process-priority-change.page:35
+msgid "Does higher priority make a process run faster?"
+msgstr "Жоғарырақ басымдылық процестің жылдам орындалуына әкеледі ме?"
+
+#. (itstool) path: section/p
+#: C/process-priority-change.page:37
+msgid ""
+"The computer shares its processing time between all of the running processes. "
+"This is normally shared intelligently, so programs that are doing more work "
+"automatically get a bigger share of the resources. Most of the time, processes "
+"will get as much processing time as they need, and so will already be running "
+"as fast as possible. Changing their priority won't make a difference."
+msgstr ""
+"Компьютер өзінің өңдеу уақытын барлық орындалып жатқан процестер арасында "
+"бөліседі. Бұл әдетте ақылды түрде бөлінеді, сондықтан көбірек жұмыс істейтін "
+"бағдарламалар автоматты түрде ресурстардың үлкенірек бөлігін алады. Көп "
+"жағдайда процестер өздеріне қажетінше өңдеу уақытын алады, сондықтан олар онсыз "
+"да мүмкіндігінше жылдам орындалып жатады. Олардың басымдылығын өзгерту ешқандай "
+"айырмашылық тудырмайды."
+
+#. (itstool) path: section/p
+#: C/process-priority-change.page:39
+msgid ""
+"If your computer is running several computationally-intensive programs at once, "
+"however, its processing time may be \"over-subscribed\" (that is, the <link "
+"xref=\"process-identify-hog\">processor's full capacity</link> will be in use). "
+"You may notice that other programs run slower than usual because there is not "
+"enough processing time to share between all of them."
+msgstr ""
+"Егер сіздің компьютеріңіз бір уақытта бірнеше есептеуді қажет ететін "
+"бағдарламаларды орындап жатса, оның өңдеу уақыты «артық жазылуы» мүмкін (яғни, "
+"<link xref=\"process-identify-hog\">процессордың толық қуаты</link> қолданыста "
+"болады). Басқа бағдарламалардың әдеттегіден баяу орындалатынын байқауыңыз "
+"мүмкін, себебі олардың барлығына бөлуге жететін өңдеу уақыты жоқ."
+
+#. (itstool) path: section/p
+#: C/process-priority-change.page:41
+msgid ""
+"In this case, changing the priority of processes can be helpful. You could "
+"lower the priority of one of the computationally-intensive processes to free up "
+"more processing time for other programs. Alternatively, you could increase the "
+"priority of a process that is more important to you, and that you want to run "
+"faster."
+msgstr ""
+"Бұл жағдайда процестердің басымдылығын өзгерту пайдалы болуы мүмкін. Басқа "
+"бағдарламаларға көбірек өңдеу уақытын босату үшін есептеуді қажет ететін "
+"процестердің бірінің басымдылығын төмендетуге болады. Сонымен қатар, сіз үшін "
+"маңыздырақ және жылдам орындалуын қалайтын процестің басымдылығын арттыра "
+"аласыз."
+
+#. (itstool) path: info/desc
+#: C/commandline.page:21
+msgid "Information in System Monitor can also be found using command line tools."
+msgstr ""
+"Жүйелік бақылаушыдағы ақпаратты командалық жол саймандарын пайдаланып та табуға "
+"болады."
+
+#. (itstool) path: page/title
+#: C/commandline.page:25
+msgid "Get the same information from the command line"
+msgstr "Дәл сол ақпаратты командалық жолдан алу"
+
+#. (itstool) path: page/p
+#: C/commandline.page:33
+msgid ""
+"Most of the information displayed by System Monitor can also be obtained using "
+"these command line tools."
+msgstr ""
+"Жүйелік бақылаушы көрсететін ақпараттың көп бөлігін осы командалық жол "
+"саймандарын пайдаланып та алуға болады."
+
+#. (itstool) path: td/p
+#: C/commandline.page:39
+msgid "<cmd>top</cmd>"
+msgstr "<cmd>top</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:40
+msgid ""
+"provides a continually updated list of running processes, and allows you to "
+"manipulate them."
+msgstr ""
+"орындалып жатқан процестердің үздіксіз жаңартылатын тізімін береді және оларды "
+"басқаруға мүмкіндік береді."
+
+#. (itstool) path: td/p
+#: C/commandline.page:45
+msgid "<cmd>lsof</cmd>"
+msgstr "<cmd>lsof</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:46
+msgid "provides a list of open files and the processes that opened them."
+msgstr "ашық файлдардың және оларды ашқан процестердің тізімін береді."
+
+#. (itstool) path: td/p
+#: C/commandline.page:51
+msgid "<cmd>free -m</cmd>"
+msgstr "<cmd>free -m</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:52
+msgid "shows you how much memory is available."
+msgstr "сізге қанша жады қолжетімді екенін көрсетеді."
+
+#. (itstool) path: td/p
+#: C/commandline.page:56
+msgid "<cmd>vmstat</cmd>"
+msgstr "<cmd>vmstat</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:57
+msgid "provides information about current virtual memory use."
+msgstr "ағымдағы виртуалды жадыны қолдану туралы ақпарат береді."
+
+#. (itstool) path: td/p
+#: C/commandline.page:61
+msgid "<cmd>df -h</cmd>"
+msgstr "<cmd>df -h</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:62
+msgid "displays available disk space on mounted filesystems."
+msgstr "тіркелген файлдық жүйелердегі қолжетімді диск орнын көрсетеді."
+
+#. (itstool) path: td/p
+#: C/commandline.page:66
+msgid "<cmd>pmap</cmd>"
+msgstr "<cmd>pmap</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:67
+msgid "displays the memory map of a process."
+msgstr "процестің жады картасын көрсетеді."
+
+#. (itstool) path: info/desc
+#: C/mem-swap.page:23
+msgid ""
+"Swap memory allows your computer to run more applications at the same time than "
+"will fit into the system memory (RAM)."
+msgstr ""
+"Своп жады компьютеріңізге жүйелік жадыға (RAM) сыйғаннан көбірек қолданбаларды "
+"бір уақытта орындауға мүмкіндік береді."
+
+#. (itstool) path: page/title
+#: C/mem-swap.page:27
+msgid "What is \"swap\" memory?"
+msgstr "«Своп» жады дегеніміз не?"
+
+#. (itstool) path: page/p
+#: C/mem-swap.page:35
+msgid ""
+"Swap memory or <em>swap space</em> is the on-disk component of the virtual "
+"memory system. It is pre-configured as a <em>swap partition</em> or a <em>swap "
+"file</em> when Linux is first installed, but can also be added later."
+msgstr ""
+"Своп жады немесе <em>своп аймағы</em> — виртуалды жады жүйесінің дискідегі "
+"құрамдас бөлігі. Ол Linux алғаш орнатылғанда <em>своп бөлімі</em> немесе "
+"<em>своп файлы</em> ретінде алдын ала конфигурацияланады, бірақ кейінірек те "
+"қосылуы мүмкін."
+
+#. (itstool) path: note/p
+#: C/mem-swap.page:41
+msgid ""
+"Disk access is <em>very</em> slow compared to memory access. The system runs "
+"more slowly if there is excessive swapping, or <em>thrashing</em>, when the "
+"system is unable to find enough free memory. In this situation the only "
+"solution is to add more RAM."
+msgstr ""
+"Дискіге қол жеткізу жадыға қол жеткізумен салыстырғанда <em>өте</em> баяу. "
+"Жүйеде бос жады жеткіліксіз болып, шамадан тыс своптау немесе <em>thrashing</"
+"em> (сілкілеу) орын алса, жүйе баяу жұмыс істейді. Бұл жағдайда жалғыз шешім — "
+"көбірек RAM қосу."
+
+#. (itstool) path: page/p
+#: C/mem-swap.page:47
+msgid ""
+"To see whether swapping, or <em>paging</em>, has become a performance issue:"
+msgstr ""
+"Своптау немесе <em>беттеу</em> өнімділік мәселесіне айналғанын тексеру үшін:"
+
+#. (itstool) path: item/p
+#: C/mem-swap.page:52 C/net-bits.page:41 C/mem-check.page:45 C/mem-check.page:69
+#: C/net-check.page:38
+msgid "Click the <gui>Resources</gui> tab."
+msgstr "<gui>Ресурстар</gui> бетін шертіңіз."
+
+#. (itstool) path: item/p
+#: C/mem-swap.page:55
+msgid ""
+"The <gui>Memory and Swap History</gui> graph shows memory and swap use as "
+"percentages."
+msgstr ""
+"<gui>Жады мен своп тарихы</gui> графигі жады мен своптың қолданылуын пайызбен "
+"көрсетеді."
+
+#. (itstool) path: info/desc
+#: C/solaris-mode.page:22
+msgid "Use Solaris mode to reflect the number of CPUs."
+msgstr "Процессорлар санын көрсету үшін Solaris режимін пайдаланыңыз."
+
+#. (itstool) path: page/title
+#: C/solaris-mode.page:25
+msgid "What is Solaris mode?"
+msgstr "Solaris режимі дегеніміз не?"
+
+#. (itstool) path: page/p
+#: C/solaris-mode.page:33
+msgid ""
+"In a system that has multiple CPUs or <link xref=\"cpu-multicore\">cores</"
+"link>, processes can use more than one at the same time. It is possible for the "
+"<gui>% CPU</gui> column to display values that total greater than 100% (i.e. "
+"400% in a 4-CPU system). <gui>Solaris mode</gui> divides the <gui>% CPU</gui> "
+"for each process by the number of CPUs in the system so that the total will be "
+"100%."
+msgstr ""
+"Бірнеше процессоры немесе <link xref=\"cpu-multicore\">ядролары</link> бар "
+"жүйеде процестер бір уақытта бірнешеуін қолдана алады. <gui>% CPU</gui> "
+"бағанында жалпы мәні 100%-дан асатын мәндердің көрсетілуі мүмкін (мысалы, 4-"
+"процессорлы жүйеде 400%). <gui>Solaris режимі</gui> әр процестің <gui>% CPU</"
+"gui> мәнін жүйедегі процессорлар санына бөледі, сонда жалпы мән 100% болады."
+
+#. (itstool) path: page/p
+#: C/solaris-mode.page:40
+msgid "To display the <gui>% CPU</gui> in <gui>Solaris mode</gui>:"
+msgstr "<gui>% CPU</gui> мәнін <gui>Solaris режимінде</gui> көрсету үшін:"
+
+#. (itstool) path: item/p
+#: C/solaris-mode.page:43
+msgid "Click <gui>Preferences</gui> in the app menu."
+msgstr "Қолданба мәзіріндегі <gui>Баптаулар</gui> батырмасын шертіңіз."
+
+#. (itstool) path: item/p
+#: C/solaris-mode.page:45
+msgid "Select <gui>Divide CPU Usage by CPU Count</gui>."
+msgstr ""
+"<gui>Процессор қолданысын процессорлар санына бөлу</gui> параметрін таңдаңыз."
+
+#. (itstool) path: note/p
+#: C/solaris-mode.page:48
+msgid ""
+"The term <gui>Solaris mode</gui> derives from Sun's UNIX, compared to the Linux "
+"default of IRIX mode, named for SGI's UNIX."
+msgstr ""
+"«Solaris режимі» термині Sun корпорациясының UNIX жүйесінен шыққан, ал Linux-"
+"тың әдепкі режимі SGI корпорациясының UNIX жүйесінің құрметіне IRIX режимі деп "
+"аталады."
+
+#. (itstool) path: info/desc
+#: C/process-priority-what.page:22
+msgid "The <em>nice</em> value of a process is used to adjust its priority."
+msgstr "Процестің <em>nice</em> мәні оның басымдылығын реттеу үшін пайдаланылады."
+
+#. (itstool) path: page/title
+#: C/process-priority-what.page:25
+msgid "What is the <em>nice</em> value of a process?"
+msgstr "Процестің <em>nice</em> мәні дегеніміз не?"
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:27
+msgid ""
+"The priority of a process determines the share of time the process is alotted "
+"on a system's one or more processors (CPUs or cores). A <em>nice</em> process, "
+"or one with a higher nice value, concedes priority to other processes. "
+"Adjusting the nice value will increase or decrease the scheduling priority."
+msgstr ""
+"Процестің басымдылығы процеске жүйенің бір немесе бірнеше процессорларында (CPU "
+"немесе ядролар) бөлінетін уақыт үлесін анықтайды. <em>Nice</em> процесс немесе "
+"жоғарырақ nice мәні бар процесс басымдылықты басқа процестерге береді. Nice "
+"мәнін реттеу жоспарлау басымдылығын арттырады немесе төмендетеді."
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:32
+msgid ""
+"The lower the nice value, the higher the priority of the process. The nice "
+"value ranges from -20 (low nice, higher priority) to 20 (lower priority). The "
+"default value of nice is usually 0."
+msgstr ""
+"Nice мәні неғұрлым төмен болса, процестің басымдылығы соғұрлым жоғары болады. "
+"Nice мәні -20-дан (төмен nice, жоғарырақ басымдылық) 20-ға (төменірек "
+"басымдылық) дейінгі аралықта болады. Nice-тың әдепкі мәні әдетте 0-ге тең."
+
+#. (itstool) path: info/desc
+#: C/process-files.page:16
+msgid "View files being accessed by processes."
+msgstr "Процестер қол жеткізіп жатқан файлдарды көру."
+
+#. (itstool) path: page/title
+#: C/process-files.page:19
+msgid "List which files a process has open"
+msgstr "Процесте қай файлдар ашық екенін тізімдеу"
+
+#. (itstool) path: page/p
+#: C/process-files.page:21
+msgid ""
+"Processes sometimes need to keep files open. They could be files that you are "
+"viewing or editing, or temporary or system files that the process needs to work "
+"properly."
+msgstr ""
+"Процестерге кейде файлдарды ашық ұстау қажет болады. Бұл сіз қарап отырған "
+"немесе түзетіп жатқан файлдар немесе процестің дұрыс жұмыс істеуі үшін қажетті "
+"уақытша немесе жүйелік файлдар болуы мүмкін."
+
+#. (itstool) path: page/p
+#: C/process-files.page:23
+msgid "To see which files a process has open:"
+msgstr "Процесте қай файлдар ашық екенін көру үшін:"
+
+#. (itstool) path: item/p
+#: C/process-files.page:25
+msgid ""
+"Find the process in the <gui>Processes</gui> tab and click once to select it."
+msgstr ""
+"<gui>Процестер</gui> бетінен процесті тауып, оны таңдау үшін бір рет шертіңіз."
+
+#. (itstool) path: item/p
+#: C/process-files.page:26
+msgid "Right-click the process and select <gui>Open Files</gui>."
+msgstr "Процесті оң жақ батырмамен шертіп, <gui>Ашық файлдар</gui> таңдаңыз."
+
+#. (itstool) path: page/p
+#: C/process-files.page:29
+msgid ""
+"In the list of open files that appears, you might find some special files "
+"called <em>sockets</em>. These are actually a way for processes to communicate "
+"with one another, and are not normal files that you can view or edit."
+msgstr ""
+"Пайда болған ашық файлдар тізімінде сіз <em>сокеттер</em> деп аталатын кейбір "
+"арнайы файлдарды таба аласыз. Бұл іс жүзінде процестердің бір-бірімен байланысу "
+"тәсілі болып табылады және сіз көре алатын немесе түзете алатын қалыпты файлдар "
+"емес."
+
+#. (itstool) path: info/desc
+#: C/process-identify-hog.page:22
+msgid ""
+"Sort the list of processes by <gui>% CPU</gui> to see which application is "
+"using up the computer's resources."
+msgstr ""
+"Қай қолданба компьютер ресурстарын пайдаланып жатқанын көру үшін процестер "
+"тізімін <gui>% CPU</gui> бойынша сұрыптаңыз."
+
+#. (itstool) path: page/title
+#: C/process-identify-hog.page:26
+msgid "Which program is making the computer run slowly?"
+msgstr "Қай бағдарлама компьютердің баяу жұмыс істеуіне әкеліп соғады?"
+
+#. (itstool) path: page/p
+#: C/process-identify-hog.page:35
+msgid ""
+"A program that is using more than its share of the CPU may slow down the whole "
+"computer. To find which process could be doing this:"
+msgstr ""
+"Процессордың (CPU) өз үлесінен артық қолданатын бағдарлама бүкіл компьютерді "
+"баяулатуы мүмкін. Мұны қай процесс жасап жатқанын табу үшін:"
+
+#. (itstool) path: item/p
+#: C/process-identify-hog.page:43
+msgid ""
+"Click the <gui>% CPU</gui> column header to sort the processes according to CPU "
+"use."
+msgstr ""
+"Процестерді процессор қолданысы бойынша сұрыптау үшін <gui>% CPU</gui> баған "
+"тақырыптамасын шертіңіз."
+
+#. (itstool) path: note/p
+#: C/process-identify-hog.page:46
+msgid ""
+"The arrow in the column header shows the sort direction; click again to reverse "
+"it. The arrow should point up."
+msgstr ""
+"Баған тақырыптамасындағы бағдарша сұрыптау бағытын көрсетеді; оны өзгерту үшін "
+"тағы бір рет шертіңіз. Бағдарша жоғары қарап тұруы керек."
+
+#. (itstool) path: page/p
+#: C/process-identify-hog.page:52
+msgid ""
+"The processes at the top of the list are using the highest percentage CPU. Once "
+"you identify which one might be using more resources than it should, you can "
+"decide whether to close the program itself, or close other programs to try to "
+"reduce the CPU load."
+msgstr ""
+"Тізімнің басындағы процестер процессорды (CPU) ең жоғары пайызбен пайдаланып "
+"жатыр. Қайсысы ресурстарды тиісті мөлшерден артық пайдаланып жатқанын "
+"анықтағаннан кейін, бағдарламаның өзін жабуды немесе процессор жүктемесін "
+"азайту үшін басқа бағдарламаларды жабуды шеше аласыз."
+
+#. (itstool) path: note/p
+#: C/process-identify-hog.page:58
+msgid ""
+"A process that has hung or crashed might use 100% CPU. If this happens you may "
+"need to <link xref=\"process-kill\">kill</link> the process."
+msgstr ""
+"Қатып қалған немесе апатты түрде аяқталған процесс процессорды 100% пайдалануы "
+"мүмкін. Егер бұл орын алса, процесті <link xref=\"process-kill\">жою</link> "
+"қажет болуы мүмкін."
+
+#. (itstool) path: info/desc
+#: C/units.page:22
+msgid "Units of measure for memory and disk space"
+msgstr "Жады мен диск орнының өлшем бірліктері"
+
+#. (itstool) path: page/title
+#: C/units.page:25
+msgid "Is GiB the same as GB (gigabyte)?"
+msgstr "GiB мен GB (гигабайт) бірдей ме?"
+
+#. (itstool) path: page/p
+#: C/units.page:32
+msgid ""
+"The memory and disk space statistics are displayed using <em>IEC binary "
+"prefixes</em>, KiB, MiB, GiB, TiB (for kibi, mebi, gibi and tebi). These are "
+"intended to distinguish binary reporting of sizes used in System Monitor "
+"(multiples of 1024) from decimal sizes (multiples of 1000) commonly used, for "
+"instance, in packaging of hard disks."
+msgstr ""
+"Жады мен диск орнының статистикасы <em>IEC екілік префикстері</em> арқылы "
+"көрсетіледі: КиБ, МиБ, ГиБ, ТиБ (киби, меби, гиби және теби үшін). Бұл Жүйелік "
+"бақылаушыда қолданылатын өлшемдердің екілік көрсеткішін (1024 еселіктері) қатты "
+"дискілердің қаптамасында жиі қолданылатын ондық өлшемдерден (1000 еселіктері) "
+"ажыратуға арналған."
+
+#. (itstool) path: page/p
+#: C/units.page:38
+msgid "Typical binary units:"
+msgstr "Типтік екілік бірліктер:"
+
+#. (itstool) path: item/p
+#: C/units.page:40
+msgid "1 KiB = 1024 bytes"
+msgstr "1 КиБ = 1024 байт"
+
+#. (itstool) path: item/p
+#: C/units.page:41
+msgid "1 MiB = 1048576 bytes"
+msgstr "1 МиБ = 1048576 байт"
+
+#. (itstool) path: item/p
+#: C/units.page:42
+msgid "1 GiB = 1073741842 bytes"
+msgstr "1 ГиБ = 1073741842 байт"
+
+#. (itstool) path: page/p
+#: C/units.page:45
+msgid ""
+"An external hard drive, advertised as 1.0 TB (terabytes), would display as "
+"0.909 TiB (tebibytes)."
+msgstr ""
+"1.0 ТБ (терабайт) ретінде жарнамаланған сыртқы қатты диск 0.909 ТиБ (тебибайт) "
+"ретінде көрсетіледі."
+
+#. (itstool) path: info/desc
+#: C/cpu-check.page:20
+msgid ""
+"The amount of CPU being used tells you how much work the computer is trying to "
+"do."
+msgstr ""
+"Қолданылып жатқан процессор (CPU) мөлшері компьютердің қанша жұмыс істеуге "
+"тырысып жатқанын көрсетеді."
+
+#. (itstool) path: page/title
+#: C/cpu-check.page:23
+msgid "Check how much processor (CPU) capacity is being used"
+msgstr "Процессордың (CPU) қанша қуаты қолданылып жатқанын тексеру"
+
+#. (itstool) path: page/p
+#: C/cpu-check.page:25
+msgid ""
+"To check how much of your computer's processor is currently being used, go to "
+"the <gui>Resources</gui> tab and look at the <gui>CPU History</gui> chart. This "
+"tells you how much work the computer is currently doing."
+msgstr ""
+"Компьютер процессорының қазіргі уақытта қаншалықты қолданылып жатқанын тексеру "
+"үшін <gui>Ресурстар</gui> бетіне өтіп, <gui>Процессор тарихы</gui> графигін "
+"қараңыз. Бұл сізге компьютердің қазіргі уақытта қанша жұмыс істеп жатқанын "
+"көрсетеді."
+
+#. (itstool) path: page/p
+#: C/cpu-check.page:27
+msgid ""
+"Many computers have more than one processor (sometimes called <em>multi-core</"
+"em> systems). Each processor is shown separately on the chart. If you want, you "
+"can change the color used for each processor by clicking one of the colored "
+"blocks below the chart."
+msgstr ""
+"Көптеген компьютерлерде бірнеше процессор болады (кейде <em>көп ядролы</em> "
+"жүйелер деп аталады). Әр процессор графикте бөлек көрсетіледі. Қаласаңыз, "
+"графиктің астындағы түрлі-түсті блоктардың бірін шерту арқылы әр процессор үшін "
+"қолданылатын түсті өзгерте аласыз."
+
+#. (itstool) path: page/p
+#: C/cpu-check.page:29
+msgid ""
+"You can also change how rapidly the chart is updated (the update interval), and "
+"how the lines for each processor are displayed (e.g. as a stacked area chart). "
+"Change the relevant options by clicking <gui>System Monitor</gui>, then select "
+"<gui>Preferences</gui>, and then the <gui>Resources</gui> tab."
+msgstr ""
+"Сондай-ақ графиктің жаңартылу жылдамдығын (жаңарту интервалы) және әр "
+"процессорға арналған сызықтардың көрсетілу тәсілін (мысалы, жинақталған аймақ "
+"графигі ретінде) өзгертуге болады. Тиісті опцияларды өзгерту үшін <gui>Жүйелік "
+"бақылаушы</gui> батырмасын шертіп, <gui>Баптаулар</gui>, содан кейін "
+"<gui>Ресурстар</gui> бетін таңдаңыз."
+
+#. (itstool) path: info/desc
+#: C/net-bits.page:22
+msgid "Choose the units to display your network speed."
+msgstr "Желі жылдамдығын көрсету үшін бірліктерді таңдаңыз."
+
+#. (itstool) path: page/title
+#: C/net-bits.page:25
+msgid "Show the network speed in bits instead of bytes per second"
+msgstr "Желі жылдамдығын секундтық байттардың орнына биттермен көрсету"
+
+#. (itstool) path: page/p
+#: C/net-bits.page:32
+msgid ""
+"Network speed is often shown in bits per second, rather than bytes per second. "
+"This is called the <em>bit rate</em>, or <em>data rate</em>."
+msgstr ""
+"Желі жылдамдығы жиі секундтағы байттармен емес, секундтағы биттермен "
+"көрсетіледі. Бұл <em>бит жылдамдығы</em> немесе <em>деректер жылдамдығы</em> "
+"деп аталады."
+
+#. (itstool) path: page/p
+#: C/net-bits.page:35
+msgid "To display the network speed in bits:"
+msgstr "Желі жылдамдығын биттермен көрсету үшін:"
+
+#. (itstool) path: item/p
+#: C/net-bits.page:42
+msgid "Select <gui>Show network speed in bits</gui>."
+msgstr "<gui>Желі жылдамдығын биттермен көрсету</gui> параметрін таңдаңыз."
+
+#. (itstool) path: info/desc
+#: C/fs-device.page:18
+msgid "Each device corresponds to a <em>partition</em> on a hard disk."
+msgstr "Әрбір құрылғы қатты дискідегі <em>бөлімге</em> сәйкес келеді."
+
+#. (itstool) path: page/title
+#: C/fs-device.page:21
+msgid "What are the different devices in the File Systems tab?"
+msgstr "Файлдық жүйелер бетіндегі әртүрлі құрылғылар дегеніміз не?"
+
+#. (itstool) path: page/p
+#: C/fs-device.page:23
+msgid ""
+"Each device listed under the <gui>File Systems</gui> tab is a storage disk "
+"(like a hard drive or USB memory stick), or a disk partition. For each device, "
+"you can see what its total capacity is, how much of its capacity has been used, "
+"and some technical information about what <link xref=\"fs-info\">type of "
+"filesystem it is</link> and <link xref=\"fs-info\">where it is \"mounted\"</"
+"link>."
+msgstr ""
+"<gui>Файлдық жүйелер</gui> бетінде көрсетілген әрбір құрылғы — бұл сақтау "
+"дискісі (қатты диск немесе USB флешка сияқты) немесе диск бөлімі. Әрбір құрылғы "
+"үшін оның жалпы сыйымдылығын, сыйымдылығының қаншалықты пайдаланылғанын және "
+"оның <link xref=\"fs-info\">файлдық жүйе түрі</link> мен <link xref=\"fs-"
+"info\">қай жерге «тіркелгені»</link> туралы кейбір техникалық ақпаратты көре "
+"аласыз."
+
+#. (itstool) path: page/p
+#: C/fs-device.page:25
+msgid ""
+"The disk space on a single physical hard disk can be split up into multiple "
+"chunks, called <em>partitions</em>, each of which can be used as if it were a "
+"separate disk. If your hard disk has been partitioned (perhaps by you or the "
+"computer manufacturer), each partition will be listed separately in the File "
+"Systems list."
+msgstr ""
+"Бір физикалық қатты дискідегі диск орнын <em>бөлімдер</em> деп аталатын бірнеше "
+"бөлікке бөлуге болады, олардың әрқайсысын бөлек диск ретінде пайдалануға "
+"болады. Егер сіздің қатты дискіңіз бөлімдерге бөлінген болса (мүмкін сіз немесе "
+"компьютер өндірушісі тарапынан), әрбір бөлім Файлдық жүйелер тізімінде бөлек "
+"көрсетіледі."
+
+#. (itstool) path: note/p
+#: C/fs-device.page:28
+msgid ""
+"You can manage disks and partitions and see more detailed disk information with "
+"the <app>Disks</app> application."
+msgstr ""
+"Дискілер мен бөлімдерді басқаруға және толығырақ диск ақпаратын <app>Дискілер</"
+"app> қолданбасы арқылы көруге болады."
+
+#. (itstool) path: info/desc
+#: C/fs-diskusage.page:18
+msgid ""
+"The <gui>File Systems</gui> tab shows how much space is being used on each hard "
+"disk."
+msgstr ""
+"<gui>Файлдық жүйелер</gui> беті әрбір қатты дискіде қанша орын пайдаланылып "
+"жатқанын көрсетеді."
+
+#. (itstool) path: page/title
+#: C/fs-diskusage.page:21
+msgid "Check how much disk space is being used"
+msgstr "Диск орнының қаншалықты пайдаланылып жатқанын тексеру"
+
+#. (itstool) path: page/p
+#: C/fs-diskusage.page:23
+msgid ""
+"To check how much space is available on a disk, go to the <gui>File Systems</"
+"gui> tab and look at the <gui>Used</gui> and <gui>Available</gui> columns."
+msgstr ""
+"Дискіде қанша орын бар екенін тексеру үшін <gui>Файлдық жүйелер</gui> бетіне "
+"өтіп, <gui>Пайдаланылған</gui> және <gui>Қолжетімді</gui> бағандарын қараңыз."
+
+#. (itstool) path: page/p
+#: C/fs-diskusage.page:25
+msgid ""
+"If several devices are shown, and you are looking for the one that has your "
+"Home folder on it, look for the disk that has <file>/</file> or <file>/home</"
+"file> listed under <gui>Directory</gui>. This is usually (but not always) the "
+"disk where your personal files are stored."
+msgstr ""
+"Егер бірнеше құрылғы көрсетілсе және сіз өзіңіздің үй бумаңыз орналасқан "
+"құрылғыны іздесеңіз, <gui>Бума</gui> бағанында <file>/</file> немесе <file>/"
+"home</file> көрсетілген дискті табыңыз. Бұл әдетте (бірақ әрдайым емес) жеке "
+"файлдарыңыз сақталған диск болады."
+
+#. (itstool) path: section/title
+#: C/fs-diskusage.page:29
+msgid "Freeing-up disk space"
+msgstr "Диск орнын босату"
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:31
+msgid ""
+"If you don't have much disk space left, there are a few things you can do to "
+"try and free up some space."
+msgstr ""
+"Егер сізде диск орны аз қалса, орын босату үшін бірнеше әрекет жасауға болады."
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:33
+msgid ""
+"One is to delete unwanted files manually. You can use the <app>Disk Usage "
+"Analyzer</app> application to tell you which files and folders are taking up "
+"the most space. After deleting some files, you should then empty the "
+"<gui>Trash</gui> to make sure they are fully removed from the computer."
+msgstr ""
+"Біреуі — қажетсіз файлдарды қолмен өшіру. Қай файлдар мен бумалар ең көп орын "
+"алып жатқанын анықтау үшін <app>Диск қолданысын талдаушы</app> қолданбасын "
+"пайдалануға болады. Кейбір файлдарды өшіргеннен кейін, олардың компьютерден "
+"толық жойылғанына көз жеткізу үшін <gui>Қоқыс шелегін</gui> босату керек."
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:35
+msgid ""
+"You can also remove temporary files in various applications. For example, web "
+"browsers and software managers often keep sizeable temporary files around. (How "
+"you remove them depends on the application.)"
+msgstr ""
+"Сондай-ақ әртүрлі қолданбалардағы уақытша файлдарды жоюға болады. Мысалы, веб-"
+"браузерлер мен бағдарламалық қамтама менеджерлері жиі үлкен көлемдегі уақытша "
+"файлдарды сақтайды. (Оларды қалай жою қолданбаға байланысты болады.)"
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:37
+msgid ""
+"You can also try uninstalling some unwanted applications. Use your usual "
+"software manager to do this."
+msgstr ""
+"Сондай-ақ кейбір қажетсіз қолданбаларды өшіріп тастауға болады. Ол үшін "
+"әдеттегі бағдарламалық қамтама менеджерін пайдаланыңыз."
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:39
+msgid ""
+"Another way of freeing disk space is to \"archive\" old files by moving them to "
+"an external hard disk or online \"cloud\" storage, for example."
+msgstr ""
+"Диск орнын босатудың тағы бір жолы — ескі файлдарды, мысалы, сыртқы қатты "
+"дискіге немесе онлайн «бұлттық» қоймаға көшіру арқылы «архивтеу»."
+
+#. (itstool) path: info/desc
+#: C/process-forcequit.page:14
+msgid "If an application has frozen, you can force it to close by \"killing\" it."
+msgstr "Егер қолданба қатып қалса, оны «жою» арқылы мәжбүрлеп жабуға болады."
+
+#. (itstool) path: page/title
+#: C/process-forcequit.page:17
+msgid "Close an application that's not responding"
+msgstr "Жауап бермейтін қолданбаны жабу"
+
+#. (itstool) path: page/p
+#: C/process-forcequit.page:28
+msgid "Short introductory text..."
+msgstr "Қысқаша кіріспе мәтін..."
+
+#. (itstool) path: item/p
+#: C/process-forcequit.page:31
+msgid "First step..."
+msgstr "Бірінші қадам..."
+
+#. (itstool) path: item/p
+#: C/process-forcequit.page:32
+msgid "Second step..."
+msgstr "Екінші қадам..."
+
+#. (itstool) path: item/p
+#: C/process-forcequit.page:33
+msgid "Third step..."
+msgstr "Үшінші қадам..."
+
+#. (itstool) path: info/desc
+#: C/memory-map-use.page:24
+msgid "View the memory map of a process."
+msgstr "Процестің жады картасын көру."
+
+#. (itstool) path: page/title
+#: C/memory-map-use.page:27
+msgid "Using memory maps"
+msgstr "Жады карталарын пайдалану"
+
+#. (itstool) path: page/p
+#: C/memory-map-use.page:34
+msgid ""
+"<gui>Virtual memory</gui> is a representation of the combined <gui>physical "
+"memory</gui> and <link xref=\"mem-swap\">swap space</link> in a system. It "
+"enables running processes to access <em>more</em> than the existing physical "
+"memory by <gui>mapping</gui> locations in physical memory to files on disk. "
+"When the system needs more pages of memory than are available, some of the "
+"existing pages will be <em>paged out</em> or written to the swap space."
+msgstr ""
+"<gui>Виртуалды жады</gui> — бұл жүйедегі біріктірілген <gui>физикалық жады</"
+"gui> мен <link xref=\"mem-swap\">своп аймағының</link> көрінісі. Ол орындалып "
+"жатқан процестерге физикалық жадыдағы орындарды дискідегі файлдарға "
+"<gui>сәйкестендіру</gui> арқылы бар физикалық жадыдан <em>көбірек</em> қол "
+"жеткізуге мүмкіндік береді. Жүйеге қолжетімді жадыдан көбірек беттер қажет "
+"болғанда, кейбір бар беттер <em>свопқа шығарылады</em> немесе своп аймағына "
+"жазылады."
+
+#. (itstool) path: page/p
+#: C/memory-map-use.page:42
+msgid ""
+"The <gui>memory map</gui> displays the total virtual memory use of the process, "
+"and can be used to determine the memory cost of running a single or multiple "
+"instances of the program, to ensure the use of the correct shared libraries, to "
+"see the results of adjusting various performance tuning parameters the program "
+"may have, or to diagnose issues such as memory leaks."
+msgstr ""
+"<gui>Жады картасы</gui> процестің жалпы виртуалды жады қолданысын көрсетеді "
+"және оны бағдарламаның бір немесе бірнеше данасын іске қосудың жады шығынын "
+"анықтау үшін, дұрыс ортақ кітапханалардың қолданылуын тексеру үшін, "
+"бағдарламаның әртүрлі өнімділікті баптау параметрлерінің нәтижелерін көру үшін "
+"немесе жадының жылыстауы сияқты мәселелерді анықтау үшін пайдалануға болады."
+
+#. (itstool) path: page/p
+#: C/memory-map-use.page:49
+msgid ""
+"To display the <link xref=\"memory-map-what\">memory map</link> of a process:"
+msgstr ""
+"Процестің <link xref=\"memory-map-what\">жады картасын</link> көрсету үшін:"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:54
+msgid "Right click the desired process in the <gui>process list</gui>."
+msgstr ""
+"<gui>Процестер тізіміндегі</gui> қажетті процесті оң жақ батырмамен шертіңіз."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:55
+msgid "Click <gui>Memory Maps</gui>."
+msgstr "<gui>Жады карталары</gui> батырмасын шертіңіз."
+
+#. (itstool) path: section/title
+#: C/memory-map-use.page:59
+msgid "Reading the memory map"
+msgstr "Жады картасын оқу"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:63
+msgid "Addresses are displayed in hexadecimal (base 16)."
+msgstr "Адрестер он алтылық жүйеде (негізі 16) көрсетіледі."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:66
+msgid "Sizes are displayed in <link xref=\"units\">IEC binary prefixes</link>."
+msgstr ""
+"Өлшемдер <link xref=\"units\">IEC екілік префикстерінде</link> көрсетіледі."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:70
+msgid ""
+"At runtime the process can allocate more memory dynamically into an area called "
+"the <em>heap</em>, and store arguments and variables into another area called "
+"the <em>stack</em>."
+msgstr ""
+"Орындалу уақытында процесс <em>үйінді</em> (heap) деп аталатын аймаққа "
+"динамикалық түрде көбірек жады бөле алады және аргументтер мен айнымалыларды "
+"<em>стек</em> (stack) деп аталатын басқа аймақта сақтай алады."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:75
+msgid ""
+"The program itself and each of the shared libraries has three entries each, one "
+"for the read-execute text segment, one for the read-write data segment and one "
+"for a read-only data segment. Both data segments need to be paged out at swap "
+"time."
+msgstr ""
+"Бағдарламаның өзі және ортақ кітапханаларның әрқайсысының үштен жазбасы болады: "
+"біреуі оқу-орындау мәтіндік сегменті үшін, біреуі оқу-жазу деректер сегменті "
+"үшін және біреуі тек оқуға арналған деректер сегменті үшін. Деректер "
+"сегменттерінің екеуі де своптау кезінде свопқа шығарылуы керек."
+
+#. (itstool) path: table/title
+#: C/memory-map-use.page:83
+msgid "Properties"
+msgstr "Қасиеттері"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:85
+msgid "Filename"
+msgstr "Файл аты"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:86
+msgid ""
+"The location of a shared library that is currently used by the process. If this "
+"field is blank, the memory information in this row describes memory that is "
+"owned by the process whose name is displayed above the memory-map table."
+msgstr ""
+"Процесс қазіргі уақытта қолданып жатқан ортақ кітапхананың орналасқан жері. "
+"Егер бұл өріс бос болса, осы жолдағы жады ақпараты аты жады картасы кестесінің "
+"үстінде көрсетілген процеске тиесілі жадыны сипаттайды."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:92
+msgid "VM Start"
+msgstr "ВЖ басы"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:93
+msgid ""
+"The address at which the memory segment begins. VM Start, VM End and VM Offset "
+"together specify the location on disk to which the shared library is mapped."
+msgstr ""
+"Жады сегменті басталатын адрес. ВЖ басы, ВЖ соңы және ВЖ ығысуы бірге ортақ "
+"кітапхана сәйкестендірілген дискідегі орынды анықтайды."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:98
+msgid "VM End"
+msgstr "ВЖ соңы"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:99
+msgid "The address at which the memory segment ends."
+msgstr "Жады сегменті аяқталатын адрес."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:102
+msgid "VM Size"
+msgstr "ВЖ өлшемі"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:103
+msgid "The size of the memory segment."
+msgstr "Жады сегментінің өлшемі."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:106
+msgid "Flags"
+msgstr "Жалаушалар"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:107
+msgid ""
+"The following flags describe the different types of memory-segment access that "
+"the process can have:"
+msgstr ""
+"Келесі жалаушалар процеске рұқсат етілген жады сегментіне қол жеткізудің "
+"әртүрлі түрлерін сипаттайды:"
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:111
+msgid "<gui>p</gui>"
+msgstr "<gui>p</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:112
+msgid ""
+"The memory segment is private to the process, and is not accessible to other "
+"processes."
+msgstr ""
+"Жады сегменті процестің жеке меншігі болып табылады және басқа процестерге "
+"қолжетімді емес."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:116
+msgid "<gui>r</gui>"
+msgstr "<gui>r</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:117
+msgid "The process has permission to read from the memory segment."
+msgstr "Процестің жады сегментінен оқуға рұқсаты бар."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:120
+msgid "<gui>s</gui>"
+msgstr "<gui>s</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:121
+msgid "The memory segment is shared with other processes."
+msgstr "Жады сегменті басқа процестермен ортақ пайдаланылады."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:124
+msgid "<gui>w</gui>"
+msgstr "<gui>w</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:125
+msgid "The process has permission to write into the memory segment."
+msgstr "Процестің жады сегментіне жазуға рұқсаты бар."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:128
+msgid "<gui>x</gui>"
+msgstr "<gui>x</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:129
+msgid ""
+"The process has permission to execute instructions that are contained within "
+"the memory segment."
+msgstr "Процестің жады сегментіндегі нұсқауларды орындауға рұқсаты бар."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:136
+msgid "VM Offset"
+msgstr "ВЖ ығысуы"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:137
+msgid ""
+"The location of the address within the memory segment, measured from VM Start."
+msgstr "Жады сегментіндегі адрестің ВЖ басынан бастап есептегендегі орны."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:141
+msgid "Private, Shared, Clean, Dirty"
+msgstr "Жеке, Ортақ, Таза, Лас"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:148
+msgid "<em>private</em> pages are accessed by one process"
+msgstr "<em>жеке</em> беттерге бір процесс қол жеткізеді"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:150
+msgid "<em>shared</em> pages can be accessed by more than one process"
+msgstr "<em>ортақ</em> беттерге бірнеше процесс қол жеткізе алады"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:152
+msgid ""
+"<em>clean</em> pages have not yet been modified while in memory and can be "
+"discarded when designated to be swapped out"
+msgstr ""
+"<em>таза</em> беттер жадыда болған кезде әлі өзгертілмеген және свопқа шығару "
+"үшін белгіленген кезде тасталуы мүмкін"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:155
+msgid ""
+"<em>dirty</em> pages have been modified while in memory and must be written to "
+"disk when designated to be swapped out"
+msgstr ""
+"<em>лас</em> беттер жадыда болған кезде өзгертілген және свопқа шығару үшін "
+"белгіленген кезде дискіге жазылуы керек"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:160
+msgid "Device"
+msgstr "Құрылғы"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:161
+msgid ""
+"The major and minor numbers of the device on which the shared library filename "
+"is located. Together these specify a partition on the system."
+msgstr ""
+"Ортақ кітапхана файлы орналасқан құрылғының негізгі және қосымша нөмірлері. "
+"Олар бірге жүйедегі бөлімді анықтайды."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:166
+msgid "Inode"
+msgstr "Inode"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:167
+msgid ""
+"The inode on the device from which the shared library location is loaded into "
+"memory. An inode is the structure the filesystem uses to store a file, and the "
+"number assigned to it is unique."
+msgstr ""
+"Ортақ кітапхана орны жадыға жүктелетін құрылғыдағы inode. Inode — бұл файлдық "
+"жүйе файлды сақтау үшін пайдаланатын құрылым және оған тағайындалған нөмір "
+"бірегей болады."
+
+#. (itstool) path: credit/name
+#: C/mem-check.page:24
+msgid "Ekaterina Gerasimova"
+msgstr "Ekaterina Gerasimova"
+
+#. (itstool) path: info/desc
+#: C/mem-check.page:28
+msgid ""
+"The <gui>Resources</gui> tab tells you how much of your computer's memory (RAM) "
+"is being used."
+msgstr ""
+"<gui>Ресурстар</gui> беті сіздің компьютеріңіздің жадысы (RAM) қаншалықты "
+"қолданылып жатқанын көрсетеді."
+
+#. (itstool) path: page/title
+#: C/mem-check.page:32
+msgid "How much memory is being used?"
+msgstr "Қанша жады қолданылып жатыр?"
+
+#. (itstool) path: page/p
+#: C/mem-check.page:41
+msgid "To check the current memory usage of your computer:"
+msgstr "Компьютеріңіздің ағымдағы жады қолданысын тексеру үшін:"
+
+#. (itstool) path: page/p
+#: C/mem-check.page:49
+msgid ""
+"<gui>Memory and Swap History</gui> displays a running line graph for memory and "
+"swap as a percentage of the total available. These are plotted against time, "
+"with the current time at the right."
+msgstr ""
+"<gui>Жады мен своп тарихы</gui> жалпы қолжетімді жады мен своптың пайызын "
+"көрсетеді. Олар уақыт бойынша сызылады, ағымдағы уақыт оң жақта болады."
+
+#. (itstool) path: note/p
+#: C/mem-check.page:54
+msgid ""
+"The color of each line is indicated by the pie graphs below. Click the pie "
+"graph to change the color of the line graph."
+msgstr ""
+"Әр сызықтың түсі төмендегі дөңгелек диаграммалармен көрсетілген. Сызықтық "
+"графиктің түсін өзгерту үшін дөңгелек диаграмманы шертіңіз."
+
+#. (itstool) path: page/p
+#: C/mem-check.page:58
+msgid ""
+"The <gui>Memory</gui> pie graph shows memory usage in <link xref=\"units\">GiB</"
+"link> and as a percentage of the total available."
+msgstr ""
+"<gui>Жады</gui> дөңгелек диаграммасы жадының қолданылуын <link "
+"xref=\"units\">ГиБ</link> есебімен және жалпы қолжетімді көлемнің пайызы "
+"ретінде көрсетеді."
+
+#. (itstool) path: page/p
+#: C/mem-check.page:61
+msgid "To change the <gui>update interval</gui>:"
+msgstr "<gui>Жаңарту интервалын</gui> өзгерту үшін:"
+
+#. (itstool) path: section/title
+#: C/mem-check.page:77
+msgid "Which processes are using the most memory?"
+msgstr "Қай процестер жадыны ең көп пайдаланып жатыр?"
+
+#. (itstool) path: section/p
+#: C/mem-check.page:79
+msgid "To check which processes are using the most memory:"
+msgstr "Қай процестердің жадыны ең көп пайдаланып жатқанын тексеру үшін:"
+
+#. (itstool) path: item/p
+#: C/mem-check.page:86
+msgid ""
+"Click the <gui>Memory</gui> column header to sort the processes according to "
+"memory use."
+msgstr ""
+"Процестерді жады қолданысы бойынша сұрыптау үшін <gui>Жады</gui> баған "
+"тақырыптамасын шертіңіз."
+
+#. (itstool) path: note/p
+#: C/mem-check.page:89
+msgid ""
+"The arrow in the column header shows the sort direction; click again to reverse "
+"it. If the arrow points up, the processes using the most memory appear at the "
+"top of the list."
+msgstr ""
+"Баған тақырыптамасындағы бағдарша сұрыптау бағытын көрсетеді; оны өзгерту үшін "
+"тағы бір рет шертіңіз. Егер бағдарша жоғары қарап тұрса, жадыны ең көп "
+"пайдаланатын процестер тізімнің басында пайда болады."
+
+#. (itstool) path: info/desc
+#: C/cpu-mem-normal.page:16
+msgid ""
+"If the computer is doing a lot of work, it will use more processor time and "
+"more memory."
+msgstr ""
+"Егер компьютер көп жұмыс істеп жатса, ол көбірек процессор уақытын және көбірек "
+"жадыны пайдаланады."
+
+#. (itstool) path: page/title
+#: C/cpu-mem-normal.page:19
+msgid "Is it normal for my computer to be using this much CPU or memory?"
+msgstr ""
+"Компьютерімнің осыншалықты көп процессорды немесе жадыны пайдалануы қалыпты ма?"
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:21
+msgid ""
+"All of the programs running on your computer share CPU (processor) time and "
+"memory. If you run many programs at once, or if some programs are doing a lot "
+"of work, a higher percentage of both of these things will be used."
+msgstr ""
+"Компьютеріңізде орындалып жатқан барлық бағдарламалар процессор (CPU) уақыты "
+"мен жадыны бөліседі. Егер сіз бір уақытта көптеген бағдарламаларды іске "
+"қоссаңыз немесе кейбір бағдарламалар көп жұмыс істеп жатса, осы екі ресурстың "
+"да жоғары пайызы қолданылады."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:23
+msgid ""
+"If the CPU usage is around 100%, this means that your computer is trying to do "
+"more work than it has the capacity for. This is usually OK, but it means that "
+"programs may slow down a little. Computers tend to use close to 100% of the CPU "
+"when they are doing computationally-intensive things like running games."
+msgstr ""
+"Егер процессорды қолдану 100% шамасында болса, бұл сіздің компьютеріңіз өзінің "
+"мүмкіндігінен көбірек жұмыс істеуге тырысып жатқанын білдіреді. Бұл әдетте "
+"қалыпты жағдай, бірақ бұл бағдарламалардың сәл баяулауы мүмкін екенін "
+"білдіреді. Компьютерлер ойындарды іске қосу сияқты есептеуді қажет ететін "
+"әрекеттерді орындағанда процессорды 100%-ға жуық пайдаланады."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:25
+msgid ""
+"If the processor is running at 100% for a long time, this could make your "
+"computer annoyingly slow. In this case, you should <link xref=\"process-"
+"identify-hog\">find out which program is using up so much CPU time</link>."
+msgstr ""
+"Егер процессор ұзақ уақыт бойы 100% жүктемемен жұмыс істесе, бұл "
+"компьютеріңіздің өте баяулауына әкелуі мүмкін. Бұл жағдайда <link "
+"xref=\"process-identify-hog\">қай бағдарлама процессор уақытын көп алып "
+"жатқанын анықтауыңыз</link> керек."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:27
+msgid ""
+"If the memory usage is close to 100%, this can slow things down a lot. This is "
+"because the computer will then try to use your hard disk as a temporary memory "
+"store, called <link xref=\"mem-swap\">swap memory</link>. Hard disks are much "
+"slower than the system memory."
+msgstr ""
+"Егер жады қолданысы 100%-ға жақын болса, бұл жұмысты айтарлықтай баяулатуы "
+"мүмкін. Себебі компьютер қатты дискті <link xref=\"mem-swap\">своп жады</link> "
+"деп аталатын уақытша жады ретінде пайдалануға тырысады. Қатты дискілер жүйелік "
+"жадыдан әлдеқайда баяу жұмыс істейді."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:29
+msgid ""
+"You can try to free up some system memory by closing some programs. If things "
+"get too slow, try restarting the computer."
+msgstr ""
+"Кейбір бағдарламаларды жабу арқылы жүйелік жадыны босатуға болады. Егер жұмыс "
+"тым баяулап кетсе, компьютерді қайта іске қосып көріңіз."
+
+#. (itstool) path: note/p
+#: C/cpu-mem-normal.page:32
+msgid ""
+"The memory shown in the <gui>Resources</gui> tab is <em>system memory</em> "
+"(also called RAM). This is used to hold programs temporarily, while they are "
+"running on the computer. This is not the same as a hard disk or other kinds of "
+"memory, which are used to store files and programs more permanently."
+msgstr ""
+"<gui>Ресурстар</gui> бетінде көрсетілген жады — бұл <em>жүйелік жады</em> (RAM "
+"деп те аталады). Ол бағдарламаларды компьютерде орындалып жатқан кезде уақытша "
+"сақтау үшін пайдаланылады. Бұл файлдар мен бағдарламаларды тұрақтырақ сақтау "
+"үшін пайдаланылатын қатты диск немесе жадының басқа түрлерімен бірдей емес."
+
+#. (itstool) path: info/desc
+#: C/fs-info.page:18
+msgid "Explanations of all of the fields shown in the <gui>File System</gui> tab."
+msgstr ""
+"<gui>Файлдық жүйе</gui> бетінде көрсетілген барлық өрістердің түсіндірмесі."
+
+#. (itstool) path: page/title
+#: C/fs-info.page:21
+msgid "Learn what the File Systems information means"
+msgstr "Файлдық жүйелер туралы ақпарат нені білдіретінін біліңіз"
+
+#. (itstool) path: page/p
+#: C/fs-info.page:23
+msgid ""
+"The File Systems tab lists which disks are attached to the computer, what they "
+"are named, and how much disk space is available on them."
+msgstr ""
+"Файлдық жүйелер беті компьютерге қай дискілердің қосылғанын, олардың қалай "
+"аталатынын және оларда қанша диск орны бар екенін көрсетеді."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:27
+msgid ""
+"<gui>Device</gui> lists the name that the operating system has assigned to the "
+"disk. Every bit of computer hardware that is attached to the computer is given "
+"an entry in the <file>/dev</file> directory that is used to identify it. For "
+"hard disks, it will usually look something like <file>/dev/sda</file>."
+msgstr ""
+"<gui>Құрылғы</gui> операциялық жүйе дискіге тағайындаған атауды көрсетеді. "
+"Компьютерге қосылған әрбір жабдыққа оны анықтау үшін пайдаланылатын <file>/dev</"
+"file> бумасында жазба беріледі. Қатты дискілер үшін ол әдетте <file>/dev/sda</"
+"file> сияқты болады."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:31
+msgid ""
+"<gui>Directory</gui> tells you where the disk or partition is <em>mounted</em>. "
+"Mounting is the technical term for making a disk or partition available for "
+"use. A disk can be physically connected to the computer, but unless it is also "
+"mounted, the files on it cannot be accessed. When a disk is mounted, it will be "
+"linked to a folder that you can then go to in order to access the files on the "
+"disk. For example, if the <gui>Directory</gui> is listed as <file>/media/disk</"
+"file>, you can access the files by going to the <file>/media/disk</file> folder "
+"on your computer."
+msgstr ""
+"<gui>Бума</gui> диск немесе бөлім қай жерге <em>тіркелгенін</em> көрсетеді. "
+"Тіркеу (mounting) — дискіні немесе бөлімді пайдалануға қолжетімді етудің "
+"техникалық термині. Диск компьютерге физикалық түрде қосылуы мүмкін, бірақ ол "
+"тіркелмейінше, ондағы файлдарға қол жеткізу мүмкін емес. Диск тіркелген кезде, "
+"ол дискідегі файлдарға қол жеткізу үшін өтуге болатын бумамен байланыстырылады. "
+"Мысалы, егер <gui>Бума</gui> <file>/media/disk</file> ретінде көрсетілсе, "
+"файлдарға компьютердегі <file>/media/disk</file> бумасына өту арқылы қол "
+"жеткізе аласыз."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:35
+msgid ""
+"<gui>Type</gui> tells you the type of <em>filesystem</em> that is used on the "
+"disk or partition. A filesystem specifies how the computer should store files "
+"on the disk. Some operating systems can only understand some filesystem types "
+"and not others, so it can be useful to check which filesystem an external hard "
+"disk uses, for example."
+msgstr ""
+"<gui>Түрі</gui> сізге дискте немесе бөлімде қолданылатын <em>файлдық жүйенің</"
+"em> түрін көрсетеді. Файлдық жүйе компьютер файлдарды дискте қалай сақтау "
+"керектігін анықтайды. Кейбір операциялық жүйелер файлдық жүйелердің тек кейбір "
+"түрлерін ғана түсіне алады, сондықтан, мысалы, сыртқы қатты дисктің қай файлдық "
+"жүйені қолданатынын тексеру пайдалы болуы мүмкін."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:39
+msgid ""
+"<gui>Total</gui> shows the total capacity of the disk and <gui>Available</gui> "
+"shows how much of that capacity is available to use for files and programs. "
+"<gui>Used</gui> shows how much disk space is already being used."
+msgstr ""
+"<gui>Жалпы</gui> дискінің жалпы сыйымдылығын көрсетеді, ал <gui>Қолжетімді</"
+"gui> файлдар мен бағдарламалар үшін сол сыйымдылықтың қаншасы бос екенін "
+"көрсетеді. <gui>Пайдаланылған</gui> диск орнының қаншалықты қолданыста екенін "
+"көрсетеді."
+
+#. (itstool) path: page/p
+#: C/fs-info.page:44
+msgid ""
+"The sum of Used and Available will not necessarily add up to the Total. This is "
+"because some disk space might be reserved for use by the system. The important "
+"number to look at is the Available column, as this tells you how much disk "
+"space you can actually use."
+msgstr ""
+"Пайдаланылған және Қолжетімді мәндерінің қосындысы міндетті түрде Жалпы мәніне "
+"тең болмауы мүмкін. Себебі кейбір диск орны жүйенің пайдалануы үшін сақталуы "
+"мүмкін. Қарау керек маңызды сан — Қолжетімді бағаны, өйткені ол сізге нақты "
+"қанша диск орнын пайдалана алатыныңызды айтады."
+
+#. (itstool) path: page/p
+#: C/fs-info.page:45
+msgid ""
+"You might also find that the Total doesn't match up with the advertised "
+"capacity of your hard disk. This is normal, and happens for a couple of "
+"reasons. One is that hard disk manufacturers use a slightly different way of "
+"counting disk capacity to everyone else. Another is that some disk space might "
+"be reserved for use by the operating system. If there is a big difference from "
+"the capacity you expect, it might be because your disk has been split up into "
+"multiple partitions."
+msgstr ""
+"Сондай-ақ Жалпы мәні қатты дискіңіздің жарнамаланған сыйымдылығына сәйкес "
+"келмейтінін байқауыңыз мүмкін. Бұл қалыпты жағдай және бірнеше себептерге "
+"байланысты болады. Біреуі — қатты диск өндірушілері диск сыйымдылығын "
+"есептеудің басқаларға қарағанда сәл басқаша әдісін қолданады. Тағы біреуі — "
+"кейбір диск орны операциялық жүйенің пайдалануы үшін сақталуы мүмкін. Егер сіз "
+"күткен сыйымдылықтан үлкен айырмашылық болса, бұл дискіңіздің бірнеше "
+"бөлімдерге бөлінгенінен болуы мүмкін."
+
+#. (itstool) path: info/desc
+#: C/net-check.page:22
+msgid ""
+"The <gui>Resources</gui> tab shows you the volume of data that's passing over "
+"your network connections."
+msgstr ""
+"<gui>Ресурстар</gui> беті желілік қосылымдарыңыз арқылы өтіп жатқан деректер "
+"көлемін көрсетеді."
+
+#. (itstool) path: page/title
+#: C/net-check.page:27
+msgid "Check network usage and connection speed"
+msgstr "Желі қолданысын және қосылым жылдамдығын тексеру"
+
+#. (itstool) path: page/p
+#: C/net-check.page:35
+msgid "To check the current network usage of your computer:"
+msgstr "Компьютеріңіздің ағымдағы желі қолданысын тексеру үшін:"
+
+#. (itstool) path: item/p
+#: C/net-check.page:42
+msgid ""
+"<gui>Network History</gui> displays a running line graph for the volume of data "
+"passing over your network connections, split up into data received and sent. "
+"These are plotted against time, with the current time at the right."
+msgstr ""
+"<gui>Желі тарихы</gui> желілік қосылымдарыңыз арқылы өтетін деректер көлемін "
+"қабылданған және жіберілген деректерге бөліп, үздіксіз сызықтық график ретінде "
+"көрсетеді. Олар уақыт бойынша сызылады, ағымдағы уақыт оң жақта болады."
+
+#. (itstool) path: note/p
+#: C/net-check.page:46
+msgid ""
+"The color of each line is indicated by the down and up arrows (for "
+"<gui>Receiving</gui> and <gui>Sending</gui> respectively) underneath the graph. "
+"Click an arrow to change the color of the corresponding line graph."
+msgstr ""
+"Әр сызықтың түсі графиктің астындағы төмен және жоғары бағдаршалармен "
+"(сәйкесінше <gui>Қабылдау</gui> және <gui>Жіберу</gui> үшін) көрсетілген. "
+"Тиісті сызықтық графиктің түсін өзгерту үшін бағдаршаны шертіңіз."
+
+#. (itstool) path: item/p
+#: C/net-check.page:52
+msgid ""
+"Below the graph is shown <gui>Receiving</gui> and <gui>Sending</gui> <link "
+"xref=\"net-bits\">bit rate</link> or connection speed, as well as total data "
+"transferred in each direction."
+msgstr ""
+"Графиктің астында <gui>Қабылдау</gui> және <gui>Жіберу</gui> <link xref=\"net-"
+"bits\">бит жылдамдығы</link> немесе қосылым жылдамдығы, сондай-ақ әр бағытта "
+"тасымалданған деректердің жалпы көлемі көрсетіледі."
+
+#. (itstool) path: info/title
+#: C/index.page:7
+msgctxt "link:trail"
+msgid "System Monitor"
+msgstr "Жүйелік бақылаушы"
+
+#. (itstool) path: info/title
+#: C/index.page:8
+msgctxt "link"
+msgid "System Monitor"
+msgstr "Жүйелік бақылаушы"
+
+#. (itstool) path: info/title
+#: C/index.page:9
+msgctxt "text"
+msgid "System Monitor"
+msgstr "Жүйелік бақылаушы"
+
+#. (itstool) path: credit/name
+#: C/index.page:20
+msgid "Patrick Pace"
+msgstr "Patrick Pace"
+
+#. (itstool) path: credit/years
+#: C/index.page:22
+msgid "2017"
+msgstr "2017"
+
+#. (itstool) path: info/desc
+#: C/index.page:25
+msgid ""
+"System Monitor shows you what programs are running and how much processor time, "
+"memory, and disk space are being used."
+msgstr ""
+"Жүйелік бақылаушы қай бағдарламалар орындалып жатқанын және қанша процессор "
+"уақыты, жады және диск орны пайдаланылып жатқанын көрсетеді."
+
+#. (itstool) path: page/title
+#: C/index.page:29
+msgid "<_:media-1/> System Monitor"
+msgstr "<_:media-1/> Жүйелік бақылаушы"
+
+#. (itstool) path: page/p
+#: C/index.page:34
+msgid ""
+"<app>System Monitor</app> shows you what programs are running and how much "
+"processor time, memory, and disk space are being used."
+msgstr ""
+"<app>Жүйелік бақылаушы</app> қай бағдарламалар орындалып жатқанын және қанша "
+"процессор уақыты, жады және диск орны пайдаланылып жатқанын көрсетеді."
+
+#. (itstool) path: section/title
+#: C/index.page:37
+msgid "Monitoring the CPU"
+msgstr "Процессорды бақылау"
+
+#. (itstool) path: section/title
+#: C/index.page:42
+msgid "Memory usage"
+msgstr "Жады қолданысы"
+
+#. (itstool) path: section/title
+#: C/index.page:47
+msgid "Questions about processes"
+msgstr "Процестер туралы сұрақтар"
+
+#. (itstool) path: section/title
+#: C/index.page:52
+msgid "Common tasks with processes"
+msgstr "Процестермен орындалатын жалпы тапсырмалар"
+
+#. (itstool) path: section/title
+#: C/index.page:57
+msgid "Information about file systems"
+msgstr "Файлдық жүйелер туралы ақпарат"
+
+#. (itstool) path: section/title
+#: C/index.page:62
+msgid "Network information"
+msgstr "Желі туралы ақпарат"
+
+#. (itstool) path: section/title
+#: C/index.page:67
+msgid "Miscellaneous"
+msgstr "Әртүрлі"
+
+#. (itstool) path: info/desc
+#: C/process-kill.page:17
+msgid "If a program stops working or freezes, you can force it to close."
+msgstr ""
+"Егер бағдарлама жұмысын тоқтатса немесе қатып қалса, оны мәжбүрлеп жабуға "
+"болады."
+
+#. (itstool) path: page/title
+#: C/process-kill.page:21
+msgid "Kill (close) a program immediately"
+msgstr "Бағдарламаны дереу жою (жабу)"
+
+#. (itstool) path: page/p
+#: C/process-kill.page:23
+msgid ""
+"If a program stops working or freezes, you can force it to close (\"kill\" it) "
+"using <app>System Monitor</app>. Go to the <gui>Processes</gui> tab and click "
+"to select the process you want to kill. Then, click <gui>End Process</gui>."
+msgstr ""
+"Егер бағдарлама жұмысын тоқтатса немесе қатып қалса, оны <app>Жүйелік "
+"бақылаушы</app> арқылы мәжбүрлеп жабуға («жоюға») болады. <gui>Процестер</gui> "
+"бетіне өтіп, жойғыңыз келетін процесті таңдау үшін шертіңіз. Содан кейін "
+"<gui>Процесті аяқтау</gui> батырмасын шертіңіз."
+
+#. (itstool) path: page/p
+#: C/process-kill.page:25
+msgid ""
+"If the process does not close after a few seconds, right-click it and select "
+"<gui>Kill</gui> from the menu that appears."
+msgstr ""
+"Егер процесс бірнеше секундтан кейін жабылмаса, оны оң жақ батырмамен шертіп, "
+"пайда болған мәзірден <gui>Жою</gui> таңдаңыз."
+
+#. (itstool) path: page/p
+#: C/process-kill.page:27
+msgid ""
+"Using <gui>End Process</gui> tries to close the process properly, giving it "
+"time to save files and so on, whereas <gui>Kill</gui> forces it to close "
+"straight away. For some programs, this might mean that you lose unsaved files. "
+"You should always try <gui>End Process</gui> first."
+msgstr ""
+"<gui>Процесті аяқтау</gui> опциясы процесті дұрыс жабуға тырысады, оған "
+"файлдарды сақтауға және т.б. уақыт береді, ал <gui>Жою</gui> оны дереу жабуға "
+"мәжбүрлейді. Кейбір бағдарламалар үшін бұл сақталмаған файлдарды жоғалтуды "
+"білдіруі мүмкін. Әрқашан алдымен <gui>Процесті аяқтау</gui> әрекетін қолданып "
+"көру керек."
+
+#. (itstool) path: info/desc
+#: C/process-status.page:19
+msgid "The status of a process can be running, sleeping, stopped, or zombie."
+msgstr "Процестің күйі орындалуда, ұйқыда, тоқтатылған немесе зомби болуы мүмкін."
+
+#. (itstool) path: page/title
+#: C/process-status.page:22
+msgid "What do the process statuses mean?"
+msgstr "Процесс күйлері нені білдіреді?"
+
+#. (itstool) path: page/p
+#: C/process-status.page:24
+msgid ""
+"The status of a process tells you whether it is currently doing something or "
+"not. There are four statuses that a process can have:"
+msgstr ""
+"Процестің күйі оның қазіргі уақытта бірдеңе істеп жатқанын немесе істемей "
+"жатқанын айтады. Процестің төрт күйі болуы мүмкін:"
+
+#. (itstool) path: item/title
+#: C/process-status.page:28
+msgid "Running"
+msgstr "Орындалуда"
+
+#. (itstool) path: item/p
+#: C/process-status.page:29
+msgid ""
+"Processes that are currently doing something (for example, a web browser "
+"loading a web page). Running processes are those that are actively using the "
+"processor (CPU)."
+msgstr ""
+"Қазіргі уақытта бірдеңе істеп жатқан процестер (мысалы, веб-парақшаны жүктеп "
+"жатқан веб-браузер). Орындалып жатқан процестер — процессорды (CPU) белсенді "
+"пайдаланатын процестер."
+
+#. (itstool) path: item/title
+#: C/process-status.page:34
+msgid "Sleeping"
+msgstr "Ұйқыда"
+
+#. (itstool) path: item/p
+#: C/process-status.page:35
+msgid ""
+"Processes that are not currently doing anything (for example, because they are "
+"waiting for something to happen). They don't use any of the processor's time, "
+"but still take up memory. If they need to do something, they will \"wake up\" "
+"and change their status to <em>running</em>."
+msgstr ""
+"Қазіргі уақытта ештеңе істемей жатқан процестер (мысалы, олар бірдеңенің болуын "
+"күтіп тұрғандықтан). Олар процессор уақытын пайдаланбайды, бірақ бәрібір жадыны "
+"алады. Егер оларға бірдеңе істеу керек болса, олар «оянады» және күйлерін "
+"<em>орындалуда</em> деп өзгертеді."
+
+#. (itstool) path: item/title
+#: C/process-status.page:41
+msgid "Stopped"
+msgstr "Тоқтатылған"
+
+#. (itstool) path: item/p
+#: C/process-status.page:42
+msgid ""
+"A <em>stopped</em> process is one that has been put to sleep manually. You "
+"might want to stop a process temporarily if it is using too much processing "
+"time, for example."
+msgstr ""
+"<em>Тоқтатылған</em> процесс — бұл қолмен ұйқы режиміне қойылған процесс. "
+"Мысалы, процесс тым көп өңдеу уақытын алып жатса, оны уақытша тоқтатқыңыз келуі "
+"мүмкін."
+
+#. (itstool) path: item/p
+#: C/process-status.page:45
+msgid ""
+"To do this, click the process in the <gui>Processes</gui> tab, then right-click "
+"it and select <gui>Stop</gui> from the menu that appears. You can wake it up "
+"again by clicking <gui>Continue</gui> on the same menu."
+msgstr ""
+"Ол үшін <gui>Процестер</gui> бетінде процесті шертіңіз, содан кейін оны оң жақ "
+"батырмамен шертіп, пайда болған мәзірден <gui>Тоқтату</gui> таңдаңыз. Сол "
+"мәзірдегі <gui>Жалғастыру</gui> батырмасын шерту арқылы оны қайтадан оятуға "
+"болады."
+
+#. (itstool) path: item/title
+#: C/process-status.page:51
+msgid "Zombie"
+msgstr "Зомби"
+
+#. (itstool) path: item/p
+#: C/process-status.page:52
+msgid ""
+"A zombie process is one that has finished running and will never start again, "
+"but is being kept in the list of processes for some reason. This usually "
+"happens because it was started by another program that needs to know if it "
+"finished successfully or not, but which has not checked on the process yet."
+msgstr ""
+"Зомби процесі — бұл орындалуын аяқтаған және ешқашан қайта басталмайтын, бірақ "
+"қандай да бір себептермен процестер тізімінде сақталып тұрған процесс. Бұл "
+"әдетте оны басқа бағдарлама іске қосқандықтан және ол бағдарлама оның сәтті "
+"аяқталғанын немесе аяқталмағанын білуі керек болғандықтан, бірақ ол бағдарлама "
+"процесті әлі тексермегендіктен болады."
+
+#. (itstool) path: item/p
+#: C/process-status.page:57
+msgid ""
+"Zombie processes do not use any memory or processing time, and will eventually "
+"go away. You do not need to do anything to get rid of them."
+msgstr ""
+"Зомби процестері жадыны немесе өңдеу уақытын пайдаланбайды және ақыр соңында "
+"жойылады. Олардан құтылу үшін ештеңе істеудің қажеті жоқ."
+
+#. (itstool) path: page/p
+#: C/process-status.page:62
+msgid "The majority of processes will either be running or sleeping."
+msgstr "Процестердің көпшілігі не орындалуда, не ұйқыда болады."
+
+#. (itstool) path: info/desc
+#: C/fs-showall.page:16
+msgid "There are hidden file systems that the operating system uses."
+msgstr "Операциялық жүйе пайдаланатын жасырын файлдық жүйелер бар."
+
+#. (itstool) path: page/title
+#: C/fs-showall.page:19
+msgid "Show all file systems, including hidden and system ones"
+msgstr ""
+"Барлық файлдық жүйелерді, соның ішінде жасырын және жүйелік файлдық жүйелерді "
+"көрсету"
+
+#. (itstool) path: page/p
+#: C/fs-showall.page:21
+msgid ""
+"By default, the <gui>File Systems</gui> tab only shows disks and partitions "
+"that hold your files and applications. There are also a number of special "
+"filesystems that the operating system uses, but these are hidden by default."
+msgstr ""
+"Әдепкі бойынша <gui>Файлдық жүйелер</gui> беті тек файлдарыңыз бен "
+"қолданбаларыңыз орналасқан дискілер мен бөлімдерді көрсетеді. Сондай-ақ "
+"операциялық жүйе пайдаланатын бірқатар арнайы файлдық жүйелер бар, бірақ олар "
+"әдепкі бойынша жасырылған."
+
+#. (itstool) path: page/p
+#: C/fs-showall.page:23
+msgid ""
+"To see these special filesystems, click <guiseq><gui>System Monitor</"
+"gui><gui>Preferences</gui></guiseq>, and under the <gui>File Systems</gui> tab, "
+"check <gui>Show all file systems</gui>."
+msgstr ""
+"Осы арнайы файлдық жүйелерді көру үшін <guiseq><gui>Жүйелік бақылаушы</"
+"gui><gui>Баптаулар</gui></guiseq> батырмасын шертіп, <gui>Файлдық жүйелер</gui> "
+"бетінде <gui>Барлық файлдық жүйелерді көрсету</gui> құсбелгісін қойыңыз."
+
+#. (itstool) path: page/p
+#: C/fs-showall.page:25
+msgid ""
+"Most of the entries in the list are \"virtual\" filesystems. These are not real "
+"disks or partitions. Instead, they are used by the operating system as a "
+"convenient layer of abstraction for various things, like managing hardware "
+"devices and storing temporary files. The system manages these automatically, so "
+"there is rarely any need for you to look at them yourself."
+msgstr ""
+"Тізімдегі жазбалардың көпшілігі «виртуалды» файлдық жүйелер болып табылады. "
+"Олар нақты дискілер немесе бөлімдер емес. Керісінше, оларды операциялық жүйе "
+"аппараттық құрылғыларды басқару және уақытша файлдарды сақтау сияқты әртүрлі "
+"нәрселер үшін ыңғайлы абстракция деңгейі ретінде пайдаланады. Жүйе оларды "
+"автоматты түрде басқарады, сондықтан оларды өзіңіз қараудың қажеті сирек болады."
