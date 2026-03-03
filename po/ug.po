@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2026-01-04 15:15+0000\n"
-"PO-Revision-Date: 2026-01-26 10:23-0500\n"
+"POT-Creation-Date: 2026-02-02 05:43+0000\n"
+"PO-Revision-Date: 2026-03-02 22:49-0500\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Gnome Uighur Translation Project <gnome-uighur@yahoogroups.com>\n"
 "Language: ug\n"
@@ -681,7 +681,7 @@ msgstr "تېخىمۇ كۆپ مەشغۇلات"
 msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
 msgstr "جەرياننىڭ قىممىتى ئۇنىڭ nice قىممىتى تەرىپىدىن بەلگىلىنىدۇ. nice قىممىتى تۆۋەن بولسا ئالدىنلىق مەرتىۋىسى يۇقىرى بولىدۇ."
 
-#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:191
+#: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:194
 msgid "_Cancel"
 msgstr "ۋاز كەچ(_C)"
 
@@ -753,7 +753,7 @@ msgstr "ھۆججەت سىستېمىسى بەتكۈچىنى كۆرسىتىدۇ"
 msgid "Open Failed"
 msgstr "ئاچالمىدى"
 
-#: src/disks.c:381 src/setaffinity.cpp:127
+#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224 src/setaffinity.cpp:124
 msgid "_Close"
 msgstr "ياپ(_C)"
 
@@ -764,7 +764,7 @@ msgid "Pick a Color for “%s”"
 msgstr "«%s» غا رەڭ تاللىنىدۇ"
 
 #. Set check box label value to CPU [1..2048]
-#: src/interface.cpp:274 src/setaffinity.cpp:317
+#: src/interface.cpp:274 src/setaffinity.cpp:274
 #, c-format
 msgid "CPU%d"
 msgstr "CPU%d"
@@ -869,23 +869,23 @@ msgstr[0] "%u sec"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
-#: src/load-graph.cpp:521
+#: src/load-graph.cpp:524
 #, c-format
 msgid "%.1f%%"
 msgstr "%.1f%%"
 
-#: src/load-graph.cpp:549
+#: src/load-graph.cpp:553
 msgid "not available"
 msgstr "ئىشلەتكىلى بولمايدۇ"
 
 #. xgettext: "540MiB (53 %) of 1.0 GiB" or "540MB (53 %) of 1.0 GB"
-#: src/load-graph.cpp:554
+#: src/load-graph.cpp:558
 #, c-format
 msgid "%s (%.1f%%) of %s"
 msgstr "%s (%.1f%%) / %s"
 
 #. xgettext: Used cache string, e.g.: "Cache 2.4GiB" or "Cache 2.4GB"
-#: src/load-graph.cpp:559
+#: src/load-graph.cpp:563
 #, c-format
 msgid "Cache %s"
 msgstr "غەملەك %s"
@@ -903,7 +903,7 @@ msgid_plural "%d Open Files"
 msgstr[0] "%d ئوچۇق ھۆججەت"
 
 #. Translators: process name and id
-#: src/memmaps.cpp:348 src/openfiles.cpp:129 src/setaffinity.cpp:291
+#: src/memmaps.cpp:348 src/openfiles.cpp:129 src/setaffinity.cpp:248
 #, c-format
 msgid "%s (PID %u)"
 msgstr "%s (PID %u)"
@@ -1408,56 +1408,42 @@ msgstr "ئېچىلغان ھۆججەتنى تەرتىپلەش تەرتىپى"
 msgid "Icon"
 msgstr "سىنبەلگە"
 
-#: src/procactions.cpp:85 src/procactions.cpp:91
-#, c-format
-msgid ""
-"Cannot change the priority of process with PID %d to %d.\n"
-"%s"
-msgstr ""
-"جەريان(PID سى %d) نىڭ ئالدىنلىقىنى %d غا ئۆزگەرتكىلى بولمىدى.\n"
-"%s"
+#: src/procactions.cpp:73
+msgid "Cannot Change Priority"
+msgstr "ئالدىنلىقنى ئۆزگەرتەلمەيدۇ"
 
-#: src/procactions.cpp:103 src/procactions.cpp:185
-msgid "_OK"
-msgstr "جەزملە(_O)"
-
-#: src/procactions.cpp:167 src/procactions.cpp:173
-#, c-format
-msgid ""
-"Cannot kill process with PID %d with signal %d.\n"
-"%s"
-msgstr ""
-"جەريان(PID سى %d) نى سىگنال %d نى ئىشلىتىپ ئۆلتۈرگىلى بولمىدى.\n"
-"%s"
+#: src/procactions.cpp:219
+msgid "Cannot Kill Process"
+msgstr "جەرياننى ئاخىرلاشتۇرغىلى بولمايدۇ"
 
 #. xgettext: primary alert message for killing single process
-#: src/procdialogs.cpp:119
+#: src/procdialogs.cpp:122
 #, c-format
 msgid "Force Stop %s?"
 msgstr "%s نى مەجبۇرىي توختىتامدۇ؟"
 
 #. xgettext: primary alert message for ending single process
-#: src/procdialogs.cpp:125
+#: src/procdialogs.cpp:128
 #, c-format
 msgid "End %s?"
 msgstr "%s نى ئاخىرلاشتۇرامدۇ؟"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
-#: src/procdialogs.cpp:131
+#: src/procdialogs.cpp:134
 #, c-format
 msgid "Stop %s?"
 msgstr "%s نى توختىتامدۇ؟"
 
 #. xgettext: primary alert message for killing multiple processes
-#: src/procdialogs.cpp:142
+#: src/procdialogs.cpp:145
 #, c-format
 msgid "Force Stop Selected Process?"
 msgid_plural "Force Stop %d Selected Processes?"
 msgstr[0] "تاللانغان %d جەرياننى مەجبۇرىي توختىتامدۇ؟"
 
 #. xgettext: primary alert message for ending multiple processes
-#: src/procdialogs.cpp:149
+#: src/procdialogs.cpp:152
 #, c-format
 msgid "End Selected Process?"
 msgid_plural "End %d Selected Processes?"
@@ -1465,46 +1451,46 @@ msgstr[0] "تاللانغان %d جەرياننى ئاخىرلاشتۇرامدۇ
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
-#: src/procdialogs.cpp:156
+#: src/procdialogs.cpp:159
 #, c-format
 msgid "Stop Selected Process?"
 msgid_plural "Stop %d Selected Processes?"
 msgstr[0] "تاللانغان %d جەرياننى توختىتامدۇ؟"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:167
+#: src/procdialogs.cpp:170
 msgid "Force stopping processes can result in data loss, crashes, and system failures"
 msgstr "جەريان مەجبۇرىي توختىتىلسا سانلىق مەلۇمات يوقاپ كېتىش، يىمىرىلىش ۋە سىستېما خاتالىقىنى پەيدا قىلىشى مۇمكىن"
 
-#: src/procdialogs.cpp:169
+#: src/procdialogs.cpp:172
 msgid "_Force Stop"
 msgstr "مەجبۇرىي توختات(_F)"
 
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:174
+#: src/procdialogs.cpp:177
 msgid "Ending processes can result in data loss, crashes, and system failures"
 msgstr "جەريان ئاخىرلاشتۇرۇلسا سانلىق مەلۇمات يوقاپ كېتىش، يىمىرىلىش ۋە سىستېما خاتالىقىنى پەيدا قىلىشى مۇمكىن"
 
-#: src/procdialogs.cpp:176
+#: src/procdialogs.cpp:179
 msgid "_End"
 msgstr "ئاخىرلاشتۇر(_E)"
 
 #. SIGSTOP
 #. xgettext: secondary alert message
-#: src/procdialogs.cpp:181
+#: src/procdialogs.cpp:184
 msgid "Stopping processes can result in data loss, crashes, and system failures"
 msgstr "جەريان توختىتىلسا سانلىق مەلۇمات يوقاپ كېتىش، يىمىرىلىش ۋە سىستېما خاتالىقىنى پەيدا قىلىشى مۇمكىن"
 
-#: src/procdialogs.cpp:183
+#: src/procdialogs.cpp:186
 msgid "_Stop"
 msgstr "توختا(_S)"
 
-#: src/procdialogs.cpp:275
+#: src/procdialogs.cpp:278
 #, c-format
 msgid "Change Priority of %s (PID %u)"
 msgstr "%s نىڭ (PID %u) ئالدىنلىقىنى ئۆزگەرت"
 
-#: src/procdialogs.cpp:278
+#: src/procdialogs.cpp:281
 #, c-format
 msgid "Change Priority of the Selected Process"
 msgid_plural "Change Priority of %d Selected Processes"
@@ -1566,7 +1552,7 @@ msgid "Disk Write"
 msgstr "دىسكا يېزىش"
 
 #. Create error alert dialog
-#: src/setaffinity.cpp:118
+#: src/setaffinity.cpp:115
 msgid "GNU CPU Affinity error"
 msgstr "GNU CPU يېقىنلىق خاتالىقى"
 
@@ -1659,6 +1645,25 @@ msgstr "ئەڭ توۋەن ئالدىنلىق"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#, c-format
+#~ msgid ""
+#~ "Cannot change the priority of process with PID %d to %d.\n"
+#~ "%s"
+#~ msgstr ""
+#~ "جەريان(PID سى %d) نىڭ ئالدىنلىقىنى %d غا ئۆزگەرتكىلى بولمىدى.\n"
+#~ "%s"
+
+#~ msgid "_OK"
+#~ msgstr "جەزملە(_O)"
+
+#, c-format
+#~ msgid ""
+#~ "Cannot kill process with PID %d with signal %d.\n"
+#~ "%s"
+#~ msgstr ""
+#~ "جەريان(PID سى %d) نى سىگنال %d نى ئىشلىتىپ ئۆلتۈرگىلى بولمىدى.\n"
+#~ "%s"
 
 #~ msgctxt "shortcut window"
 #~ msgid "General"
@@ -1754,9 +1759,6 @@ msgstr "%s/s"
 
 #~ msgid "Force process to finish normally"
 #~ msgstr "ئىجرانى نورمال ئاخىرلىشىشقا مەجبۇرلاش"
-
-#~ msgid "_Kill Process"
-#~ msgstr "ئىجرانى ئۆلتۈرۈش(_K)"
 
 #~ msgid "Force process to finish immediately"
 #~ msgstr "ئىجرانى ھازىرلا ئاخىرلىشىشقا مەجبۇرلاش"
