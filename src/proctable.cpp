@@ -1002,7 +1002,7 @@ proctable_refresh_summary_headers(GsmApplication * app)
   auto format_bytes = [app](uint64_t bytes) -> std::string
   {
     const GFormatSizeFlags flags =
-      app->config.process_memory_in_iec ? G_FORMAT_SIZE_IEC_UNITS : G_FORMAT_SIZE_BITS;
+      app->config.process_memory_in_iec ? G_FORMAT_SIZE_IEC_UNITS : G_FORMAT_SIZE_DEFAULT;
 
     return make_string (g_format_size_full (bytes, flags));
   };
@@ -1120,15 +1120,22 @@ proctable_refresh_summary_headers(GsmApplication * app)
       break;
     case COL_DISK_READ_CURRENT:
       v_str = format_bytes(total_disk_read_bytes_current);
+      if (!v_str.empty()) {
+            v_str = v_str + "/s";
+      }
       break;
     case COL_DISK_WRITE_CURRENT:
       v_str = format_bytes(total_disk_write_bytes_current);
+      if (!v_str.empty()) {
+            v_str = v_str + "/s";
+      }
       break;
     default:
       v_str = "";
     }
     gtk_label_set_text(label, v_str.c_str());
   }
+  g_list_free(columns);
 }
 
 static void
