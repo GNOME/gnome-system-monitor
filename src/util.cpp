@@ -158,58 +158,6 @@ format_byte_size (guint64 size,
   return g_format_size_full (size, flags);
 }
 
-gboolean
-load_symbols (const char *module,
-              ...)
-{
-  GModule *mod;
-  gboolean found_all = TRUE;
-  va_list args;
-
-  mod = g_module_open (module, static_cast<GModuleFlags>(G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL));
-
-  if (!mod)
-    return FALSE;
-
-  procman_debug ("Found %s", module);
-
-  va_start (args, module);
-
-  while (1)
-    {
-      const char *name;
-      void **symbol;
-
-      name = va_arg (args, char*);
-
-      if (!name)
-        break;
-
-      symbol = va_arg (args, void**);
-
-      if (g_module_symbol (mod, name, symbol))
-        {
-          procman_debug ("Loaded %s from %s", name, module);
-        }
-      else
-        {
-          procman_debug ("Could not load %s from %s", name, module);
-          found_all = FALSE;
-          break;
-        }
-    }
-
-  va_end (args);
-
-
-  if (found_all)
-    g_module_make_resident (mod);
-  else
-    g_module_close (mod);
-
-  return found_all;
-}
-
 
 static gboolean
 is_debug_enabled (void)

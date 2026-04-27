@@ -53,7 +53,6 @@ datadir = join_paths(prefix, get_option('datadir'))
 ################################################################################
 # Dependencies
 
-catch2     = dependency('catch2-with-main')
 giomm      = dependency('giomm-2.68',  version: '>=2.80')
 glib       = dependency('glib-2.0',    version: '>=2.80')
 gio_unix   = dependency('gio-unix-2.0', version: '>=2.84')
@@ -67,10 +66,11 @@ librsvg    = dependency('librsvg-2.0', version: '>=2.46')
 
 if get_option('systemd')
   libsystemd = dependency('libsystemd', version: '>=44')
+  conf.set('HAVE_SYSTEMD', libsystemd.found())
 else
   libsystemd = dependency('', required: false)
+  conf.set('HAVE_SYSTEMD', false)
 endif
-conf.set('HAVE_SYSTEMD', libsystemd.found())
 
 
 ################################################################################

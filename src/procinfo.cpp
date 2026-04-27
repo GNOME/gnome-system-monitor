@@ -1,4 +1,10 @@
- #include "procinfo.h"
+/*
+ * SPDX-License-Identifier: GPL-2.0-or-later
+ */
+
+#include "config.h"
+
+#include "procinfo.h"
 
 #include <map>
 #include <string>
@@ -12,10 +18,14 @@
 #include <sys/types.h>
 
 #include "application.h"
-#include "cgroups.h"
 #include "proctable.h"
-#include "selinux.h"
-#include "systemd.h"
+#include "gsm-cgroups.h"
+#include "gsm-selinux.h"
+
+#ifdef HAVE_SYSTEMD
+#include "gsm-systemd.h"
+#endif
+
 
 std::string
 ProcInfo::lookup_user (guint uid)
@@ -121,11 +131,11 @@ ProcInfo::ProcInfo(pid_t pid)
   info->cpu_time = cpu_time;
   info->start_time = proctime.start_time;
 
-  get_process_selinux_context (info);
-  get_process_cgroup_info (*info);
-
-  get_process_systemd_info (info);
+  gsm_proc_info_load_cgroups (info);
+  gsm_proc_info_load_selinux (info);
+  gsm_proc_info_load_systemd (info);
 }
+
 
 void
 ProcInfo::set_icon (Glib::RefPtr<Gdk::Texture> icon)
@@ -140,4 +150,57 @@ ProcInfo::set_icon (Glib::RefPtr<Gdk::Texture> icon)
   gtk_tree_store_set (GTK_TREE_STORE (model), &this->node,
                       COL_ICON, (this->icon ? this->icon->gobj () : NULL),
                       -1);
+}
+
+
+void
+gsm_proc_info_load_cgroups (ProcInfo *self)
+{
+  g_autofree char *cgroup = NULL;
+
+  g_return_if_fail (self);
+
+  cgroup = gsm_cgroups_get_name (self->pid);
+
+  self->cgroup_name = make_string (g_steal_pointer (&cgroup));
+}
+
+
+void
+gsm_proc_info_load_selinux (ProcInfo *self)
+{
+  g_autofree char *context = NULL;
+
+  g_return_if_fail (self);
+
+  context = gsm_selinux_get_context (self->pid);
+
+  self->security_context = make_string (g_steal_pointer (&context));
+}
+
+
+void
+gsm_proc_info_load_systemd (ProcInfo *self)
+{
+#ifdef HAVE_SYSTEMD
+  g_autofree char *sd_unit = NULL;
+  g_autofree char *sd_session = NULL;
+  g_autofree char *sd_seat = NULL;
+  uid_t sd_owner;
+
+  g_return_if_fail (self);
+
+  if (gsm_systemd_get_process_info (self->pid,
+                                    &sd_unit,
+                                    &sd_session,
+                                    &sd_seat,
+                                    &sd_owner)) {
+    self->unit = make_string (g_steal_pointer (&sd_unit));
+    self->session = make_string (g_steal_pointer (&sd_session));
+    self->seat = make_string (g_steal_pointer (&sd_seat));
+    self->owner = self->lookup_user (sd_owner);
+  }
+#else
+  g_return_if_fail (self);
+#endif
 }

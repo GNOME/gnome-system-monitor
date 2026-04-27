@@ -1,10 +1,12 @@
 subdir('action-impls')
 subdir('actions')
 subdir('legacy')
+subdir('systemd')
+subdir('selinux')
+subdir('cgroups')
 
 system_monitor_sources = [
   'application.cpp',
-  'cgroups.cpp',
   'column-view-persister.c',
   'disk.c',
   'disks.c',
@@ -24,10 +26,8 @@ system_monitor_sources = [
   'proclist.cpp',
   'procproperties.cpp',
   'proctable.cpp',
-  'selinux.cpp',
   'setaffinity.cpp',
   'smooth_refresh.cpp',
-  'systemd.cpp',
   'update_interval.cpp',
   'util.cpp',
 ]
@@ -37,14 +37,12 @@ system_monitor_headers = [
   'legacy/gsm_color_button.h',
   'legacy/treeview.h',
   'application.h',
-  'cgroups.h',
   'column-view-persister.h',
   'defaulttable.h',
   'disk.h',
   'disks.h',
   'gsm-graph.h',
   'interface.h',
-  'join.h',
   'load-graph.h',
   'lsof.h',
   'mem-map.h',
@@ -59,11 +57,9 @@ system_monitor_headers = [
   'proclist.h',
   'procproperties.h',
   'proctable.h',
-  'selinux.h',
   'setaffinity.h',
   'settings-keys.h',
   'smooth_refresh.h',
-  'systemd.h',
   'update_interval.h',
   'util.h',
 ]
@@ -116,8 +112,10 @@ system_monitor_dependencies = [
   gtkmm,
   libgtop,
   libadwaita,
-  libsystemd,
   libgsm_actions_dep,
+  libgsm_systemd_dep,
+  libgsm_selinux_dep,
+  libgsm_cgroups_dep,
 ]
 libgsm = static_library(
   'libgsm',
@@ -137,18 +135,6 @@ executable(meson.project_name(),
   dependencies: libgsm_dep,
   install: true,
 )
-
-unit_tests = executable('unit_tests',
-  [
-    'test/cgroups.cpp',
-    'test/join.cpp'
-  ],
-  dependencies: [
-    catch2,
-    libgsm_dep,
-  ],
-)
-test('unit_tests', unit_tests)
 
 gnome.post_install(
   glib_compile_schemas: true,

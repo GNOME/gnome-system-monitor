@@ -6,13 +6,17 @@
 #include "prefsdialog.h"
 
 #include "application.h"
-#include "cgroups.h"
 #include "proctable.h"
-#include "selinux.h"
+#include "gsm-cgroups.h"
+#include "gsm-selinux.h"
 #include "settings-keys.h"
-#include "systemd.h"
 #include "util.h"
 #include "update_interval.h"
+
+#ifdef HAVE_SYSTEMD
+#include "gsm-systemd.h"
+#endif
+
 
 static AdwPreferencesDialog *prefs_dialog = NULL;
 
@@ -86,18 +90,30 @@ create_field_page (GtkBuilder  *builder,
         title = _("Icon");
 
       column_id = gtk_tree_view_column_get_sort_column_id (column);
-      if ((column_id == COL_CGROUP) && (!cgroups_enabled ()))
-        continue;
-      if ((column_id == COL_SECURITYCONTEXT) && (!can_show_security_context_column ()))
-        continue;
 
-      if ((column_id == COL_UNIT ||
-           column_id == COL_SESSION ||
-           column_id == COL_SEAT ||
-           column_id == COL_OWNER)
-          && !procman::systemd_logind_running ()
-          )
-        continue;
+      switch (column_id) {
+        case COL_CGROUP:
+          if (!gsm_cgroups_is_enabled ()) {
+            continue;
+          }
+        case COL_SECURITYCONTEXT:
+          if (!gsm_selinux_is_enabled ()) {
+            continue;
+          }
+        case COL_UNIT:
+        case COL_SESSION:
+        case COL_SEAT:
+        case COL_OWNER:
+#ifdef HAVE_SYSTEMD
+          /* Hide is systemd isn't actually running */
+          if (!gsm_systemd_is_running ()) {
+            continue;
+          }
+#else
+          /* No systemd support, always hide */
+          continue;
+#endif
+      }
 
       row = adw_switch_row_new ();
       adw_preferences_row_set_title (ADW_PREFERENCES_ROW (row), title);
