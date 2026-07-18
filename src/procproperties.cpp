@@ -242,7 +242,7 @@ create_single_procproperties_dialog (GtkTreeModel *model,
   gtk_actionable_set_action_target_value (GTK_ACTIONABLE (stop_button), g_variant_new_int32 (info->pid));
   gtk_actionable_set_action_target_value (GTK_ACTIONABLE (force_stop_button), g_variant_new_int32 (info->pid));
 
-  item = g_menu_item_new (_("_Terminate…"), "procprop.send-signal-term");
+  item = g_menu_item_new (_("_End Process…"), "procprop.send-signal-term");
   g_menu_item_set_attribute_value (item, G_MENU_ATTRIBUTE_TARGET, g_variant_new_int32 (info->pid));
   g_menu_append_item (menu, item);
   item = g_menu_item_new (_("_Resume"), "procprop.send-signal-cont");
