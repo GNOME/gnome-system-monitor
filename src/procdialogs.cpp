@@ -131,7 +131,7 @@ procdialog_create_kill_dialog (GsmApplication *app,
 
           default:   // SIGSTOP
             /*xgettext: primary alert message for stopping single process*/
-            primary = g_strdup_printf (_("Stop %s?"),
+            primary = g_strdup_printf (_("Temporarily Stop %s?"),
                                        short_process_name.c_str ());
             break;
         }
@@ -156,8 +156,8 @@ procdialog_create_kill_dialog (GsmApplication *app,
 
           default:   // SIGSTOP
             /*xgettext: primary alert message for stopping multiple processes*/
-            primary = g_strdup_printf (ngettext ("Stop Selected Process?",
-                                                 "Stop %d Selected Processes?", selected_count),
+            primary = g_strdup_printf (ngettext ("Temporarily Stop Selected Process?",
+                                                 "Temporarily Stop %d Selected Processes?", selected_count),
                                        selected_count);
             break;
         }
@@ -181,9 +181,9 @@ procdialog_create_kill_dialog (GsmApplication *app,
 
       default:   // SIGSTOP
         /*xgettext: secondary alert message*/
-        secondary = _("Stopping processes can result in data loss, "
+        secondary = _("Stopping (pausing) processes can result in data loss, "
                       "crashes, and system failures");
-        button_text = _("_Stop");
+        button_text = _("_Pause");
         break;
     }
 
