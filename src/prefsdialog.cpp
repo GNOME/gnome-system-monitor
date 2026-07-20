@@ -84,7 +84,7 @@ create_field_page (GtkBuilder  *builder,
       gint column_id;
       GtkWidget *row;
 
-      title = get_value_label(column);
+      title = gtk_tree_view_column_get_title(column);
 
       if (!title)
         title = _("Icon");
