@@ -1127,16 +1127,10 @@ proctable_refresh_summary_headers(GsmApplication * app)
       v_str = format_bytes(total_disk_write_bytes_total);
       break;
     case COL_DISK_READ_CURRENT:
-      v_str = format_bytes(total_disk_read_bytes_current);
-      if (!v_str.empty()) {
-            v_str = v_str + "/s";
-      }
+      v_str = procman::format_rate(total_disk_read_bytes_current, false);
       break;
     case COL_DISK_WRITE_CURRENT:
-      v_str = format_bytes(total_disk_write_bytes_current);
-      if (!v_str.empty()) {
-            v_str = v_str + "/s";
-      }
+      v_str = procman::format_rate(total_disk_write_bytes_current, false);
       break;
     default:
       v_str = "";
