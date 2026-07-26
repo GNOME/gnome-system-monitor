@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2026-04-15 05:49+0000\n"
-"PO-Revision-Date: 2026-04-15 11:21+0200\n"
+"POT-Creation-Date: 2026-07-20 07:58+0000\n"
+"PO-Revision-Date: 2026-07-26 18:23+0200\n"
 "Last-Translator: Antonio Marin <gnmer.6qxyg@slmail.me>\n"
 "Language-Team: Romanian <gnomero-list@lists.sourceforge.net>\n"
 "Language: ro\n"
@@ -24,9 +24,15 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2);\n"
 "20)) ? 1: 2);\n"
-"X-Generator: Gtranslator 48.0\n"
+"X-Generator: Gtranslator 50.0\n"
 "X-Project-Style: gnome\n"
 "X-Poedit-SourceCharset: UTF-8\n"
+"X-DL-VCS-Web: https://gitlab.gnome.org/GNOME/gnome-system-monitor/\n"
+"X-DL-Lang: ro\n"
+"X-DL-Module: gnome-system-monitor\n"
+"X-DL-Branch: main\n"
+"X-DL-Domain: po\n"
+"X-DL-State: Translating\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
 msgid "Device"
@@ -112,23 +118,23 @@ msgstr "Alocă procesorul"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Trimite semnal de oprire"
+msgid "Send Stop (Pause) Signal"
+msgstr "Trimite semnal de oprire (Pauză)"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "Trimite semnal de continuare"
+msgid "Send Continue (Resume) Signal"
+msgstr "Trimite semnal de continuare (Continuă)"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "Trimite semnal de terminare"
+msgid "Send Terminate (End Process) Signal"
+msgstr "Trimite semnal de terminare (Termină procesul)"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "Trimite semnal „kill”"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "Trimite semnal „kill” (Forțează oprirea)"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -207,13 +213,13 @@ msgid "_Resources"
 msgstr "_Resurse"
 
 #: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111
-#: src/interface.cpp:272 src/proctable.cpp:345
+#: src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
 #: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311
-#: src/proctable.cpp:352
+#: src/proctable.cpp:356
 msgid "Memory"
 msgstr "Memorie"
 
@@ -457,19 +463,21 @@ msgstr "Personaliza_tă"
 msgid "Set _Affinity…"
 msgstr "Alocă proc_esorul…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_Oprește…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_Pauză…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_Continuă"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
 msgstr "_Termină…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "_Forțează oprirea…"
 
@@ -548,6 +556,10 @@ msgstr "Prezentare generală a resurselor"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "Afișare sisteme de fișiere"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "Proiectul GNOME"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -646,19 +658,19 @@ msgstr "Detalii"
 msgid "Process ID"
 msgstr "ID Proces"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "Utilizator"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "Stare"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "Pornit"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "Prioritate"
 
@@ -666,42 +678,49 @@ msgstr "Prioritate"
 msgid "Usage"
 msgstr "Utilizare"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "Timp CPU"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "Memorie virtuală"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "Memorie rezidentă"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "Memorie inscripționabilă"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "Memorie partajată"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "Context de securitate"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "Linie de comandă"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "Canal de așteptare"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "Grup de control"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "Termină proc_esul…"
+msgstr[1] "Termină proc_esele…"
+msgstr[2] "Termină proc_esele…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -1489,7 +1508,7 @@ msgstr "Coloană de aranjare a fișierelor deschise"
 msgid "Open files sort order"
 msgstr "Ordinea fișierelor deschise"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "Simbol"
 
@@ -1517,8 +1536,8 @@ msgstr "Se termină %s?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "Se oprește %s?"
+msgid "Temporarily Stop %s?"
+msgstr "Se oprește temporar %s?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1542,11 +1561,11 @@ msgstr[2] "Se termină cele %d de procese alese?"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Se oprește procesul?"
-msgstr[1] "Se opresc cele %d procese alese?"
-msgstr[2] "Se opresc cele %d de procese alese?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "Se oprește temporar procesul ales?"
+msgstr[1] "Se opresc temporar cele %d procese alese?"
+msgstr[2] "Se opresc temporar cele %d de procese alese?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1576,14 +1595,15 @@ msgstr "_Termină"
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
 msgid ""
-"Stopping processes can result in data loss, crashes, and system failures"
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
 msgstr ""
-"Oprirea proceselor poate duce la pierderea datelor, blocări și defectări ale "
-"sistemului"
+"Oprirea (pauză) proceselor poate duce la pierderea datelor, blocări și "
+"defectări ale sistemului"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Oprește"
+msgid "_Pause"
+msgstr "_Pauză"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1598,60 +1618,53 @@ msgstr[0] "Schimbă prioritatea procesului ales"
 msgstr[1] "Schimbă prioritatea celor %d procese alese"
 msgstr[2] "Schimbă prioritatea celor %d de procese alese"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "Termină proc_esul…"
-msgstr[1] "Termină proc_esele…"
-msgstr[2] "Termină proc_esele…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "Nume"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "Memorie Server X"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "Unitate"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "Sesiune"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "Loc"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "Proprietar"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "Total citit de pe disc"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "Total scris pe disc"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "Citit de pe disc"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "Scris pe disc"
 
@@ -1745,7 +1758,7 @@ msgid "Very Low Priority"
 msgstr "Prioritate foarte scăzută"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
