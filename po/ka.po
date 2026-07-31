@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2026-01-31 12:21+0000\n"
-"PO-Revision-Date: 2026-02-01 02:40+0100\n"
+"POT-Creation-Date: 2026-07-20 07:58+0000\n"
+"PO-Revision-Date: 2026-07-31 05:45+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
 msgid "Device"
@@ -101,23 +101,23 @@ msgstr "მიმაგრების დაყენება"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "გაჩერების სიგნალის გაგზავნა"
+msgid "Send Stop (Pause) Signal"
+msgstr "გაჩერების (შეჩერების) სიგნალის გაგზავნა"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
+msgid "Send Continue (Resume) Signal"
 msgstr "გაგრძელების სიგნალის გაგზავნა"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "შეწყვეტის სიგნალის გაგზავნა"
+msgid "Send Terminate (End Process) Signal"
+msgstr "შეწყვეტის (პროცესის დასრულების) სიგნალის გაგზავნა"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "მოკვლის სიგნალის გაგზავნა"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "მოკვლის (ძალით გაჩერების) სიგნალის გაგზავნა"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -196,12 +196,12 @@ msgid "_Resources"
 msgstr "­_რესურსები"
 
 #: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111 src/interface.cpp:272
-#: src/proctable.cpp:345
+#: src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311 src/proctable.cpp:352
+#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311 src/proctable.cpp:356
 msgid "Memory"
 msgstr "მეხსიერება"
 
@@ -442,19 +442,21 @@ msgstr "მ_ორგებული"
 msgid "Set _Affinity…"
 msgstr "შესაბამისობის დ_აყენება…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_გაჩერება…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_შეჩერება…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_გაგრძელება"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
-msgstr "შეწყვე_ტა…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
+msgstr "_დასრულება…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "ძალით _გაჩერება…"
 
@@ -527,6 +529,10 @@ msgstr "რესურსების გადახედვა"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "ფაილური სისტემის ხედი"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "პროექტი \"GNOME\""
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -625,19 +631,19 @@ msgstr "დეტალები"
 msgid "Process ID"
 msgstr "პროცესის ID"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "მომხმარებელი"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "სტატუსი"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "დაიწყო"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "პრიორიტეტი"
 
@@ -645,42 +651,48 @@ msgstr "პრიორიტეტი"
 msgid "Usage"
 msgstr "გამოყენება"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "CPU -ის დრო"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "ვირტუალური მეხსიერება"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "რეზიდენტული მეხსიერება"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "ჩაწერადი მეხსიერება"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "გაზიარებული მეხსიერება"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "უსაფრთხოების კონტექსტი"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "ბრძანების სტრიქონი"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "არხის მოლოდინი"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "კონტროლის ჯგუფი"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_პროცესის დასრულება…"
+msgstr[1] "_პროცესების დასრულება…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -745,6 +757,18 @@ msgstr "მიმაგრება მხარდაჭერილი არ�
 #, c-format
 msgid "Priority failed on %i: %s"
 msgstr "%i-ზე პრიორიტეტის დაყენება ჩავარდა: %s"
+
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "დამხმარის მოკვლა ჩავარდა"
+
+#: src/actions/gsm-actions.c:236
+msgid "Affinity helper failed"
+msgstr "მიმაგრების დამხმარე ჩავარდა"
+
+#: src/actions/gsm-actions.c:325
+msgid "Priority helper failed"
+msgstr "პრიორიტეტის დამხმარე ჩავარდა"
 
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
@@ -1429,7 +1453,7 @@ msgstr "ღია ფაილების სვეტის დალაგე
 msgid "Open files sort order"
 msgstr "ღია ფაილების დალაგების მიმდევრობა"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "_ხატულა"
 
@@ -1457,8 +1481,8 @@ msgstr "დავასრულო %s?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "გავაჩერო %s?"
+msgid "Temporarily Stop %s?"
+msgstr "გავაჩერო %s დროებით?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1480,10 +1504,10 @@ msgstr[1] "დავასრულო %d მონიშნული პრო�
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "გავაჩერო მონიშნული პროცესი?"
-msgstr[1] "გავაჩერო %d მონიშნული პროცესი?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "გავაჩერო დროებით მონიშნული პროცესი?"
+msgstr[1] "გავაჩერო დროებით %d მონიშნული პროცესი?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1507,13 +1531,14 @@ msgstr "_დასრულება"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
-msgid "Stopping processes can result in data loss, crashes, and system failures"
+msgid "Stopping (pausing) processes can result in data loss, crashes, and system failures"
 msgstr ""
-"პროცესების გაჩერებამ, შეიძლება, მონაცემების კარგვა, ავარიები და სისტემური ჩავარდნები გამოიწვიოს"
+"პროცესების გაჩერებამ (შეჩერებამ), შეიძლება, მონაცემების კარგვა, ავარიები და სისტემური ჩავარდნები "
+"გამოიწვიოს"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "გაჩერე_ბა"
+msgid "_Pause"
+msgstr "_შეჩერება"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1527,59 +1552,53 @@ msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "მონიშნული პროცესის პრიორიტეტის შეცვლა"
 msgstr[1] "%d მონიშნული პროცესის პრიორიტეტის შეცვლა"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "_პროცესის დასრულება…"
-msgstr[1] "_პროცესების დასრულება…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "სახელი"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "X სერვერის მეხსიერება"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "ნისი"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "განყოფილება"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "სესია"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "სავარძელი"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "მეპატრონე"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "დისკიდან წაკითხვები სულ"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "დისკზე ჩაწერები სულ"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "დისკის წაკითხვა"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "დისკზე ჩაწერა"
 
@@ -1673,10 +1692,29 @@ msgid "Very Low Priority"
 msgstr "ძალიან დაბალი პრიორიტეტი"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/წმ"
+
+#~ msgid "_Stop…"
+#~ msgstr "_გაჩერება…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "შეწყვე_ტა…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "გავაჩერო %s?"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "გავაჩერო მონიშნული პროცესი?"
+#~ msgstr[1] "გავაჩერო %d მონიშნული პროცესი?"
+
+#~ msgid "_Stop"
+#~ msgstr "გაჩერე_ბა"
 
 #, c-format
 #~ msgid ""
@@ -1743,9 +1781,6 @@ msgstr "%s/წმ"
 #~ msgctxt "Menu item to Open Search for Open Files dialog"
 #~ msgid "_Search for Open Files…"
 #~ msgstr "ღია ფაილების ძებნა…"
-
-#~ msgid "The GNOME Project"
-#~ msgstr "პროექტი \"GNOME\""
 
 #~ msgid "Open _Files"
 #~ msgstr "ღია ფაილები"
