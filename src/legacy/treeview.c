@@ -103,13 +103,13 @@ static const gchar * get_value_label(GtkTreeViewColumn *col)
 {
     GtkWidget *box = gtk_tree_view_column_get_widget(col);
     if (!GTK_IS_BOX(box))
-      return nullptr;
+      return NULL;
 
     GtkWidget *child = gtk_widget_get_first_child(box);
     if (GTK_IS_LABEL(child))
       return gtk_label_get_text(GTK_LABEL(child));
 
-    return nullptr;
+    return NULL;
 }
 
 GtkTreeViewColumn *
