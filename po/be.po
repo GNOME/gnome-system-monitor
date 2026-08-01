@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2026-04-27 05:21+0000\n"
-"PO-Revision-Date: 2026-05-14 18:57+0300\n"
+"POT-Creation-Date: 2026-07-20 07:58+0000\n"
+"PO-Revision-Date: 2026-08-01 15:54+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
 msgid "Device"
@@ -100,23 +100,23 @@ msgstr "Задаць прывязку да працэсараў"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Адправіць сігнал «спыніць»"
+msgid "Send Stop (Pause) Signal"
+msgstr "Адправіць сігнал «спыніць» (спыніць)"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "Адправіць сігнал «працягнуць»"
+msgid "Send Continue (Resume) Signal"
+msgstr "Адправіць сігнал «працягнуць» (узнавіць)"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "Адправіць сігнал «завяршыць»"
+msgid "Send Terminate (End Process) Signal"
+msgstr "Адправіць сігнал «завяршыць» (закончыць працу)"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "Адправіць сігнал «забіць»"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "Адправіць сігнал «забіць» (прымусова спыніць)"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -439,19 +439,22 @@ msgstr "_Адмысловы"
 msgid "Set _Affinity…"
 msgstr "Задаць _прывязку да працэсараў…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_Спыніць…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "П_рыпыніць…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_Узнавіць"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
-msgstr "_Завяршыць…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+#| msgid "_End"
+msgid "_End…"
+msgstr "_Закончыць…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "_Прымусова спыніць…"
 
@@ -515,6 +518,10 @@ msgstr "Агляд рэсурсаў"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "Агляд файлавых сістэм"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "Праект GNOME"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -670,6 +677,13 @@ msgstr "Пункт чакання"
 msgid "Control Group"
 msgstr "Кіроўная група"
 
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Закончыць працу працэсу…"
+msgstr[1] "_Закончыць працу працэсаў…"
+msgstr[2] "_Закончыць працу працэсаў…"
+
 #: data/procproperties.ui:304
 msgid "More Actions"
 msgstr "Дадатковыя дзеянні"
@@ -713,7 +727,7 @@ msgstr "Ужыць да даччыных _патокаў"
 #: src/action-impls/gsm-kill.c:32
 #, c-format
 msgid "Kill failed on %i: %s"
-msgstr "Збой сігнала «забіць» на %i: %s"
+msgstr "Збой сігналу «забіць» на %i: %s"
 
 #: src/action-impls/gsm-setaffinity.c:103
 #, c-format
@@ -732,17 +746,15 @@ msgstr "Збой змены прыярытэту на %i: %s"
 
 #: src/actions/gsm-actions.c:98
 msgid "Kill helper failed"
-msgstr ""
+msgstr "Збой дапаможнай праграмы для сігналу «забіць»"
 
 #: src/actions/gsm-actions.c:236
-#| msgid "Affinity failed on %i: %s"
 msgid "Affinity helper failed"
-msgstr ""
+msgstr "Збой дапаможнай праграмы для прывязкі"
 
 #: src/actions/gsm-actions.c:325
-#| msgid "Priority failed on %i: %s"
 msgid "Priority helper failed"
-msgstr ""
+msgstr "Збой дапаможнай праграмы для змены прыярытэту"
 
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
@@ -1449,8 +1461,8 @@ msgstr "Закончыць працу %s?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "Спыніць працу %s?"
+msgid "Temporarily Stop %s?"
+msgstr "Часова спыніць працу %s?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1474,11 +1486,11 @@ msgstr[2] "Закончыць працу %d выбраных працэсаў?"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Спыніць працу %d выбранага працэсу?"
-msgstr[1] "Спыніць працу %d выбраных працэсаў?"
-msgstr[2] "Спыніць працу %d выбраных працэсаў?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "Часова спыніць працу %d выбранага працэсу?"
+msgstr[1] "Часова спыніць працу %d выбраных працэсаў?"
+msgstr[2] "Часова спыніць працу %d выбраных працэсаў?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1501,12 +1513,12 @@ msgstr "_Закончыць"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
-msgid "Stopping processes can result in data loss, crashes, and system failures"
-msgstr "Спыненне працы працэсаў можа прывесці да страты даных, памылак і збояў сістэмы"
+msgid "Stopping (pausing) processes can result in data loss, crashes, and system failures"
+msgstr "Спыненне (прыпыненне) працы працэсаў можа прывесці да страты даных, памылак і збояў сістэмы"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Спыніць"
+msgid "_Pause"
+msgstr "_Прыпыніць"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1520,13 +1532,6 @@ msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Змяненне прыярытэту для %d выбранага працэсу"
 msgstr[1] "Змяненне прыярытэту для %d выбраных працэсаў"
 msgstr[2] "Змяненне прыярытэту для %d выбраных працэсаў"
-
-#: src/proctable.cpp:133
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "_Закончыць працу працэсу…"
-msgstr[1] "_Закончыць працу працэсаў…"
-msgstr[2] "_Закончыць працу працэсаў…"
 
 #: src/proctable.cpp:341
 msgid "Name"
@@ -1673,6 +1678,26 @@ msgstr "Вельмі нізкі прыярытэт"
 msgid "%s/s"
 msgstr "%s/с"
 
+#~ msgid "_Stop…"
+#~ msgstr "_Спыніць…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "_Завяршыць…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "Спыніць працу %s?"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "Спыніць працу %d выбранага працэсу?"
+#~ msgstr[1] "Спыніць працу %d выбраных працэсаў?"
+#~ msgstr[2] "Спыніць працу %d выбраных працэсаў?"
+
+#~ msgid "_Stop"
+#~ msgstr "_Спыніць"
+
 #~ msgctxt "shortcut window"
 #~ msgid "General"
 #~ msgstr "Агульныя"
@@ -1738,9 +1763,6 @@ msgstr "%s/с"
 #~ msgctxt "Menu item to Open Search for Open Files dialog"
 #~ msgid "_Search for Open Files…"
 #~ msgstr "_Пошук адкрытых файлаў…"
-
-#~ msgid "The GNOME Project"
-#~ msgstr "Праект GNOME"
 
 #~ msgid "Open _Files"
 #~ msgstr "Адкрытыя _файлы"
