@@ -19,8 +19,8 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2026-04-27 05:21+0000\n"
-"PO-Revision-Date: 2026-05-04 07:56+0800\n"
+"POT-Creation-Date: 2026-08-01 19:47+0000\n"
+"PO-Revision-Date: 2026-08-04 09:18+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -117,23 +117,23 @@ msgstr "设置亲和性"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "发送停止信号"
+msgid "Send Stop (Pause) Signal"
+msgstr "发送停止（暂停）信号"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "发送继续信号"
+msgid "Send Continue (Resume) Signal"
+msgstr "发送继续（恢复）信号"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "发送终止信号"
+msgid "Send Terminate (End Process) Signal"
+msgstr "发送终止（结束进程）信号"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "发送杀死信号"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "发送杀死（强制停止）信号"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -460,19 +460,21 @@ msgstr "自定义(_T)"
 msgid "Set _Affinity…"
 msgstr "设置亲和性(_A)…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "停止(_S)…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "暂停(_P)…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "恢复(_R)"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
-msgstr "终止(_T)…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
+msgstr "结束(_E)…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "强制停止(_F)…"
 
@@ -546,6 +548,10 @@ msgstr "资源概览"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "文件系统视图"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "GNOME 项目"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -702,6 +708,11 @@ msgstr "等候频道"
 #: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "控制组"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "结束进程(_E)…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -1503,8 +1514,8 @@ msgstr "结束 %s？"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "停止 %s？"
+msgid "Temporarily Stop %s?"
+msgstr "暂时停止 %s？"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1524,9 +1535,9 @@ msgstr[0] "结束 %d 个选定的进程？"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "停止 %d 个选定的进程？"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "暂时停止 %d 个选定的进程？"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1552,12 +1563,13 @@ msgstr "结束(_E)"
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
 msgid ""
-"Stopping processes can result in data loss, crashes, and system failures"
-msgstr "停止进程可能会导致数据丢失、崩溃或系统故障"
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
+msgstr "停止（暂停）进程可能会导致数据丢失、崩溃或系统故障"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "停止(_S)"
+msgid "_Pause"
+msgstr "暂停(_P)"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1569,11 +1581,6 @@ msgstr "更改 %s（PID %u）的优先级"
 msgid "Change Priority of the Selected Process"
 msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "更改所选 %d 个进程的优先级"
-
-#: src/proctable.cpp:133
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "结束进程(_E)…"
 
 #: src/proctable.cpp:341
 msgid "Name"
@@ -1720,6 +1727,24 @@ msgstr "非常低优先级"
 msgid "%s/s"
 msgstr "%s/s"
 
+#~ msgid "_Stop…"
+#~ msgstr "停止(_S)…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "终止(_T)…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "停止 %s？"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "停止 %d 个选定的进程？"
+
+#~ msgid "_Stop"
+#~ msgstr "停止(_S)"
+
 #~ msgctxt "shortcut window"
 #~ msgid "General"
 #~ msgstr "常规"
@@ -1786,9 +1811,6 @@ msgstr "%s/s"
 #~ msgctxt "Menu item to Open Search for Open Files dialog"
 #~ msgid "_Search for Open Files…"
 #~ msgstr "搜索打开的文件(_S)…"
-
-#~ msgid "The GNOME Project"
-#~ msgstr "GNOME 项目"
 
 #~ msgid "Open _Files"
 #~ msgstr "打开的文件(_F)"
