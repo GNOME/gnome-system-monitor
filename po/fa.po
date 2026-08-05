@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2026-01-31 12:10+0000\n"
-"PO-Revision-Date: 2026-03-29 13:43+0330\n"
+"POT-Creation-Date: 2026-08-01 19:47+0000\n"
+"PO-Revision-Date: 2026-08-06 01:30+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -108,23 +108,23 @@ msgstr "تنظیم خویشاوندی"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "فرستادن پیام توقّف"
+msgid "Send Stop (Pause) Signal"
+msgstr "فرستادن پیام توقّف (مکث)"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "فرستادن پیام ادامه"
+msgid "Send Continue (Resume) Signal"
+msgstr "فرستادن پیام ادامه (از سرگیری)"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "فرستادن پیام پایان‌دهی"
+msgid "Send Terminate (End Process) Signal"
+msgstr "فرستادن پیام پایان دهی (پایان فرایند)"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "فرستادن پیام کشتن"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "فرستادن پیام کشتن (توقّف اجباری)"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -201,12 +201,12 @@ msgstr "جست‌وجوی فرایندها و کاربران"
 msgid "_Resources"
 msgstr "_منابع"
 
-#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111 src/interface.cpp:272 src/proctable.cpp:345
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111 src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "پردازنده"
 
-#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311 src/proctable.cpp:352
+#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311 src/proctable.cpp:356
 msgid "Memory"
 msgstr "حافظه"
 
@@ -447,19 +447,21 @@ msgstr "_سفارشی"
 msgid "Set _Affinity…"
 msgstr "تنظیم _سنجاق کردن…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_توقّف…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_مکث…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "از _سر گیری"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
-msgstr "_پایان‌دهی…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
+msgstr "_پایان…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "_توقّف اجباری…"
 
@@ -502,11 +504,11 @@ msgstr "پایشگر سامانه، یک نمایشگر فرایندها و یک
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:14
 msgid ""
-"System Monitor can help you find out what applications are using the processor or the memory of your computer, can manage the running applications, force stop "
-"processes not responding, and change the state or priority of existing processes."
+"System Monitor can help you find out what applications are using the processor or the memory of your computer, can manage the running applications, force stop processes "
+"not responding, and change the state or priority of existing processes."
 msgstr ""
-"پایشگر سامانه این امکان را می‌دهد که بفهمید چه برنامه‌هایی در حال استفاده از پردازشگر یا حافظهٔ رایانه‌تانند، بتوانید برنامه‌های درحال اجرا را مدیریت کرده، فرایندهای "
-"ناپاسخگو را مجبور به توقف کنید و الویت یا وضعیت فرایندهای موجود را تغییر دهید."
+"پایشگر سامانه این امکان را می‌دهد که بفهمید چه برنامه‌هایی در حال استفاده از پردازشگر یا حافظهٔ رایانه‌تانند، بتوانید برنامه‌های درحال اجرا را مدیریت کرده، فرایندهای ناپاسخگو "
+"را مجبور به توقف کنید و الویت یا وضعیت فرایندهای موجود را تغییر دهید."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:20
 msgid "The resource graphs feature shows you a quick overview of what is going on with your computer displaying recent network, memory and processor usage."
@@ -523,6 +525,10 @@ msgstr "نمای‌کلی منابع"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "نمای سامانه پرونده‌ها"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "پروژهٔ گنوم"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -621,19 +627,19 @@ msgstr "جزییات"
 msgid "Process ID"
 msgstr "شناسهٔ فرایند"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "کاربر"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "وضعیت"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "شروع"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "اولویت"
 
@@ -641,42 +647,48 @@ msgstr "اولویت"
 msgid "Usage"
 msgstr "استفاده"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "زمان پردازنده"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "حافظهٔ مجازی"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "حافظهٔ مقیم"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "حافظهٔ قابل نوشتن"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "حافظهٔ اشتراکی"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "مفاد امنیتی"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "خط فرمان"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "کانال انتظار"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "گروه واپایشی"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_پایان فرایند…"
+msgstr[1] "_پایان فرایندها…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -737,6 +749,18 @@ msgstr "خویشاوندی پشتیبانی نشده"
 #, c-format
 msgid "Priority failed on %i: %s"
 msgstr "شکست اولویت %i‏: %s"
+
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "کشتن یاریگر شکست خورد"
+
+#: src/actions/gsm-actions.c:236
+msgid "Affinity helper failed"
+msgstr "یاریگر خویشاوندی شکست خورد"
+
+#: src/actions/gsm-actions.c:325
+msgid "Priority helper failed"
+msgstr "یاریگر اولویت شکست خورد"
 
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
@@ -855,22 +879,22 @@ msgstr "%I.0f ٪"
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
-msgstr[0] "%Iu س"
-msgstr[1] "%Iu س"
+msgstr[0] "‏%Iu س"
+msgstr[1] "‏%Iu س"
 
 #: src/load-graph.cpp:127
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
-msgstr[0] "%Iu د"
-msgstr[1] "%Iu د"
+msgstr[0] "‏%Iu د"
+msgstr[1] "‏%Iu د"
 
 #: src/load-graph.cpp:129
 #, c-format
 msgid "%u sec"
 msgid_plural "%u secs"
-msgstr[0] "%Iu ثانیه"
-msgstr[1] "%Iu ثانیه"
+msgstr[0] "‏%Iu ثانیه"
+msgstr[1] "‏%Iu ثانیه"
 
 #. Update label
 #. Translators: CPU usage percentage label: 95.7%
@@ -899,15 +923,15 @@ msgstr "انباره %s"
 #, c-format
 msgid "%d Matching Open File"
 msgid_plural "%d Matching Open Files"
-msgstr[0] "%Id پروندهٔ باز مطابق"
-msgstr[1] "%Id پروندهٔ باز مطابق"
+msgstr[0] "‏%Id پروندهٔ باز مطابق"
+msgstr[1] "‏%Id پروندهٔ باز مطابق"
 
 #: src/lsof.cpp:42
 #, c-format
 msgid "%d Open File"
 msgid_plural "%d Open Files"
-msgstr[0] "%Id پروندهٔ باز"
-msgstr[1] "%Id پروندهٔ باز"
+msgstr[0] "‏%Id پروندهٔ باز"
+msgstr[1] "‏%Id پروندهٔ باز"
 
 #. Translators: process name and id
 #: src/memmaps.cpp:348 src/openfiles.cpp:129 src/setaffinity.cpp:248
@@ -962,8 +986,7 @@ msgstr "حالت سولاریس برای درصد پردازنده"
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:32
 msgid "If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage is divided by the total number of CPUs. Otherwise, it operates in “Irix mode”."
 msgstr ""
-"اگر درست باشد، پایشگر سامانه در «حالت سولاریس» اجرا می‌شود که در آن مصرف پردازندهٔ یک تکلیف، بر تعداد کل پردازنده‌ها تقسیم می‌شود. در غیر این‌صورت در «حالت ایریکس» عمل "
-"می‌کند."
+"اگر درست باشد، پایشگر سامانه در «حالت سولاریس» اجرا می‌شود که در آن مصرف پردازندهٔ یک تکلیف، بر تعداد کل پردازنده‌ها تقسیم می‌شود. در غیر این‌صورت در «حالت ایریکس» عمل می‌کند."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:39
 msgid "Show memory in IEC"
@@ -990,8 +1013,7 @@ msgid "Whether information about all file systems should be displayed"
 msgstr "این که باید اطّلاعات تمام سامانه پرونده‌ها نشان داده شود یا نه"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:74
-msgid ""
-"Whether to display information about all file systems (including types like “autofs” and “procfs”). Useful for getting a list of all currently mounted file systems."
+msgid "Whether to display information about all file systems (including types like “autofs” and “procfs”). Useful for getting a list of all currently mounted file systems."
 msgstr "این که اطّلاعات تمام سامانه پرونده‌ها (از جمله گونه‌هایی چون autofs و procfs) نشان داده شود یا نه . مفید برای گرفتن فهرستی از تمام سامانه پرونده‌های سوار‌شدهٔ جاری."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:81
@@ -1414,7 +1436,7 @@ msgstr "ستون چینش پرونده‌های باز"
 msgid "Open files sort order"
 msgstr "ترتیب چینش پرونده‌های باز"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "نقشک"
 
@@ -1442,8 +1464,8 @@ msgstr "پایان دادن به %s؟"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "توقف %s؟"
+msgid "Temporarily Stop %s?"
+msgstr "توقّف موقّتی %s؟"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1465,10 +1487,10 @@ msgstr[1] "پایان دادن به %Id فرایند گزیده؟"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "توقّف فرایند گزیده؟"
-msgstr[1] "توقّف %Id فرایند گزیده؟"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "توقّف موقّتی فرایند گزیده؟"
+msgstr[1] "توقّف موقّتی %Id فرایند گزیده؟"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1491,12 +1513,12 @@ msgstr "_پایان"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
-msgid "Stopping processes can result in data loss, crashes, and system failures"
-msgstr "توقّف فرایندها می‌تواند منجر به از دست رفتن داده‌، فروپاشی و شکست‌های سامانه‌ای شود"
+msgid "Stopping (pausing) processes can result in data loss, crashes, and system failures"
+msgstr "توقّف (مکث) فرایندها می‌تواند منجر به از دست رفتن داده‌، فروپاشی و شکست‌های سامانه‌ای شود"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_توقّف"
+msgid "_Pause"
+msgstr "_مکث"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1510,59 +1532,53 @@ msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "تغییر اولویت فرایند گزیده"
 msgstr[1] "تغییر اولویت %Id فرایند گزیده"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "_پایان فرایند…"
-msgstr[1] "_پایان فرایندها…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "نام"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "حافظهٔ کارساز ایکس"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "نایس"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "شناسه"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "واحد"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "نشست"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "صندلی"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "مالک"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "مجموع خواندن دیسک"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "مجموع نوشتن دیسک"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "خواندن دیسک"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "نوشتن دیسک"
 
@@ -1595,13 +1611,13 @@ msgstr "خوابیده"
 #: src/util.cpp:85
 #, c-format
 msgid "%uw%ud"
-msgstr "%Iu هفته %Iu روز"
+msgstr "‏%Iu هفته %Iu روز"
 
 #. xgettext: days, hours (0 -> 23)
 #: src/util.cpp:89
 #, c-format
 msgid "%ud%02uh"
-msgstr "%Iu روز %I02u ساعت"
+msgstr "‏%Iu روز %I02u ساعت"
 
 #. xgettext: hours (0 -> 23), minutes, seconds
 #: src/util.cpp:93
@@ -1656,10 +1672,29 @@ msgid "Very Low Priority"
 msgstr "اولویت خیلی کم"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/ث"
+
+#~ msgid "_Stop…"
+#~ msgstr "_توقّف…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "_پایان‌دهی…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "توقف %s؟"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "توقّف فرایند گزیده؟"
+#~ msgstr[1] "توقّف %Id فرایند گزیده؟"
+
+#~ msgid "_Stop"
+#~ msgstr "_توقّف"
 
 #, c-format
 #~ msgid ""
@@ -1726,9 +1761,6 @@ msgstr "%s/ث"
 #~ msgctxt "Menu item to Open Search for Open Files dialog"
 #~ msgid "_Search for Open Files…"
 #~ msgstr "_جست‌وجو برای پرونده‌های باز…"
-
-#~ msgid "The GNOME Project"
-#~ msgstr "پروژهٔ گنوم"
 
 #~ msgid "Open _Files"
 #~ msgstr "پرونده‌های _باز"
