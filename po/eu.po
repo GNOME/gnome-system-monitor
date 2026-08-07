@@ -9,8 +9,8 @@
 msgid ""
 msgstr "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2026-01-31 12:21+0000\n"
-"PO-Revision-Date: 2026-02-01  07:47+0000\n"
+"POT-Creation-Date: 2026-08-01 19:47+0000\n"
+"PO-Revision-Date: 2026-08-07 07:47+0000\n"
 "Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <librezale@librezale.eus>\n"
 "Language: eu\n"
@@ -103,23 +103,23 @@ msgstr "Ezarri afinitatea"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Bidali gelditzeko seinalea"
+msgid "Send Stop (Pause) Signal"
+msgstr "Bidali gelditzeko (pausatzeko) seinalea"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "Bidali jarraitzeko seinalea"
+msgid "Send Continue (Resume) Signal"
+msgstr "Bidali jarraitzeko (berrekiteko) seinalea"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "Bidali amaitzeko seinalea"
+msgid "Send Terminate (End Process) Signal"
+msgstr "Bidali amaitzeko (prozesua bukatzeko) seinalea"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "Bidali hiltzeko seinalea"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "Bidali hiltzeko (gelditzea behartzeko) seinalea"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -198,13 +198,13 @@ msgid "_Resources"
 msgstr "_Baliabideak"
 
 #: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111
-#: src/interface.cpp:272 src/proctable.cpp:345
+#: src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "PUZa"
 
 #: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311
-#: src/proctable.cpp:352
+#: src/proctable.cpp:356
 msgid "Memory"
 msgstr "Memoria"
 
@@ -439,25 +439,27 @@ msgstr "O_so baxua"
 
 #: data/menus.ui:134
 msgid "Cus_tom"
-msgstr "_pertsonalizatua"
+msgstr "Pe_rtsonalizatua"
 
 #: data/menus.ui:141
 msgid "Set _Affinity…"
 msgstr "Ezarri a_finitatea…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_Gelditu…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_Pausatu…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_Jarraitu"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
 msgstr "_Amaitu…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "Be_hartu gelditzea"
 
@@ -527,6 +529,10 @@ msgstr "Baliabideen ikuspegia"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "Fitxategi-sistemen ikuspegia"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "GNOME proiektua"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -625,19 +631,19 @@ msgstr "Xehetasunak"
 msgid "Process ID"
 msgstr "Prozesuaren IDa"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "Erabiltzailea"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "Egoera"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "Hasita"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "Lehentasuna"
 
@@ -645,42 +651,48 @@ msgstr "Lehentasuna"
 msgid "Usage"
 msgstr "Erabilera"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "PUZ denbora"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "Memoria birtuala"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "Memoria egoiliarra"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "Memoria idazgarria"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "Memoria partekatua"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "Segurtasun testuingurua"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "Komando-lerroa"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "Itxaron kanala"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "Kontrol taldea"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Amaitu prozesua…"
+msgstr[1] "_Amaitu prozesuak"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -743,6 +755,18 @@ msgstr "Afinitatea ez da onartzen"
 #, c-format
 msgid "Priority failed on %i: %s"
 msgstr "Lehentasunak huts egin du %i(e)n: %s"
+
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "Hiltze-laguntzaileak huts egin du"
+
+#: src/actions/gsm-actions.c:236
+msgid "Affinity helper failed"
+msgstr "Afinitate-laguntzaileak huts egin du"
+
+#: src/actions/gsm-actions.c:325
+msgid "Priority helper failed"
+msgstr "Lehentasun-laguntzaileak huts egin du"
 
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
@@ -1426,7 +1450,7 @@ msgstr "Irekitako fitxategien ordena zutabea"
 msgid "Open files sort order"
 msgstr "Irekitako fitxategien ordenazioa"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "Ikonoa"
 
@@ -1454,8 +1478,8 @@ msgstr "Amaitu %s?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "Gelditu %s?"
+msgid "Temporarily Stop %s?"
+msgstr "Gelditu %s aldi baterako?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1477,10 +1501,10 @@ msgstr[1] "Amaitu hautatutako %d prozesu?"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Gelditu hautatutako prozesua?"
-msgstr[1] "Gelditu hautatutako %d prozesu?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "Gelditu hautatutako prozesua aldi baterako?"
+msgstr[1] "Behartu hautatutako %d prozesu gelditzera?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1506,12 +1530,13 @@ msgstr "_Amaitu"
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
 msgid ""
-"Stopping processes can result in data loss, crashes, and system failures"
-msgstr "Prozesuak gelditzen badira, datuak galdu daitezke, kraskadurak izan daitezke eta sistemak huts egin dezake"
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
+msgstr "Prozesuak gelditzen (pausatzen) badira, datuak galdu daitezke, kraskadurak izan daitezke eta sistemak huts egin dezake"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Gelditu"
+msgid "_Pause"
+msgstr "Pau_satu"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1525,59 +1550,53 @@ msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Aldatu hautatutako prozesuaren lehentasuna"
 msgstr[1] "Aldatu hautatutako %d prozesuren lehentasuna"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "_Amaitu prozesua…"
-msgstr[1] "_Amaitu prozesuak"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "Izena"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "X zerbitzariaren memoria"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Lehentasuna"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "IDa"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "Unitatea"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "Saioa"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "Eserlekua"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "Jabea"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "Diskotik irakurrita guztira"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "Diskoan idatzita guztira"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "Diskotik irakurrita"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "Diskoan idatzita"
 
@@ -1671,10 +1690,29 @@ msgid "Very Low Priority"
 msgstr "Lehentasun oso baxua"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Stop…"
+#~ msgstr "_Gelditu…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "_Amaitu…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "Gelditu %s?"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "Gelditu hautatutako prozesua?"
+#~ msgstr[1] "Gelditu hautatutako %d prozesu?"
+
+#~ msgid "_Stop"
+#~ msgstr "_Gelditu"
 
 #~ msgctxt "shortcut window"
 #~ msgid "General"
@@ -1741,9 +1779,6 @@ msgstr "%s/s"
 #~ msgctxt "Menu item to Open Search for Open Files dialog"
 #~ msgid "_Search for Open Files…"
 #~ msgstr "_Bilatu irekitako fitxategiak…"
-
-#~ msgid "The GNOME Project"
-#~ msgstr "GNOME proiektua"
 
 #~ msgid "Open _Files"
 #~ msgstr "Ireki _fitxategiak"
