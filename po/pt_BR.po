@@ -25,23 +25,30 @@
 # Rafael Fontenelle <rafaelff@gnome.org>, 2013-2025.
 # Álvaro Burns <>, 2025.
 # Juliano de Souza Camargo <julianosc@pm.me>, 2025-2026.
+# Samuel Schlemper <samuelschlemper2006@gmail.com>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2026-01-31 12:21+0000\n"
-"PO-Revision-Date: 2026-01-31 19:23-0300\n"
-"Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
+"POT-Creation-Date: 2026-08-01 19:47+0000\n"
+"PO-Revision-Date: 2026-08-04 14:05-0300\n"
+"Last-Translator: Samuel Schlemper <samuelschlemper2006@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Gtranslator 50.0\n"
 "X-Project-Style: gnome\n"
+"X-DL-VCS-Web: https://gitlab.gnome.org/GNOME/gnome-system-monitor/\n"
+"X-DL-Lang: pt_BR\n"
+"X-DL-Module: gnome-system-monitor\n"
+"X-DL-Branch: main\n"
+"X-DL-Domain: po\n"
+"X-DL-State: Translating\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
 msgid "Device"
@@ -127,23 +134,23 @@ msgstr "Definir afinidade"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Envia o sinal para parar"
+msgid "Send Stop (Pause) Signal"
+msgstr "Envia o sinal para parar (pausar)"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "Envia o sinal para continuar"
+msgid "Send Continue (Resume) Signal"
+msgstr "Envia o sinal para continuar (retomar)"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "Envia o sinal para encerrar"
+msgid "Send Terminate (End Process) Signal"
+msgstr "Envia o sinal para encerrar (terminar processo)"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "Envia o sinal para forçar o encerramento"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "Envia o sinal para forçar o encerramento (matar processo)"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -222,13 +229,13 @@ msgid "_Resources"
 msgstr "_Recursos"
 
 #: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111
-#: src/interface.cpp:272 src/proctable.cpp:345
+#: src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
 #: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311
-#: src/proctable.cpp:352
+#: src/proctable.cpp:356
 msgid "Memory"
 msgstr "Memória"
 
@@ -470,19 +477,21 @@ msgstr "_Personalizada"
 msgid "Set _Affinity…"
 msgstr "Definir afi_nidade…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "Pa_rar…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_Pausar…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_Continuar"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
 msgstr "_Encerrar…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "_Forçar parada…"
 
@@ -562,6 +571,10 @@ msgstr "Visão geral dos recursos"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "Visão do sistemas de arquivos"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "O Projeto GNOME"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -660,19 +673,19 @@ msgstr "Detalhes"
 msgid "Process ID"
 msgstr "ID do processo"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "Usuário"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "Estado"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "Iniciado"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "Prioridade"
 
@@ -680,42 +693,48 @@ msgstr "Prioridade"
 msgid "Usage"
 msgstr "Uso"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "Tempo da CPU"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "Memória virtual"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "Memória residente"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "Memória gravável"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "Memória compartilhada"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "Contexto de segurança"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "Linha de comando"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "Aguardando canal"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "Grupo de controle"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Encerrar processo…"
+msgstr[1] "_Encerrar processos…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -780,6 +799,18 @@ msgstr "Afinidade não suportada"
 #, c-format
 msgid "Priority failed on %i: %s"
 msgstr "Prioridade falhou em %i: %s"
+
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "Encerrar processo auxiliar falhou"
+
+#: src/actions/gsm-actions.c:236
+msgid "Affinity helper failed"
+msgstr "Afinidade auxiliar falhou"
+
+#: src/actions/gsm-actions.c:325
+msgid "Priority helper failed"
+msgstr "Prioridade auxiliar falhou"
 
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
@@ -1494,7 +1525,7 @@ msgstr "Coluna de ordenação de arquivos abertos"
 msgid "Open files sort order"
 msgstr "Ordem de ordenação de arquivos abertos"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "Ícone"
 
@@ -1522,8 +1553,8 @@ msgstr "Encerrar %s?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "Parar %s?"
+msgid "Temporarily Stop %s?"
+msgstr "Parar temporariamente %s?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1545,10 +1576,10 @@ msgstr[1] "Encerrar os %d processos selecionados?"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Parar processo selecionado?"
-msgstr[1] "Parar os %d processos selecionados?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "Parar temporariamente o processo selecionado?"
+msgstr[1] "Parar temporariamente os %d processos selecionados?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1578,14 +1609,15 @@ msgstr "_Encerrar"
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
 msgid ""
-"Stopping processes can result in data loss, crashes, and system failures"
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
 msgstr ""
-"Parar processos pode resultar em perda de dados, travamentos e falhas de "
-"sistema"
+"Parar (pausar) processos pode resultar em perda de dados, travamentos e "
+"falhas de sistema"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Parar"
+msgid "_Pause"
+msgstr "_Pausar"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1599,60 +1631,54 @@ msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Altera prioridade do processo selecionado"
 msgstr[1] "Altera prioridade dos %d processos selecionados"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "_Encerrar processo…"
-msgstr[1] "_Encerrar processos…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "Nome"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "Memória do servidor X"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "Unidade"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "Sessão"
 
 # Há suporte para multiterminais, portanto cada processo pode rodar em mais de um terminal. Para não confundir usuários, adota-se o nome Estação.
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "Estação"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "Proprietário"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "Total de leitura de disco"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "Total de escrita em disco"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "Leitura de disco"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "Escrita em disco"
 
@@ -1747,10 +1773,29 @@ msgid "Very Low Priority"
 msgstr "Prioridade muito baixa"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Stop…"
+#~ msgstr "Pa_rar…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "_Encerrar…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "Parar %s?"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "Parar processo selecionado?"
+#~ msgstr[1] "Parar os %d processos selecionados?"
+
+#~ msgid "_Stop"
+#~ msgstr "_Parar"
 
 #~ msgctxt "shortcut window"
 #~ msgid "General"
@@ -1817,9 +1862,6 @@ msgstr "%s/s"
 #~ msgctxt "Menu item to Open Search for Open Files dialog"
 #~ msgid "_Search for Open Files…"
 #~ msgstr "Pesquisar por arquivos a_bertos…"
-
-#~ msgid "The GNOME Project"
-#~ msgstr "O Projeto GNOME"
 
 #~ msgid "Open _Files"
 #~ msgstr "_Arquivos abertos"
