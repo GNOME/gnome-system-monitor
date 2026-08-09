@@ -18,9 +18,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: procman 2.11.92\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2026-02-02 05:43+0000\n"
-"PO-Revision-Date: 2026-02-06 19:07+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
+"issues\n"
+"POT-Creation-Date: 2026-08-01 19:47+0000\n"
+"PO-Revision-Date: 2026-08-09 11:07+0000\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -28,7 +29,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Minairó 0.1.0\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
 msgid "Device"
@@ -62,7 +63,8 @@ msgstr "Utilitzat"
 msgid "GNOME System Monitor"
 msgstr "Monitor del sistema del GNOME"
 
-#: data/gnome-system-monitor-kde.desktop.in.in:3 data/org.gnome.SystemMonitor.desktop.in.in:3
+#: data/gnome-system-monitor-kde.desktop.in.in:3
+#: data/org.gnome.SystemMonitor.desktop.in.in:3
 msgid "View current processes and monitor system state"
 msgstr "Visualitza els processos actuals i supervisa l'estat del sistema"
 
@@ -112,24 +114,32 @@ msgid "Set Affinity"
 msgstr "Estableix l'afinitat"
 
 #: data/shortcuts-dialog.ui:70
+#| msgctxt "shortcuts dialog"
+#| msgid "Send Stop Signal"
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Envia el senyal d'aturada"
+msgid "Send Stop (Pause) Signal"
+msgstr "Envia un senyal d'aturada (pausa)"
 
 #: data/shortcuts-dialog.ui:76
+#| msgctxt "shortcuts dialog"
+#| msgid "Send Continue Signal"
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "Envia el senyal de continuació"
+msgid "Send Continue (Resume) Signal"
+msgstr "Envia un senyal de continuació"
 
 #: data/shortcuts-dialog.ui:82
+#| msgctxt "shortcuts dialog"
+#| msgid "Send Terminate Signal"
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "Envia el senyal de finalització"
+msgid "Send Terminate (End Process) Signal"
+msgstr "Envia el senyal de terminació (final del procés)"
 
 #: data/shortcuts-dialog.ui:88
+#| msgctxt "shortcuts dialog"
+#| msgid "Send Kill Signal"
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "Envia el senyal de matar"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "Envia el senyal de matar (aturada per força)"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -207,13 +217,14 @@ msgstr "Cerca processos i usuaris"
 msgid "_Resources"
 msgstr "_Recursos"
 
-#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111 src/interface.cpp:272
-#: src/proctable.cpp:345
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111
+#: src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311 src/proctable.cpp:352
+#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311
+#: src/proctable.cpp:356
 msgid "Memory"
 msgstr "Memòria"
 
@@ -454,19 +465,22 @@ msgstr "Personali_tzat"
 msgid "Set _Affinity…"
 msgstr "Estableix l'_afinitat…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_Atura…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_Pausa..."
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_Continua"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
-msgstr "Finali_tza…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+#| msgid "_End"
+msgid "_End…"
+msgstr "_Finalitza..."
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "_Força l'aturada…"
 
@@ -476,7 +490,8 @@ msgstr "Fitxers oberts"
 
 #: data/openfiles.ui:45
 msgctxt ""
-"FD here means File Descriptor. Use a short translation if possible, and at most 2-3 characters"
+"FD here means File Descriptor. Use a short translation if possible, and at "
+"most 2-3 characters"
 msgid "FD"
 msgstr "DF"
 
@@ -490,7 +505,8 @@ msgstr "Mata el procés"
 
 #: data/org.gnome.gnome-system-monitor.policy.in.in:12
 msgid "Privileges are required to control other users’ processes"
-msgstr "Es requereixen privilegis per a controlar els processos d'altres usuaris"
+msgstr ""
+"Es requereixen privilegis per a controlar els processos d'altres usuaris"
 
 #: data/org.gnome.gnome-system-monitor.policy.in.in:22
 msgid "Renice process"
@@ -506,28 +522,32 @@ msgstr "Visualitzeu i gestioneu els recursos del sistema"
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:10
 msgid ""
-"System Monitor is a process viewer and system monitor with an attractive, easy-to-use interface."
+"System Monitor is a process viewer and system monitor with an attractive, "
+"easy-to-use interface."
 msgstr ""
-"El Monitor del sistema és un visualitzador de processos i un monitor del sistema amb una "
-"interfície atractiva i fàcil d'utilitzar."
+"El Monitor del sistema és un visualitzador de processos i un monitor del "
+"sistema amb una interfície atractiva i fàcil d'utilitzar."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:14
 msgid ""
-"System Monitor can help you find out what applications are using the processor or the memory of "
-"your computer, can manage the running applications, force stop processes not responding, and "
-"change the state or priority of existing processes."
+"System Monitor can help you find out what applications are using the "
+"processor or the memory of your computer, can manage the running "
+"applications, force stop processes not responding, and change the state or "
+"priority of existing processes."
 msgstr ""
-"El Monitor del sistema us pot ajudar a descobrir quina aplicació està fent servir el "
-"processador o la memòria de l'ordinador, us permet gestionar les aplicacions en execució, pot "
-"aturar processos que no responguin i canviar l'estat i la prioritat dels processos existents."
+"El Monitor del sistema us pot ajudar a descobrir quina aplicació està fent "
+"servir el processador o la memòria de l'ordinador, us permet gestionar les "
+"aplicacions en execució, pot aturar processos que no responguin i canviar "
+"l'estat i la prioritat dels processos existents."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:20
 msgid ""
-"The resource graphs feature shows you a quick overview of what is going on with your computer "
-"displaying recent network, memory and processor usage."
+"The resource graphs feature shows you a quick overview of what is going on "
+"with your computer displaying recent network, memory and processor usage."
 msgstr ""
-"Els gràfics dels recursos us permeten tenir una visió general de què està passant a "
-"l'ordinador, es mostra l'ús recent de la xarxa, la memòria i els processadors."
+"Els gràfics dels recursos us permeten tenir una visió general de què està "
+"passant a l'ordinador, es mostra l'ús recent de la xarxa, la memòria i els "
+"processadors."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:28
 msgid "Process list view"
@@ -540,6 +560,10 @@ msgstr "Visió general dels recursos"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "Vista dels sistemes de fitxers"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "El projecte GNOME"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -638,19 +662,19 @@ msgstr "Detalls"
 msgid "Process ID"
 msgstr "ID del procés"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "Usuari"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "Estat"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "Iniciat"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "Prioritat"
 
@@ -658,42 +682,48 @@ msgstr "Prioritat"
 msgid "Usage"
 msgstr "Ús"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "Temps de CPU"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "Memòria virtual"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "Memòria resident"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "Memòria d'escriptura"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "Memòria compartida"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "Context de seguretat"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "Línia d'ordres"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "Canal d'espera"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "Grup de control"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Finalitza el procés…"
+msgstr[1] "_Finalitza els processos…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -701,11 +731,11 @@ msgstr "Més accions"
 
 #: data/renice.ui:4
 msgid ""
-"The priority of a process is given by its nice value. A lower nice value corresponds to a "
-"higher priority."
+"The priority of a process is given by its nice value. A lower nice value "
+"corresponds to a higher priority."
 msgstr ""
-"La prioritat d'un procés es defineix pel seu valor de prioritat «nice». Un valor de prioritat "
-"més baix es correspon amb una prioritat més alta."
+"La prioritat d'un procés es defineix pel seu valor de prioritat «nice». Un "
+"valor de prioritat més baix es correspon amb una prioritat més alta."
 
 #: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:194
 msgid "_Cancel"
@@ -759,6 +789,20 @@ msgstr "Afinitat no suportada"
 msgid "Priority failed on %i: %s"
 msgstr "La prioritat ha fallat a %i: %s"
 
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "Ha fallat l'ajudant de matar"
+
+#: src/actions/gsm-actions.c:236
+#| msgid "Affinity failed on %i: %s"
+msgid "Affinity helper failed"
+msgstr "Ha fallat l'ajudant d'afinitat"
+
+#: src/actions/gsm-actions.c:325
+#| msgid "Priority failed on %i: %s"
+msgid "Priority helper failed"
+msgstr "Ha fallat l'ajudant de prioritat"
+
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
 msgstr "Un monitor del sistema i de processos simple."
@@ -779,7 +823,8 @@ msgstr "Mostra la pestanya dels sistemes de fitxers"
 msgid "Open Failed"
 msgstr "No s'ha pogut obrir"
 
-#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224 src/setaffinity.cpp:124
+#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224
+#: src/setaffinity.cpp:124
 msgid "_Close"
 msgstr "Tan_ca"
 
@@ -981,11 +1026,13 @@ msgstr "Mode Solaris per al percentatge de CPU"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:32
 msgid ""
-"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage is divided by the "
-"total number of CPUs. Otherwise, it operates in “Irix mode”."
+"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in “Irix "
+"mode”."
 msgstr ""
-"Si és «TRUE» (cert), el monitor del sistema funcionarà en «mode Solaris», en què la utilització "
-"de la CPU de les tasques es divideix pel nombre total de CPU. Si no, funcionarà en «mode Irix»."
+"Si és «TRUE» (cert), el monitor del sistema funcionarà en «mode Solaris», en "
+"què la utilització de la CPU de les tasques es divideix pel nombre total de "
+"CPU. Si no, funcionarà en «mode Irix»."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:39
 msgid "Show memory in IEC"
@@ -1013,16 +1060,18 @@ msgstr "Si s'ha de mostrar informació sobre tots els sistemes de fitxers"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:74
 msgid ""
-"Whether to display information about all file systems (including types like “autofs” and "
-"“procfs”). Useful for getting a list of all currently mounted file systems."
+"Whether to display information about all file systems (including types like "
+"“autofs” and “procfs”). Useful for getting a list of all currently mounted "
+"file systems."
 msgstr ""
-"Si s'ha de mostrar informació sobre tots els sistemes de fitxers, incloent-hi els tipus com ara "
-"«autofs» i «procfs». Útil per a obtenir una llista de tots els sistemes de fitxers muntats "
-"actualment."
+"Si s'ha de mostrar informació sobre tots els sistemes de fitxers, incloent-"
+"hi els tipus com ara «autofs» i «procfs». Útil per a obtenir una llista de "
+"tots els sistemes de fitxers muntats actualment."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:81
 msgid "Time in milliseconds between updates of the devices list"
-msgstr "Temps en mil·lisegons entre actualitzacions de la llista de dispositius"
+msgstr ""
+"Temps en mil·lisegons entre actualitzacions de la llista de dispositius"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:87
 msgid "Time amount of data points in the resource graphs"
@@ -1042,7 +1091,8 @@ msgstr "A l'inici, expandeix la secció de CPU"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:116
 msgid "Whether to expand the CPU section in the resources tab on startup."
-msgstr "Si s'ha d'expandir la secció de CPU a la pestanya de recursos a l'inici."
+msgstr ""
+"Si s'ha d'expandir la secció de CPU a la pestanya de recursos a l'inici."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:123
 msgid "Expand memory section on startup"
@@ -1050,7 +1100,8 @@ msgstr "Expandeix la secció de memòria a l'inici"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:125
 msgid "Whether to expand the memory section in the resources tab on startup."
-msgstr "Si s'ha d'expandir la secció de memòria a la pestanya de recursos a l'inici."
+msgstr ""
+"Si s'ha d'expandir la secció de memòria a la pestanya de recursos a l'inici."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:132
 msgid "Expand network section on startup"
@@ -1058,7 +1109,8 @@ msgstr "Expandeix la secció de xarxa a l'inici"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:134
 msgid "Whether to expand the network section in the resources tab on startup."
-msgstr "Si s'ha d'expandir la secció de xarxa a la pestanya de recursos a l'inici."
+msgstr ""
+"Si s'ha d'expandir la secció de xarxa a la pestanya de recursos a l'inici."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:141
 msgid "Expand disks section on startup"
@@ -1111,28 +1163,32 @@ msgstr "Mostra la memòria en l'escala logarítmica"
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:240
 msgid ""
-"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead of a line chart."
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
+"of a line chart."
 msgstr ""
-"Si és «TRUE» (cert), el monitor del sistema mostrarà el gràfic de la CPU com un gràfic d'àrea "
-"apilat en comptes d'un gràfic de línia."
+"Si és «TRUE» (cert), el monitor del sistema mostrarà el gràfic de la CPU com "
+"un gràfic d'àrea apilat en comptes d'un gràfic de línia."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show CPU chart as stacked area chart"
 msgstr "Mostra el gràfic de la CPU com a gràfic d'àrea apilat"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:247
-msgid "Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier curves"
+msgid ""
+"Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier "
+"curves"
 msgstr ""
-"Mostra els diagrames de CPU, memòria, xarxa i disc com a gràfics suaus utilitzant corbes de "
-"Bézier"
+"Mostra els diagrames de CPU, memòria, xarxa i disc com a gràfics suaus "
+"utilitzant corbes de Bézier"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:249
 msgid ""
-"If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as smoothed graphs, "
-"otherwise as line charts."
+"If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as "
+"smoothed graphs, otherwise as line charts."
 msgstr ""
-"Si és «TRUE» (cert), el monitor del sistema mostrarà el gràfic de la CPU, memòria, xarxa i disc "
-"com gràfics d'àrea suavitzats en comptes de gràfics de línia."
+"Si és «TRUE» (cert), el monitor del sistema mostrarà el gràfic de la CPU, "
+"memòria, xarxa i disc com gràfics d'àrea suavitzats en comptes de gràfics de "
+"línia."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:256
 msgid "Show memory and swap in IEC"
@@ -1432,7 +1488,8 @@ msgstr "Amplada de la columna «Utilitzat» en la vista de discs"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:784
 msgid "Show disk view “Used” column on startup"
-msgstr "A l'inici, mostra la columna «Utilitzat» en la vista de sistemes de discs"
+msgstr ""
+"A l'inici, mostra la columna «Utilitzat» en la vista de sistemes de discs"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:794
 msgid "Memory map sort column"
@@ -1450,7 +1507,7 @@ msgstr "Columna d'ordenació dels fitxers oberts"
 msgid "Open files sort order"
 msgstr "Ordre dels fitxers oberts"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "Icona"
 
@@ -1478,8 +1535,9 @@ msgstr "Voleu finalitzar %s?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "Voleu aturar %s?"
+#| msgid "Force Stop %s?"
+msgid "Temporarily Stop %s?"
+msgstr "Voleu aturar temporalment %s?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1501,16 +1559,21 @@ msgstr[1] "Voleu finalitzar els %d processos seleccionats?"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Voleu aturar el procés seleccionat?"
-msgstr[1] "Voleu aturar els %d processos seleccionats?"
+#| msgid "Force Stop Selected Process?"
+#| msgid_plural "Force Stop %d Selected Processes?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "Voleu aturar temporalment el procés seleccionat?"
+msgstr[1] "Atura temporalment %d processos seleccionats?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
-msgid "Force stopping processes can result in data loss, crashes, and system failures"
+msgid ""
+"Force stopping processes can result in data loss, crashes, and system "
+"failures"
 msgstr ""
-"L'aturada forçada de processos pot provocar pèrdua de dades, trencaments i fallades del sistema"
+"L'aturada forçada de processos pot provocar pèrdua de dades, trencaments i "
+"fallades del sistema"
 
 #: src/procdialogs.cpp:172
 msgid "_Force Stop"
@@ -1519,7 +1582,9 @@ msgstr "_Força l'aturada"
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:177
 msgid "Ending processes can result in data loss, crashes, and system failures"
-msgstr "Finalitzar processos pot provocar pèrdua de dades, trencaments i fallades del sistema"
+msgstr ""
+"Finalitzar processos pot provocar pèrdua de dades, trencaments i fallades "
+"del sistema"
 
 #: src/procdialogs.cpp:179
 msgid "_End"
@@ -1528,12 +1593,18 @@ msgstr "_Finalitza"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
-msgid "Stopping processes can result in data loss, crashes, and system failures"
-msgstr "L'aturada de processos pot provocar pèrdua de dades, trencaments i fallades del sistema"
+#| msgid ""
+#| "Stopping processes can result in data loss, crashes, and system failures"
+msgid ""
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
+msgstr ""
+"L'aturada (o pausa) de processos pot provocar pèrdua de dades, trencaments i "
+"fallades del sistema"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Atura"
+msgid "_Pause"
+msgstr "_Pausa"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1547,59 +1618,53 @@ msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Voleu canviar la prioritat del procés seleccionat"
 msgstr[1] "Canvia la prioritat dels %d processos seleccionats"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "_Finalitza el procés…"
-msgstr[1] "_Finalitza els processos…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "Nom"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "Memòria del servidor X"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Prioritat"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "Identificador"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "Unitat"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "Sessió"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "Seient"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "Propietari"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "Lectures totals de disc"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "Escriptures totals de disc"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "Lectures de disc"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "Escriptures de disc"
 
@@ -1693,188 +1758,7 @@ msgid "Very Low Priority"
 msgstr "Prioritat molt baixa"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
-
-#~ msgctxt "shortcut window"
-#~ msgid "General"
-#~ msgstr "General"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Show help"
-#~ msgstr "Mostra l'ajuda"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Show preferences"
-#~ msgstr "Mostra les preferències"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Keyboard shortcuts"
-#~ msgstr "Dreceres de teclat"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Search"
-#~ msgstr "Cerca"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Processes"
-#~ msgstr "Processos"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Show dependencies"
-#~ msgstr "Mostra les dependències"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Show process properties"
-#~ msgstr "Mostra les propietats del procés"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Memory maps"
-#~ msgstr "Mapes de memòria"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Open files"
-#~ msgstr "Fitxers oberts"
-
-#~ msgid "Show the application’s version"
-#~ msgstr "Mostra la versió de l'aplicació"
-
-#, c-format
-#~ msgid ""
-#~ "Cannot change the priority of process with PID %d to %d.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "No es pot canviar la prioritat del procés amb PID %d a %d.\n"
-#~ "%s"
-
-#~ msgid "_OK"
-#~ msgstr "_D'acord"
-
-#, c-format
-#~ msgid ""
-#~ "Cannot kill process with PID %d with signal %d.\n"
-#~ "%s"
-#~ msgstr ""
-#~ "No es pot matar el procés amb PID %d amb el senyal %d.\n"
-#~ "%s"
-
-#~ msgctxt "Menu item to Open Search for Open Files dialog"
-#~ msgid "_Search for Open Files…"
-#~ msgstr "Cerca de fitxer_s oberts…"
-
-#~ msgid "The GNOME Project"
-#~ msgstr "El projecte GNOME"
-
-#~ msgid "Open _Files"
-#~ msgstr "_Fitxers oberts"
-
-#~ msgid "Custom"
-#~ msgstr "Personalitzada"
-
-#~ msgid "_Continue"
-#~ msgstr "_Continua"
-
-#~ msgid "_Kill…"
-#~ msgstr "_Mata…"
-
-#~ msgid ""
-#~ "<small><i><b>Note:</b> The priority of a process is given by its nice value. A lower nice "
-#~ "value corresponds to a higher priority.</i></small>"
-#~ msgstr ""
-#~ "<small><i><b>Nota:</b> la prioritat d'un procés es defineix pel seu valor de prioritat "
-#~ "«nice». Un valor de prioritat més baix es correspon amb una prioritat més alta.</i></small>"
-
-#, c-format
-#~ msgid "_Memory maps for process “%s” (PID %u):"
-#~ msgstr "_Mapes de memòria per al procés «%s» (PID %u):"
-
-#, c-format
-#~ msgid "_Files opened by process “%s” (PID %u):"
-#~ msgstr "_Fitxers oberts pel procés «%s» (PID %u):"
-
-#, c-format
-#~ msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
-#~ msgstr "Segur que voleu matar el procés seleccionat «%s» (PID: %u)?"
-
-#, c-format
-#~ msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
-#~ msgstr "Segur que voleu finalitzar el procés seleccionat «%s» (PID: %u)?"
-
-#, c-format
-#~ msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
-#~ msgstr "Segur que voleu aturar el procés seleccionat «%s» (PID: %u)?"
-
-#, c-format
-#~ msgid "Are you sure you want to kill the selected process?"
-#~ msgid_plural "Are you sure you want to kill the %d selected processes?"
-#~ msgstr[0] "Segur que voleu matar el procés seleccionat?"
-#~ msgstr[1] "Segur que voleu matar els %d processos seleccionats?"
-
-#, c-format
-#~ msgid "Are you sure you want to end the selected process?"
-#~ msgid_plural "Are you sure you want to end the %d selected processes?"
-#~ msgstr[0] "Segur que voleu finalitzar el procés seleccionat?"
-#~ msgstr[1] "Segur que voleu finalitzar els %d processos seleccionats?"
-
-#, c-format
-#~ msgid "Are you sure you want to stop the selected process?"
-#~ msgid_plural "Are you sure you want to stop the %d selected processes?"
-#~ msgstr[0] "Segur que voleu aturar el procés seleccionat?"
-#~ msgstr[1] "Segur que voleu aturar els %d processos seleccionats?"
-
-#~ msgid ""
-#~ "Killing a process may destroy data, break the session or introduce a security risk. Only "
-#~ "unresponsive processes should be killed."
-#~ msgstr ""
-#~ "Si mateu un procés, podeu destruir dades, corrompre la sessió o crear un problema de "
-#~ "seguretat. Només s'haurien de matar els processos que no responguin."
-
-#~ msgid ""
-#~ "Ending a process may destroy data, break the session or introduce a security risk. Only "
-#~ "unresponsive processes should be ended."
-#~ msgstr ""
-#~ "Si finalitzeu un procés, podeu destruir dades, corrompre la sessió o crear un problema de "
-#~ "seguretat. Només s'haurien de finalitzar els processos que no responguin."
-
-#~ msgid ""
-#~ "Stopping a process may destroy data, break the session or introduce a security risk. Only "
-#~ "unresponsive processes should be stopped."
-#~ msgstr ""
-#~ "Si atureu un procés, podeu destruir dades, corrompre la sessió o crear un problema de "
-#~ "seguretat. Només s'haurien d'aturar els processos que no responguin."
-
-#~ msgid "N/A"
-#~ msgstr "N/D"
-
-#~ msgid "Process Name"
-#~ msgstr "Nom del procés"
-
-#, no-c-format
-#~ msgid "% CPU"
-#~ msgstr "% de CPU"
-
-#, c-format
-#~ msgid "CPU %d"
-#~ msgstr "CPU %d"
-
-#~ msgid "_Terminate Process"
-#~ msgstr "_Finalitza el procés"
-
-#~ msgid "Set Network Totals _Unit Separately"
-#~ msgstr "_Estableix la unitat de totals de xarxa per separat"
-
-#~ msgid "Received invalid color data\n"
-#~ msgstr "S'ha rebut dades de color no vàlides\n"
-
-#~ msgid "Main window size and position in the form (width, height, xpos, ypos)"
-#~ msgstr ""
-#~ "La mida i la posició de la finestra principal en el format (amplada, alçada, posició X, "
-#~ "posició Y)"
-
-#~ msgid "Set network totals unit separately"
-#~ msgstr "Estableix la unitat total de xarxa per separat"
-
-#~ msgid "Note:"
-#~ msgstr "Nota:"
