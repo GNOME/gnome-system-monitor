@@ -16,9 +16,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor-master-po-gl\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2026-02-02 05:43+0000\n"
-"PO-Revision-Date: 2026-02-18 00:31+0100\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
+"issues\n"
+"POT-Creation-Date: 2026-08-01 19:47+0000\n"
+"PO-Revision-Date: 2026-08-10 20:42+0200\n"
 "Last-Translator: Fran Dieguez <fran.dieguez@gnome.org>\n"
 "Language-Team: Galician <Proxecto Trasno <proxecto@trasno.gal>>\n"
 "Language: gl\n"
@@ -31,7 +32,7 @@ msgstr ""
 "X-DL-Module: gnome-system-monitor\n"
 "X-DL-State: Translating\n"
 "X-DL-Team: gl\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 "X-Project-Style: gnome\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
@@ -66,11 +67,13 @@ msgstr "Usada"
 msgid "GNOME System Monitor"
 msgstr "Monitor do sistema de GNOME"
 
-#: data/gnome-system-monitor-kde.desktop.in.in:3 data/org.gnome.SystemMonitor.desktop.in.in:3
+#: data/gnome-system-monitor-kde.desktop.in.in:3
+#: data/org.gnome.SystemMonitor.desktop.in.in:3
 msgid "View current processes and monitor system state"
 msgstr "Ver os procesos actuais e monitorizar o estado do sistema"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#. Translators: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: data/gnome-system-monitor-kde.desktop.in.in:15
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr "Monitor;Sistema;Procesos;CPU;Memoria;Rede;Historial;Uso;"
@@ -117,23 +120,25 @@ msgstr "Estabelecer afinidade"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Enviar sinal Stop"
+msgid "Send Stop (Pause) Signal"
+msgstr "Enviar sinal Stop (Pause)"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "Enviar sinal Continue"
+msgid "Send Continue (Resume) Signal"
+msgstr "Enviar sinal Continue (Resuem)"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "Enviar sinal de Rematar (Terminate)"
+msgid "Send Terminate (End Process) Signal"
+msgstr "Enviar sinal de Rematar (End Process)"
 
 #: data/shortcuts-dialog.ui:88
+#| msgctxt "shortcuts dialog"
+#| msgid "Send Kill Signal"
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "Enviar sinal Kill"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "Enviar sinal Kill (Force Stop)"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -211,13 +216,14 @@ msgstr "Buscar procesos e usuarios"
 msgid "_Resources"
 msgstr "_Recursos"
 
-#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111 src/interface.cpp:272
-#: src/proctable.cpp:345
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111
+#: src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311 src/proctable.cpp:352
+#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311
+#: src/proctable.cpp:356
 msgid "Memory"
 msgstr "Memoria"
 
@@ -458,19 +464,22 @@ msgstr "_Personalizado"
 msgid "Set _Affinity…"
 msgstr "Estabelecer _afinidade…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_Deter…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_Pausar…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_Retomar"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+#| msgid "_End"
+msgid "_End…"
 msgstr "_Rematar…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "Forzar _parada…"
 
@@ -480,7 +489,8 @@ msgstr "Ficheiros abertos"
 
 #: data/openfiles.ui:45
 msgctxt ""
-"FD here means File Descriptor. Use a short translation if possible, and at most 2-3 characters"
+"FD here means File Descriptor. Use a short translation if possible, and at "
+"most 2-3 characters"
 msgid "FD"
 msgstr "FD"
 
@@ -510,28 +520,31 @@ msgstr "Ver e xestionar os recursos do sistema"
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:10
 msgid ""
-"System Monitor is a process viewer and system monitor with an attractive, easy-to-use interface."
+"System Monitor is a process viewer and system monitor with an attractive, easy-"
+"to-use interface."
 msgstr ""
-"O monitor do sistema é un visor de procesos e un monitor do sistema con unha interface bonita e "
-"doada de usar."
+"O monitor do sistema é un visor de procesos e un monitor do sistema con unha "
+"interface bonita e doada de usar."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:14
 msgid ""
-"System Monitor can help you find out what applications are using the processor or the memory of "
-"your computer, can manage the running applications, force stop processes not responding, and change "
-"the state or priority of existing processes."
+"System Monitor can help you find out what applications are using the processor "
+"or the memory of your computer, can manage the running applications, force "
+"stop processes not responding, and change the state or priority of existing "
+"processes."
 msgstr ""
-"O monitor do sistema pode axudarlle a saber que aplicacións están usando o procesador ou a memoria "
-"do seu computador, pode xestionar as aplicacións en execución, forzar o peche de procesos que non "
-"respondan e cambiar o estado ou prioridade dos procesos existentes."
+"O monitor do sistema pode axudarlle a saber que aplicacións están usando o "
+"procesador ou a memoria do seu computador, pode xestionar as aplicacións en "
+"execución, forzar o peche de procesos que non respondan e cambiar o estado ou "
+"prioridade dos procesos existentes."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:20
 msgid ""
-"The resource graphs feature shows you a quick overview of what is going on with your computer "
-"displaying recent network, memory and processor usage."
+"The resource graphs feature shows you a quick overview of what is going on "
+"with your computer displaying recent network, memory and processor usage."
 msgstr ""
-"As gráficas de recursos móstranlle unha vista rápida de que está pasando no seu computador como o  "
-"uso recente da rede, memoria e procesador."
+"As gráficas de recursos móstranlle unha vista rápida de que está pasando no "
+"seu computador como o  uso recente da rede, memoria e procesador."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:28
 msgid "Process list view"
@@ -545,7 +558,12 @@ msgstr "Vista xeral dos recursos"
 msgid "File Systems view"
 msgstr "Vista dos sistemas de ficheiros"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "O Proxecto GNOME"
+
+#. Translators: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Manager;Activity;"
 msgstr "Monitor;Sistema;Procesos;CPU;Memoria;Rede;Historial;Uso;Rendemento;Tarefas;Xestor;Actividade;"
@@ -642,19 +660,19 @@ msgstr "Detalles"
 msgid "Process ID"
 msgstr "ID do proceso"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "Usuario"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "Estado"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "Comezado"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "Prioridade"
 
@@ -662,42 +680,49 @@ msgstr "Prioridade"
 msgid "Usage"
 msgstr "Uso"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "Tempo da CPU"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "Memoria virtual"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "Memoria residente"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "Memoria escribíbel"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "Memoria compartida"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "Contexto de seguranza"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "Liña de ordes"
 
-#. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#. xgettext: combined noun, the function the process is waiting in, see wchan
+#. ps(1)
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "Agardando pola canle"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "Grupo de control"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Rematar proceso…"
+msgstr[1] "_Rematar procesos…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -705,11 +730,11 @@ msgstr "Máis accións"
 
 #: data/renice.ui:4
 msgid ""
-"The priority of a process is given by its nice value. A lower nice value corresponds to a higher "
-"priority."
+"The priority of a process is given by its nice value. A lower nice value "
+"corresponds to a higher priority."
 msgstr ""
-"A prioridade do proceso está dada polo seu valor nice. Un valor nice máis baixo corresponde a unha "
-"prioridade máis alta."
+"A prioridade do proceso está dada polo seu valor nice. Un valor nice máis "
+"baixo corresponde a unha prioridade máis alta."
 
 #: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:194
 msgid "_Cancel"
@@ -763,6 +788,18 @@ msgstr "Afinidade non compatíbel"
 msgid "Priority failed on %i: %s"
 msgstr "Prioridade fallou en %i: %s"
 
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "Produciuse un fallou no axudante de Kill"
+
+#: src/actions/gsm-actions.c:236
+msgid "Affinity helper failed"
+msgstr "Produciuse un fallo no axudante de Afinidade"
+
+#: src/actions/gsm-actions.c:325
+msgid "Priority helper failed"
+msgstr "Produciuse un fallo no axudante de Prioridade"
+
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
 msgstr "Un monitor simple de procesos e sistema."
@@ -783,11 +820,13 @@ msgstr "Mostrar a lapela «Sistemas de ficheiros»"
 msgid "Open Failed"
 msgstr "Produciuse un erro ao abrir"
 
-#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224 src/setaffinity.cpp:124
+#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224
+#: src/setaffinity.cpp:124
 msgid "_Close"
 msgstr "_Pechar"
 
-#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving, Sending
+#. Translators: color picker title, %s is CPU, Memory, Swap, Receiving,
+#. Sending
 #: src/interface.cpp:235
 #, c-format
 msgid "Pick a Color for “%s”"
@@ -805,7 +844,8 @@ msgstr ""
 "Fran Diéguez <frandieguez@gnome.org>, 2009-2026.\n"
 "Leandro Regueiro <leandro.regueiro@gmail.com>, 2012;\n"
 "Antón Méixome <meixome@mancomun.org>, 2009.\n"
-"Mancomún - Centro de Referencia e Servizos de Software Libre <g11n@mancomun.org>, 2009.\n"
+"Mancomún - Centro de Referencia e Servizos de Software Libre "
+"<g11n@mancomun.org>, 2009.\n"
 "Suso Baleato <suso.baleato@xunta.es>, 2009.\n"
 "Ignacio Casal Quinteiro <icq@gnome.org>, 2005, 2006, 2007, 2008.\n"
 "Manuel A. Fernández Montecelo <manuel@sindominio.net>, 2001 2002."
@@ -842,7 +882,8 @@ msgstr "%d de %B de %Y"
 msgid "Fraction"
 msgstr "Fracción"
 
-#. TRANSLATORS: description of the pie color picker's (mem, swap) filled percentage property
+#. TRANSLATORS: description of the pie color picker's (mem, swap) filled
+#. percentage property
 #: src/legacy/gsm_color_button.c:570
 msgid "Percentage full for pie color pickers"
 msgstr "Porcentaxe completo para os selectores de cor da torta"
@@ -991,11 +1032,12 @@ msgstr "Modo Solaris para a porcentaxe de CPU"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:32
 msgid ""
-"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage is divided by the total "
-"number of CPUs. Otherwise, it operates in “Irix mode”."
+"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage is "
+"divided by the total number of CPUs. Otherwise, it operates in “Irix mode”."
 msgstr ""
-"Se é certo, o monito do sistema opera no «Modo Solaris» onde o uso da CPU por tarefas está dividido "
-"entre o número total de CPU. Doutro xeito opera en «Modo Irix»."
+"Se é certo, o monito do sistema opera no «Modo Solaris» onde o uso da CPU por "
+"tarefas está dividido entre o número total de CPU. Doutro xeito opera en «Modo "
+"Irix»."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:39
 msgid "Show memory in IEC"
@@ -1011,7 +1053,8 @@ msgstr "Mostrar o diálogo de aviso ao matar procesos"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:60
 msgid "Time in milliseconds between updates of the process view"
-msgstr "Tempo en milisegundos entre as actualizacións da visualización de procesos"
+msgstr ""
+"Tempo en milisegundos entre as actualizacións da visualización de procesos"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:66
 msgid "Time in milliseconds between updates of the graphs"
@@ -1023,12 +1066,13 @@ msgstr "Indica se debe mostrar información sobre todos os sistemas de ficheiros
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:74
 msgid ""
-"Whether to display information about all file systems (including types like “autofs” and “procfs”). "
-"Useful for getting a list of all currently mounted file systems."
+"Whether to display information about all file systems (including types like "
+"“autofs” and “procfs”). Useful for getting a list of all currently mounted "
+"file systems."
 msgstr ""
-"Indica se debe mostrarse información sobre todos os sistemas de ficheiros (incluíndo tipos como "
-"«autofs» e «procfs»). Pode ser útil para obter unha lista de todos os sistemas de ficheiros "
-"montados actualmente."
+"Indica se debe mostrarse información sobre todos os sistemas de ficheiros "
+"(incluíndo tipos como «autofs» e «procfs»). Pode ser útil para obter unha "
+"lista de todos os sistemas de ficheiros montados actualmente."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:81
 msgid "Time in milliseconds between updates of the devices list"
@@ -1120,27 +1164,31 @@ msgstr "Mostrar a memoria en escala logarítmica"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:240
-msgid "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead of a line chart."
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead of "
+"a line chart."
 msgstr ""
-"Se é verdadeiro, system-monitor mostrará a gráfica de CPU como unha gráfica de áreas apiladas no "
-"lugar dunha gráfica de liña."
+"Se é verdadeiro, system-monitor mostrará a gráfica de CPU como unha gráfica de "
+"áreas apiladas no lugar dunha gráfica de liña."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show CPU chart as stacked area chart"
 msgstr "Mostrar a gráfica de CPU como unha gráfica de áreas apiladas"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:247
-msgid "Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier curves"
+msgid ""
+"Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier curves"
 msgstr ""
-"Mostrar as gráficas de CPU, Memoria, Rede e Disco como gráficas suavizadas usando curvas de Bezier"
+"Mostrar as gráficas de CPU, Memoria, Rede e Disco como gráficas suavizadas "
+"usando curvas de Bezier"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:249
 msgid ""
-"If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as smoothed graphs, "
-"otherwise as line charts."
+"If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as "
+"smoothed graphs, otherwise as line charts."
 msgstr ""
-"Se é verdadeiro, system-monitor mostrará as gráficas de CPU, memoria, rede e disco como gráficas "
-"suavizadas, no lugar de gráficas de liña."
+"Se é verdadeiro, system-monitor mostrará as gráficas de CPU, memoria, rede e "
+"disco como gráficas suavizadas, no lugar de gráficas de liña."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:256
 msgid "Show memory and swap in IEC"
@@ -1458,7 +1506,7 @@ msgstr "Columna de ordenación de ficheiros abertos"
 msgid "Open files sort order"
 msgstr "Orde de colocación de ficheiros abertos"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "Icona"
 
@@ -1486,8 +1534,8 @@ msgstr "Rematar %s?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "Parar %s?"
+msgid "Temporarily Stop %s?"
+msgstr "Desexa deter temporalmente %s?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1509,15 +1557,18 @@ msgstr[1] "Rematar %d procesos seleccionados?"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Desexa para o proceso seleccionado?"
-msgstr[1] "Desexa para %d procesos seleccionados?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "Temporarily Stop Selected Process?"
+msgstr[1] "Desexa parar temporalmente o %d procesos seleccionados?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
-msgid "Force stopping processes can result in data loss, crashes, and system failures"
-msgstr "A parada forzada dos procesos poden producir perdas de datos, roturas e fallos do sistema"
+msgid ""
+"Force stopping processes can result in data loss, crashes, and system failures"
+msgstr ""
+"A parada forzada dos procesos poden producir perdas de datos, roturas e fallos "
+"do sistema"
 
 #: src/procdialogs.cpp:172
 msgid "_Force Stop"
@@ -1526,7 +1577,9 @@ msgstr "Forzar _parada"
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:177
 msgid "Ending processes can result in data loss, crashes, and system failures"
-msgstr "A finalización de procesos poden producir perdas de datos, roturas e fallos do sistema"
+msgstr ""
+"A finalización de procesos poden producir perdas de datos, roturas e fallos do "
+"sistema"
 
 #: src/procdialogs.cpp:179
 msgid "_End"
@@ -1535,12 +1588,16 @@ msgstr "_Rematar"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
-msgid "Stopping processes can result in data loss, crashes, and system failures"
-msgstr "Deter procesos poden producir perdas de datos, roturas e fallos do sistema"
+msgid ""
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
+msgstr ""
+"Deter (pausar) procesos poden producir perdas de datos, roturas e fallos do "
+"sistema"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Deter"
+msgid "_Pause"
+msgstr "_Pausar"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1554,59 +1611,55 @@ msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Cambiar prioridade do proceso seleccionado"
 msgstr[1] "Cambiar prioridade de %d procesos seleccionados"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "_Rematar proceso…"
-msgstr[1] "_Rematar procesos…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "Nome"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "Memoria do servidor X"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "Unidade"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "Sesión"
 
-#. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
-#. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#. TRANSLATORS: Seat = i.e. the physical seat the session of the process
+#. belongs to, only
+#. for multi-seat environments. See
+#. http://en.wikipedia.org/wiki/Multiseat_configuration
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "Estado"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "Propietario"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "Total de lecturas de disco"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "Total de escrituras en disco"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "Lecturas de disco"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "Escrituras en disco"
 
@@ -1700,10 +1753,29 @@ msgid "Very Low Priority"
 msgstr "Prioridade moi baixa"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Stop…"
+#~ msgstr "_Deter…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "_Rematar…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "Parar %s?"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "Desexa para o proceso seleccionado?"
+#~ msgstr[1] "Desexa para %d procesos seleccionados?"
+
+#~ msgid "_Stop"
+#~ msgstr "_Deter"
 
 #~ msgctxt "shortcut window"
 #~ msgid "General"
@@ -1771,9 +1843,6 @@ msgstr "%s/s"
 #~ msgid "_Search for Open Files…"
 #~ msgstr "_Buscar nos ficheiros abertos…"
 
-#~ msgid "The GNOME Project"
-#~ msgstr "O Proxecto GNOME"
-
 #~ msgid "Open _Files"
 #~ msgstr "Abrir os _ficheiros"
 
@@ -1787,11 +1856,12 @@ msgstr "%s/s"
 #~ msgstr "_Matar…"
 
 #~ msgid ""
-#~ "<small><i><b>Note:</b> The priority of a process is given by its nice value. A lower nice value "
-#~ "corresponds to a higher priority.</i></small>"
+#~ "<small><i><b>Note:</b> The priority of a process is given by its nice "
+#~ "value. A lower nice value corresponds to a higher priority.</i></small>"
 #~ msgstr ""
-#~ "<small><i><b>Nota:</b>A prioridade do proceso está dada polo seu valor nice. Un valor nice máis "
-#~ "baixo corresponde a unha prioridade máis alta.</i></small>"
+#~ "<small><i><b>Nota:</b>A prioridade do proceso está dada polo seu valor "
+#~ "nice. Un valor nice máis baixo corresponde a unha prioridade máis alta.</"
+#~ "i></small>"
 
 #, c-format
 #~ msgid "_Memory maps for process “%s” (PID %u):"
@@ -1807,7 +1877,8 @@ msgstr "%s/s"
 
 #, c-format
 #~ msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
-#~ msgstr "Está seguro que quere rematar os procesos seleccionados «%s» (PID: %u)?"
+#~ msgstr ""
+#~ "Está seguro que quere rematar os procesos seleccionados «%s» (PID: %u)?"
 
 #, c-format
 #~ msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
@@ -1832,25 +1903,27 @@ msgstr "%s/s"
 #~ msgstr[1] "Está seguro que quere deter os %d procesos seleccionados?"
 
 #~ msgid ""
-#~ "Killing a process may destroy data, break the session or introduce a security risk. Only "
-#~ "unresponsive processes should be killed."
+#~ "Killing a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be killed."
 #~ msgstr ""
-#~ "Matar un proceso pode destruír datos, romper a sesión de traballo ou crear un risco de "
-#~ "seguranza. Só deberían matarse os procesos que non respondan."
+#~ "Matar un proceso pode destruír datos, romper a sesión de traballo ou crear "
+#~ "un risco de seguranza. Só deberían matarse os procesos que non respondan."
 
 #~ msgid ""
-#~ "Ending a process may destroy data, break the session or introduce a security risk. Only "
-#~ "unresponsive processes should be ended."
+#~ "Ending a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be ended."
 #~ msgstr ""
-#~ "Finalizar un proceso pode destruír os datos, interromper a sesión de traballo ou crear un risco "
-#~ "de seguranza. Só deberían finalizarse os procesos que non respondan."
+#~ "Finalizar un proceso pode destruír os datos, interromper a sesión de "
+#~ "traballo ou crear un risco de seguranza. Só deberían finalizarse os "
+#~ "procesos que non respondan."
 
 #~ msgid ""
-#~ "Stopping a process may destroy data, break the session or introduce a security risk. Only "
-#~ "unresponsive processes should be stopped."
+#~ "Stopping a process may destroy data, break the session or introduce a "
+#~ "security risk. Only unresponsive processes should be stopped."
 #~ msgstr ""
-#~ "Deter un proceso pode destruír os datos, interromper a sesión de traballo ou crear un risco de "
-#~ "seguranza. Só deberían deter os procesos que non respondan."
+#~ "Deter un proceso pode destruír os datos, interromper a sesión de traballo "
+#~ "ou crear un risco de seguranza. Só deberían deter os procesos que non "
+#~ "respondan."
 
 #~ msgid "N/A"
 #~ msgstr "N/D"
@@ -1876,7 +1949,8 @@ msgstr "%s/s"
 #~ msgstr "Recibíronse datos de cor non válidos\n"
 
 #~ msgid "Main window size and position in the form (width, height, xpos, ypos)"
-#~ msgstr "Tamaño e posición da xanela principal no formato (ancho, alto, posx, posy)"
+#~ msgstr ""
+#~ "Tamaño e posición da xanela principal no formato (ancho, alto, posx, posy)"
 
 #~ msgid "Set network totals unit separately"
 #~ msgstr "Enviar unidades totais de rede por separado"
