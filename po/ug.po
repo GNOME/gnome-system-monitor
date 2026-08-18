@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: procman\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2026-02-02 05:43+0000\n"
-"PO-Revision-Date: 2026-03-02 22:49-0500\n"
+"POT-Creation-Date: 2026-08-01 19:47+0000\n"
+"PO-Revision-Date: 2026-08-18 12:02-0400\n"
 "Last-Translator: Abduqadir Abliz <sahranbay@gmail.com>\n"
 "Language-Team: Gnome Uighur Translation Project <gnome-uighur@yahoogroups.com>\n"
 "Language: ug\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
 msgid "Device"
@@ -89,7 +89,7 @@ msgstr "خاسلىق"
 #: data/shortcuts-dialog.ui:46
 msgctxt "shortcuts dialog"
 msgid "Memory Maps"
-msgstr "ئەسلەك خەرىتىسى"
+msgstr "ئەسلەك خەرىتە"
 
 #: data/shortcuts-dialog.ui:53
 msgctxt "shortcuts dialog"
@@ -103,23 +103,23 @@ msgstr "يېقىنلىق تەڭشىكى"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "توختا سىگنالى يوللايدۇ"
+msgid "Send Stop (Pause) Signal"
+msgstr "توختا (ۋاقىتلىق توختا) سىگنالى يوللايدۇ"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "داۋاملاشتۇر سىگنالى يوللايدۇ"
+msgid "Send Continue (Resume) Signal"
+msgstr "داۋاملاشتۇر (داۋاملىق) سىگنالى يوللايدۇ"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "ئاخىرلاشتۇر سىگنالى يوللايدۇ"
+msgid "Send Terminate (End Process) Signal"
+msgstr "ئاخىرلاشتۇر (جەرياننى ئاخىرلاشتۇر) سىگنالى يوللايدۇ"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "ئۆلتۈر سىگنالى يوللايدۇ"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "ئۆلتۈر (مەجبۇرىي توختات) سىگنالى يوللايدۇ"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -149,7 +149,7 @@ msgstr "ئەپ"
 #: data/shortcuts-dialog.ui:122
 msgctxt "shortcuts dialog"
 msgid "Open Menu"
-msgstr "تىزىملىك ئاچىدۇ"
+msgstr "تىزىملىك ئاچ"
 
 #: data/shortcuts-dialog.ui:128
 msgctxt "shortcuts dialog"
@@ -169,7 +169,7 @@ msgstr "ياردەم"
 #: data/shortcuts-dialog.ui:149
 msgctxt "shortcuts dialog"
 msgid "Close Window"
-msgstr "كۆزنەكنى ياپ"
+msgstr "كۆزنەك ياپ"
 
 #: data/shortcuts-dialog.ui:156
 msgctxt "shortcuts dialog"
@@ -196,12 +196,12 @@ msgstr "ئىزدەش جەريانى ۋە ئىشلەتكۈچى"
 msgid "_Resources"
 msgstr "مەنبە(_R)"
 
-#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111 src/interface.cpp:272 src/proctable.cpp:345
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111 src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311 src/proctable.cpp:352
+#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311 src/proctable.cpp:356
 msgid "Memory"
 msgstr "ئەسلەك"
 
@@ -442,19 +442,21 @@ msgstr "ئىختىيارى(_T)"
 msgid "Set _Affinity…"
 msgstr "يېقىنلىق تەڭشىكى(_A)…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "توختا(_S)…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "ۋاقىتلىق توختا(_P)…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
-msgstr "داۋاملاشتۇر(_R)"
+msgstr "داۋاملىق(_R)"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
-msgstr "ئاخىرلاشتۇر(_T)…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
+msgstr "ئاخىرلاشتۇر(_E)…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "مەجبۇرىي توختات(_F)…"
 
@@ -496,12 +498,8 @@ msgid "System Monitor is a process viewer and system monitor with an attractive,
 msgstr "سىستېما كۆزەتكۈچ ئارايۈزىنى ئىشلىتىش ئاسان بولغان جەريان كۆرگۈچ ۋە سىستېما كۆزەتكۈچ."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:14
-msgid ""
-"System Monitor can help you find out what applications are using the processor or the memory of your computer, can manage the running applications, force stop processes not responding, "
-"and change the state or priority of existing processes."
-msgstr ""
-"سىستېما كۆزەتكۈچ سىزگە ياردەملىشىپ قانداق پىروگراممىنىڭ كومپيۇتېرىڭىزنىڭ بىر تەرەپ قىلغۇچ ياكى ئەسلىكىنى ئىشلىتىۋاتقانلىقى كۆرسىتىپ بېرەلەيدۇ، ئىجرا قىلىنىۋاتقان پىروگراممىنى باشقۇرۇپ، "
-"ئىنكاس يوق جەرياننى مەجبۇرىي توختىتالايدۇ ۋە مەۋجۇت جەرياننىڭ ھالىتى ياكى ئالدىنلىق مەرتىۋىسىنى ئۆزگەرتەلەيدۇ."
+msgid "System Monitor can help you find out what applications are using the processor or the memory of your computer, can manage the running applications, force stop processes not responding, and change the state or priority of existing processes."
+msgstr "سىستېما كۆزەتكۈچ سىزگە ياردەملىشىپ قانداق پىروگراممىنىڭ كومپيۇتېرىڭىزنىڭ بىر تەرەپ قىلغۇچ ياكى ئەسلىكىنى ئىشلىتىۋاتقانلىقى كۆرسىتىپ بېرەلەيدۇ، ئىجرا قىلىنىۋاتقان پىروگراممىنى باشقۇرۇپ، ئىنكاس يوق جەرياننى مەجبۇرىي توختىتالايدۇ ۋە مەۋجۇت جەرياننىڭ ھالىتى ياكى ئالدىنلىق مەرتىۋىسىنى ئۆزگەرتەلەيدۇ."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:20
 msgid "The resource graphs feature shows you a quick overview of what is going on with your computer displaying recent network, memory and processor usage."
@@ -519,6 +517,10 @@ msgstr "مەنبە ئىخچام كۆرۈنۈشى"
 msgid "File Systems view"
 msgstr "ھۆججەت سىستېما كۆرۈنۈشى"
 
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "GNOME قۇرۇلۇشى"
+
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Manager;Activity;"
@@ -534,7 +536,7 @@ msgstr "مەنبە"
 
 #: data/preferences.ui:16 data/preferences.ui:101 data/preferences.ui:150
 msgid "Behavior"
-msgstr "مەشغۇلات"
+msgstr "قىلمىش"
 
 #: data/preferences.ui:20 data/preferences.ui:105 data/preferences.ui:154
 msgid "_Update Interval in Seconds"
@@ -616,19 +618,19 @@ msgstr "تەپسىلاتى"
 msgid "Process ID"
 msgstr "جەريان كىملىكى"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "ئىشلەتكۈچى"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "ھالىتى"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "باشلاندى"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "ئالدىنلىقى"
 
@@ -636,42 +638,47 @@ msgstr "ئالدىنلىقى"
 msgid "Usage"
 msgstr "ئىشلىتىلىشى"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "CPU ۋاقتى"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "مەۋھۇم ئەسلەك"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "دائىمىي ئەسلەك"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "يېزىشچان ئەسلەك"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "ھەمبەھىر ئەسلەك"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "بىخەتەر مۇھىت"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "بۇيرۇق قۇرى"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "كۈتۈش قانىلى"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "تىزگىن گۇرۇپپا"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "جەرياننى ئاخىرلاشتۇر(_E)…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -733,6 +740,18 @@ msgstr "يېقىنلىقىنى قوللىمايدۇ"
 msgid "Priority failed on %i: %s"
 msgstr "%i: دىكى ئالدىنلىقى مەغلۇپ بولدى: %s"
 
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "ياردەمچىنى توختىتالمىدى"
+
+#: src/actions/gsm-actions.c:236
+msgid "Affinity helper failed"
+msgstr "Affinity ياردەمچىسى مەغلۇپ بولدى"
+
+#: src/actions/gsm-actions.c:325
+msgid "Priority helper failed"
+msgstr "ئالدىنلىق ياردەمچىسى مەغلۇپ بولدى"
+
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
 msgstr "ئاددىي ئىجرا ۋە سىستېما كۆزەتكۈچ."
@@ -772,13 +791,7 @@ msgstr "CPU%d"
 #: src/interface.cpp:488
 msgid "translator-credits"
 msgstr ""
-"تەرجىمان تۆھپىسى\n"
-"GNOME Uighur Translation Project <gnome-uighur@yahoogroups.comAbduxukur Abdurixit <abduxukur.abdurixit@t-systems.ch>, 2005\n"
-"\n"
-"Launchpad Contributions:\n"
-"  Burkut https://launchpad.net/~burkut\n"
-"  Gheyret T.Kenji https://launchpad.net/~gheyretkenji\n"
-"  Sebastien Bacher https://launchpad.net/~seb128\n"
+"غەيرەت ت.كەنجى <gheyret@gmail.com>\n"
 "ئابدۇقادىر ئابلىز <sahranbay@gmail.com>"
 
 #. xgettext: ? stands for unknown
@@ -804,7 +817,7 @@ msgstr "%m-ئاينىڭ %d-كۈنى %H:%M"
 
 #: src/legacy/e_date.c:220
 msgid "%b %d %Y"
-msgstr "%b %d %Y"
+msgstr "%Y-يىلى %-m-ئاينىڭ %-d-كۈنى"
 
 #: src/legacy/gsm_color_button.c:568
 msgid "Fraction"
@@ -859,7 +872,7 @@ msgstr[0] "%u hr"
 #, c-format
 msgid "%u min"
 msgid_plural "%u mins"
-msgstr[0] "%u min"
+msgstr[0] "%u مىنۇت"
 
 #: src/load-graph.cpp:129
 #, c-format
@@ -954,7 +967,7 @@ msgstr "CPU پىرسەنتى Solaris ھالىتىنى ئىشلىتىدۇ"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:32
 msgid "If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage is divided by the total number of CPUs. Otherwise, it operates in “Irix mode”."
-msgstr "ئەگەر TRUE بولسا سىستېما كۆزەتكۈچ «Solaris ھالەت» تە ئىشلەيدۇ، ئۇنىڭدىكى ۋەزىپىنىڭ CPU ئىشلىتىش مىقدارى ئومۇمىي CPU سانىغا بۆلۈنىدۇ. ئۇنداق بولمىسا «Irix ھالەت» تە ئىشلەيدۇ."
+msgstr "ئەگەر TRUE بولسا سىستېما كۆزەتكۈچ «Solaris ھالەت» تە ئىشلەيدۇ، ئۇدىكى ۋەزىپىنىڭ CPU ئىشلىتىش مىقدارى ئومۇمىي CPU سانىغا بۆلۈنىدۇ. ئۇنداق بولمىسا «Irix ھالەت» تە ئىشلەيدۇ."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:39
 msgid "Show memory in IEC"
@@ -1074,7 +1087,7 @@ msgstr "ئەسلەكنى لوگارىفما ئۆلچىمىدە كۆرسىتىد�
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:231 src/org.gnome.gnome-system-monitor.gschema.xml.in:240
 msgid "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead of a line chart."
-msgstr "ئەگەر TRUE بولسا، سىستېما كۆزەتكۈچىسى CPU  گىرافىكىنى دەستىلەنگەن گىرافىك سۈپىتىدە كۆرسىتىدۇ."
+msgstr "ئەگەر TRUE بولسا، سىستېما كۆزەتكۈچىسى CPU گىرافىكىنى دەستىلەنگەن گىرافىك سۈپىتىدە كۆرسىتىدۇ."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show CPU chart as stacked area chart"
@@ -1258,11 +1271,11 @@ msgstr "قوزغالغاندا جەرياننىڭ «بىرلىك» رېتىنى 
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:556
 msgid "Width of process “Session” column"
-msgstr "«ئەڭگىمە» رېتى جەريانىنىڭ كەڭلىكى"
+msgstr "«جەريانچاق» رېتى جەريانىنىڭ كەڭلىكى"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:563
 msgid "Show process “Session” column on startup"
-msgstr "قوزغالغاندا جەرياننىڭ «ئەڭگىمە» رېتىنى كۆرسىتىدۇ"
+msgstr "قوزغالغاندا جەرياننىڭ «جەريانچاق» رېتىنى كۆرسىتىدۇ"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:570
 msgid "Width of process “Seat” column"
@@ -1404,7 +1417,7 @@ msgstr "ئېچىلغان ھۆججەت تەرتىپلەش رېتى"
 msgid "Open files sort order"
 msgstr "ئېچىلغان ھۆججەتنى تەرتىپلەش تەرتىپى"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "سىنبەلگە"
 
@@ -1432,8 +1445,8 @@ msgstr "%s نى ئاخىرلاشتۇرامدۇ؟"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "%s نى توختىتامدۇ؟"
+msgid "Temporarily Stop %s?"
+msgstr "%s نى ۋاقىتلىق توختىتامدۇ؟"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1453,9 +1466,9 @@ msgstr[0] "تاللانغان %d جەرياننى ئاخىرلاشتۇرامدۇ
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "تاللانغان %d جەرياننى توختىتامدۇ؟"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "تاللانغان %d جەرياننى ۋاقىتلىق توختىتامدۇ؟"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1478,12 +1491,12 @@ msgstr "ئاخىرلاشتۇر(_E)"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
-msgid "Stopping processes can result in data loss, crashes, and system failures"
-msgstr "جەريان توختىتىلسا سانلىق مەلۇمات يوقاپ كېتىش، يىمىرىلىش ۋە سىستېما خاتالىقىنى پەيدا قىلىشى مۇمكىن"
+msgid "Stopping (pausing) processes can result in data loss, crashes, and system failures"
+msgstr "جەريان توختىتىش (ۋاقىتلىق توختىتىش) سانلىق مەلۇمات يوقاپ كېتىش، يىمىرىلىش ۋە سىستېما خاتالىقىنى پەيدا قىلىشى مۇمكىن"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "توختا(_S)"
+msgid "_Pause"
+msgstr "ۋاقىتلىق توختا(_P)"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1496,58 +1509,53 @@ msgid "Change Priority of the Selected Process"
 msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "تاللانغان %d جەرياننىڭ ئالدىنلىقىنى ئۆزگەرتىدۇ"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "جەرياننى ئاخىرلاشتۇر(_E)…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "ئاتى"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "X مۇلازىمېتىر ئەسلەك"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "كىملىك"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "بىرلىك"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
-msgstr "ئەڭگىمە"
+msgstr "جەريانچاق"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "ئورۇن"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "ئىگىدار"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "دىسكا ئوقۇش يىغىندىسى"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "دىسكا يېزىش يىغىندىسى"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "دىسكا ئوقۇش"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "دىسكا يېزىش"
 
@@ -1641,10 +1649,28 @@ msgid "Very Low Priority"
 msgstr "ئەڭ توۋەن ئالدىنلىق"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Stop…"
+#~ msgstr "توختا(_S)…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "ئاخىرلاشتۇر(_T)…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "%s نى توختىتامدۇ؟"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "تاللانغان %d جەرياننى توختىتامدۇ؟"
+
+#~ msgid "_Stop"
+#~ msgstr "توختا(_S)"
 
 #, c-format
 #~ msgid ""
