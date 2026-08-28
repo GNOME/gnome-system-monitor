@@ -16,10 +16,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2026-02-02 05:43+0000\n"
-"PO-Revision-Date: 2026-02-05 22:44+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
+"issues\n"
+"POT-Creation-Date: 2026-08-01 19:47+0000\n"
+"PO-Revision-Date: 2026-08-28 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -61,7 +62,8 @@ msgstr "Kullanılan"
 msgid "GNOME System Monitor"
 msgstr "GNOME Sistem Gözlemcisi"
 
-#: data/gnome-system-monitor-kde.desktop.in.in:3 data/org.gnome.SystemMonitor.desktop.in.in:3
+#: data/gnome-system-monitor-kde.desktop.in.in:3
+#: data/org.gnome.SystemMonitor.desktop.in.in:3
 msgid "View current processes and monitor system state"
 msgstr "Çalışan süreçleri ve sistem durumunu gösterir"
 
@@ -69,7 +71,9 @@ msgstr "Çalışan süreçleri ve sistem durumunu gösterir"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/gnome-system-monitor-kde.desktop.in.in:15
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
-msgstr "System Monitor;Monitor;System;Process;CPU;Memory;Network;History;Usage;İzleyici;Gözlemci;Sistem;Süreç;İşlem;MİB;CPU;Bellek;Ağ;Geçmiş;Kullanım;"
+msgstr ""
+"System "
+"Monitor;Monitor;System;Process;CPU;Memory;Network;History;Usage;İzleyici;Gözlemci;Sistem;Süreç;İşlem;MİB;CPU;Bellek;Ağ;Geçmiş;Kullanım;"
 
 #: data/shortcuts-dialog.ui:6
 msgctxt "shortcuts dialog"
@@ -113,23 +117,23 @@ msgstr "Benzeşim Belirle"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Durdur Sinyali Gönder"
+msgid "Send Stop (Pause) Signal"
+msgstr "Durdur (Duraklat) Sinyali Gönder"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "Sürdür Sinyali Gönder"
+msgid "Send Continue (Resume) Signal"
+msgstr "Devam Et (Sürdür) Sinyali Gönder"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "Sonlandır Sinyali Gönder"
+msgid "Send Terminate (End Process) Signal"
+msgstr "Sonlandır (Süreci Bitir) Sinyali Gönder"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "Öldür Sinyali Gönder"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "Öldür (Zorla Durdur) Sinyali Gönder"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -186,7 +190,8 @@ msgctxt "shortcuts dialog"
 msgid "Quit"
 msgstr "Çık"
 
-#: data/interface.ui:6 data/org.gnome.SystemMonitor.metainfo.xml.in.in:7 data/org.gnome.SystemMonitor.desktop.in.in:2 src/application.cpp:392
+#: data/interface.ui:6 data/org.gnome.SystemMonitor.metainfo.xml.in.in:7
+#: data/org.gnome.SystemMonitor.desktop.in.in:2 src/application.cpp:392
 msgid "System Monitor"
 msgstr "Sistem Gözlemcisi"
 
@@ -206,12 +211,14 @@ msgstr "Süreç ve kullanıcı ara"
 msgid "_Resources"
 msgstr "_Kaynaklar"
 
-#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111 src/interface.cpp:272 src/proctable.cpp:345
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111
+#: src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "MİB"
 
-#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311 src/proctable.cpp:352
+#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311
+#: src/proctable.cpp:356
 msgid "Memory"
 msgstr "Bellek"
 
@@ -452,19 +459,21 @@ msgstr "Ö_zel"
 msgid "Set _Affinity…"
 msgstr "_Benzeşim Belirle…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_Durdur…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_Duraklat…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_Sürdür"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
 msgstr "_Sonlandır…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "_Durmaya Zorla…"
 
@@ -473,7 +482,9 @@ msgid "Open Files"
 msgstr "Açık Dosyalar"
 
 #: data/openfiles.ui:45
-msgctxt "FD here means File Descriptor. Use a short translation if possible, and at most 2-3 characters"
+msgctxt ""
+"FD here means File Descriptor. Use a short translation if possible, and at "
+"most 2-3 characters"
 msgid "FD"
 msgstr "DT"
 
@@ -502,20 +513,32 @@ msgid "View and manage system resources"
 msgstr "Sistem kaynaklarını görüntüle ve yönet"
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:10
-msgid "System Monitor is a process viewer and system monitor with an attractive, easy-to-use interface."
-msgstr "Sistem Gözlemcisi; çekici, kullanımı kolay arayüzlü süreç görüntüleyici ve sistem izleyicisidir."
+msgid ""
+"System Monitor is a process viewer and system monitor with an attractive, "
+"easy-to-use interface."
+msgstr ""
+"Sistem Gözlemcisi; çekici, kullanımı kolay arayüzlü süreç görüntüleyici ve "
+"sistem izleyicisidir."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:14
 msgid ""
-"System Monitor can help you find out what applications are using the processor or the memory of your computer, can manage the running applications, force stop processes not responding, and change the state or "
+"System Monitor can help you find out what applications are using the "
+"processor or the memory of your computer, can manage the running "
+"applications, force stop processes not responding, and change the state or "
 "priority of existing processes."
 msgstr ""
-"Sistem Gözlemcisi; hangi uygulamaların bellek ve işlemci kullandığını bulmanıza yardım edebilir, çalışan uygulamaları yönetebilir, yanıtlamayan süreçleri zorla kapatabilir ve var olan süreçlerin durumunu veya "
-"önceliğini değiştirebilir."
+"Sistem Gözlemcisi; hangi uygulamaların bellek ve işlemci kullandığını "
+"bulmanıza yardım edebilir, çalışan uygulamaları yönetebilir, yanıtlamayan "
+"süreçleri zorla kapatabilir ve var olan süreçlerin durumunu veya önceliğini "
+"değiştirebilir."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:20
-msgid "The resource graphs feature shows you a quick overview of what is going on with your computer displaying recent network, memory and processor usage."
-msgstr "Kaynak grafiği; ağın, belleğin ve işlemcinin kullanımıyla ve sisteminizde ne olup bittiğiyle ilgili hızlı bakış sunar."
+msgid ""
+"The resource graphs feature shows you a quick overview of what is going on "
+"with your computer displaying recent network, memory and processor usage."
+msgstr ""
+"Kaynak grafiği; ağın, belleğin ve işlemcinin kullanımıyla ve sisteminizde ne "
+"olup bittiğiyle ilgili hızlı bakış sunar."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:28
 msgid "Process list view"
@@ -528,6 +551,10 @@ msgstr "Kaynaklar genel görünümü"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "Dosya Sistemleri görünümü"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "GNOME Projesi"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -626,19 +653,19 @@ msgstr "Ayrıntılar"
 msgid "Process ID"
 msgstr "Süreç Kimliği"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "Kullanıcı"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "Durum"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "Başlamış"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "Öncelik"
 
@@ -646,50 +673,59 @@ msgstr "Öncelik"
 msgid "Usage"
 msgstr "Kullanım"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "MİB Zamanı"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "Sanal Bellek"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "Yerleşik Bellek"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "Yazılabilir Bellek"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "Paylaşılan Bellek"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "Güvenlik Bağlamı"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "Komut Satırı"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "Bekleyen Kanal"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "Denetim Kümesi"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "Süreç(leri) _Sonlandır…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
 msgstr "Daha Çok İşlem"
 
 #: data/renice.ui:4
-msgid "The priority of a process is given by its nice value. A lower nice value corresponds to a higher priority."
-msgstr "Öncelik değeri süreç öncelikleri ile ilgilidir. Düşük öncelik değeri daha yüksek önceliğe karşılık gelir."
+msgid ""
+"The priority of a process is given by its nice value. A lower nice value "
+"corresponds to a higher priority."
+msgstr ""
+"Öncelik değeri süreç öncelikleri ile ilgilidir. Düşük öncelik değeri daha "
+"yüksek önceliğe karşılık gelir."
 
 #: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:194
 msgid "_Cancel"
@@ -743,6 +779,18 @@ msgstr "Benzeşim desteklenmiyor"
 msgid "Priority failed on %i: %s"
 msgstr "%i üstünde öncelik başarısız: %s"
 
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "Öldürme yardımcısı başarısız"
+
+#: src/actions/gsm-actions.c:236
+msgid "Affinity helper failed"
+msgstr "Benzeşim yardımcısı başarısız"
+
+#: src/actions/gsm-actions.c:325
+msgid "Priority helper failed"
+msgstr "Öncelik yardımcısı başarısız"
+
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
 msgstr "Basit bir süreç ve sistem izleyici."
@@ -763,7 +811,8 @@ msgstr "Dosya Sistemleri sekmesini göster"
 msgid "Open Failed"
 msgstr "Açılamadı"
 
-#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224 src/setaffinity.cpp:124
+#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224
+#: src/setaffinity.cpp:124
 msgid "_Close"
 msgstr "_Kapat"
 
@@ -957,8 +1006,14 @@ msgid "Solaris mode for CPU percentage"
 msgstr "MİB yüzdesi için Solaris kipi"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:32
-msgid "If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage is divided by the total number of CPUs. Otherwise, it operates in “Irix mode”."
-msgstr "Eğer TRUE yapılırsa sistem gözlemcisi bir görevin mib kullanımı toplam MİB sayısına bölündüğü “Solaris kipinde” işlem yapar. Diğer şekilde “Irix kipinde” işlem yapar."
+msgid ""
+"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage "
+"is divided by the total number of CPUs. Otherwise, it operates in “Irix "
+"mode”."
+msgstr ""
+"Eğer TRUE yapılırsa sistem gözlemcisi bir görevin mib kullanımı toplam MİB "
+"sayısına bölündüğü “Solaris kipinde” işlem yapar. Diğer şekilde “Irix "
+"kipinde” işlem yapar."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:39
 msgid "Show memory in IEC"
@@ -974,7 +1029,8 @@ msgstr "Süreçler öldürülürken uyarı iletisi göster"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:60
 msgid "Time in milliseconds between updates of the process view"
-msgstr "Milisaniye olarak süreç görüntüleme güncellemeleri arasında geçen zaman"
+msgstr ""
+"Milisaniye olarak süreç görüntüleme güncellemeleri arasında geçen zaman"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:66
 msgid "Time in milliseconds between updates of the graphs"
@@ -985,9 +1041,14 @@ msgid "Whether information about all file systems should be displayed"
 msgstr "Tüm dosya sistemleriyle ilgili bilgilerin gösterilmesi"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:74
-msgid "Whether to display information about all file systems (including types like “autofs” and “procfs”). Useful for getting a list of all currently mounted file systems."
+msgid ""
+"Whether to display information about all file systems (including types like "
+"“autofs” and “procfs”). Useful for getting a list of all currently mounted "
+"file systems."
 msgstr ""
-"Tüm dosya sistemleriyle ilgili bilgilerin gösterilip gösterilmeyeceği (“autofs” ve “procfs” gibi dosya sistemi türlerini de içeren). Şu an bağlı olan tüm dosya sistemlerinin listesini almak için yararlıdır."
+"Tüm dosya sistemleriyle ilgili bilgilerin gösterilip gösterilmeyeceği "
+"(“autofs” ve “procfs” gibi dosya sistemi türlerini de içeren). Şu an bağlı "
+"olan tüm dosya sistemlerinin listesini almak için yararlıdır."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:81
 msgid "Time in milliseconds between updates of the devices list"
@@ -1077,21 +1138,34 @@ msgstr "Ağ toplamlarını bit türünden göster"
 msgid "Show memory in logarithmic scale"
 msgstr "Belleği logaritmik ölçekte göster"
 
-#: src/org.gnome.gnome-system-monitor.gschema.xml.in:231 src/org.gnome.gnome-system-monitor.gschema.xml.in:240
-msgid "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead of a line chart."
-msgstr "Eğer TRUE yapılırsa sistem gözlemcisi MİB grafiğini çizgi grafiği yerine yığılmış alan grafiği olarak gösterir."
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
+#: src/org.gnome.gnome-system-monitor.gschema.xml.in:240
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
+"of a line chart."
+msgstr ""
+"Eğer TRUE yapılırsa sistem gözlemcisi MİB grafiğini çizgi grafiği yerine "
+"yığılmış alan grafiği olarak gösterir."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show CPU chart as stacked area chart"
 msgstr "MİB grafiğini yığılmış alan grafiği olarak göster"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:247
-msgid "Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier curves"
-msgstr "MİB, Bellek, Ağ ve Disk grafiklerini Bezier eğrileri kullanarak pürüzsüz grafik olarak göster"
+msgid ""
+"Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier "
+"curves"
+msgstr ""
+"MİB, Bellek, Ağ ve Disk grafiklerini Bezier eğrileri kullanarak pürüzsüz "
+"grafik olarak göster"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:249
-msgid "If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as smoothed graphs, otherwise as line charts."
-msgstr "Eğer TRUE ise sistem gözlemcisi MİB, Bellek, Ağ ve Disk grafiklerini çizgi grafiği yerine pürüzsüz grafik olarak gösterir."
+msgid ""
+"If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as "
+"smoothed graphs, otherwise as line charts."
+msgstr ""
+"Eğer TRUE ise sistem gözlemcisi MİB, Bellek, Ağ ve Disk grafiklerini çizgi "
+"grafiği yerine pürüzsüz grafik olarak gösterir."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:256
 msgid "Show memory and swap in IEC"
@@ -1409,7 +1483,7 @@ msgstr "Açık dosyalar sıralama sütunu"
 msgid "Open files sort order"
 msgstr "Açık dosyalar sıralama düzeni"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "Simge"
 
@@ -1437,8 +1511,8 @@ msgstr "%s Sonlandırılsın Mı?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "%s Durdurulsun Mu?"
+msgid "Temporarily Stop %s?"
+msgstr "%s Geçici Olarak Durdurulsun Mu?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1458,14 +1532,18 @@ msgstr[0] "%d Süreç Sonlandırılsın Mı?"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Seçili %d Süreç Durdurulsun Mu?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "Seçili %d Süreç Geçici Olarak Durdurulsun Mu?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
-msgid "Force stopping processes can result in data loss, crashes, and system failures"
-msgstr "Süreçleri durmaya zorlamak veri yitimine, çökmeye ve sistem hatalarına neden olabilir"
+msgid ""
+"Force stopping processes can result in data loss, crashes, and system "
+"failures"
+msgstr ""
+"Süreçleri durmaya zorlamak veri yitimine, çökmeye ve sistem hatalarına neden "
+"olabilir"
 
 #: src/procdialogs.cpp:172
 msgid "_Force Stop"
@@ -1474,7 +1552,9 @@ msgstr "_Durmaya Zorla"
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:177
 msgid "Ending processes can result in data loss, crashes, and system failures"
-msgstr "Süreçlerin sonlandırılması veri yitimine, çökmeye ve sistem hatalarına neden olabilir"
+msgstr ""
+"Süreçlerin sonlandırılması veri yitimine, çökmeye ve sistem hatalarına neden "
+"olabilir"
 
 #: src/procdialogs.cpp:179
 msgid "_End"
@@ -1483,12 +1563,16 @@ msgstr "_Sonlandır"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
-msgid "Stopping processes can result in data loss, crashes, and system failures"
-msgstr "Süreçlerin durdurulması veri yitimine, çökmeye ve sistem hatalarına neden olabilir"
+msgid ""
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
+msgstr ""
+"Süreçlerin durdurulması (duraklatılması) veri yitimine, çökmeye ve sistem "
+"hatalarına neden olabilir"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Durdur"
+msgid "_Pause"
+msgstr "_Duraklat"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1501,58 +1585,53 @@ msgid "Change Priority of the Selected Process"
 msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Seçilen %d Sürecin Önceliğini Değiştir"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "Süreç(leri) _Sonlandır…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "Ad"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "X Sunucusu Belleği"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Öncelik"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "Kimlik"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "Birim"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "Oturum"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "Yuva"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "Sahip"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "Toplam Diskten Okuma"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "Toplam Diske Yazma"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "Diskten Okuma"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "Diske Yazma"
 
@@ -1647,10 +1726,28 @@ msgid "Very Low Priority"
 msgstr "Çok Düşük Öncelik"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Stop…"
+#~ msgstr "_Durdur…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "_Sonlandır…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "%s Durdurulsun Mu?"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "Seçili %d Süreç Durdurulsun Mu?"
+
+#~ msgid "_Stop"
+#~ msgstr "_Durdur"
 
 #, c-format
 #~ msgid ""
