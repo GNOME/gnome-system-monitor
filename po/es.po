@@ -8,25 +8,24 @@
 # Pablo Gonzalo del Campo <pablodc@bigfoot.com>,2002, 2003.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2009, 2010, 2011.
-# Daniel Mustieles <daniel.mustieles@gmail.com>, 2011-2022.
 # Alberto H Sande <albertohsande@gmail.com>, 2022.
-# Daniel Mustieles García <daniel.mustieles@gmail.com>, 2022-2026.
+# Daniel Mustieles <daniel.mustieles@gmail.com>, 2022-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2026-02-02 05:43+0000\n"
-"PO-Revision-Date: 2026-02-12 15:40+0100\n"
-"Last-Translator: Daniel Mustieles García <daniel.mustieles@gmail.com>\n"
-"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
-"Language: es_ES\n"
+"POT-Creation-Date: 2026-08-29 17:41+0000\n"
+"PO-Revision-Date: 2026-09-04 13:09+0200\n"
+"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"Language-Team: Spanish <l10n-es@gnome.org>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 49.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
 msgid "Device"
@@ -113,23 +112,23 @@ msgstr "Establecer afinidad"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Enviar señal de parada"
+msgid "Send Stop (Pause) Signal"
+msgstr "Enviar señal de parada (pausa)"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "Enviar señal de continuar"
+msgid "Send Continue (Resume) Signal"
+msgstr "Enviar señal de continuar (reanudar)"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "Enviar señal de terminación"
+msgid "Send Terminate (End Process) Signal"
+msgstr "Enviar señal de finalización (fin del proceso)"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "Enviar señal de finalización"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "Enviar señal de matar (forzar parada)"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -208,13 +207,13 @@ msgid "_Resources"
 msgstr "_Recursos"
 
 #: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111
-#: src/interface.cpp:272 src/proctable.cpp:345
+#: src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
 #: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311
-#: src/proctable.cpp:352
+#: src/proctable.cpp:356
 msgid "Memory"
 msgstr "Memoria"
 
@@ -455,19 +454,21 @@ msgstr "P_ersonalizado"
 msgid "Set _Affinity…"
 msgstr "Establecer _afinidad…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_Detener…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_Pausa…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_Reanudar"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
-msgstr "_Terminar…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
+msgstr "_Fin…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "_Forzar detención…"
 
@@ -546,6 +547,10 @@ msgstr "Vista general de recursos"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "Vista de los sistemas de archivos"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "El proyecto GNOME"
 
 #. Translators: Search terms to find this application. Do NOT translate or
 #. localize the semicolons! The list MUST also end with a semicolon!
@@ -645,19 +650,19 @@ msgstr "Detalles"
 msgid "Process ID"
 msgstr "ID de proceso"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "Usuario"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "Estado"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "Iniciado"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "Prioridad"
 
@@ -665,43 +670,49 @@ msgstr "Prioridad"
 msgid "Usage"
 msgstr "Uso"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "Tiempo de CPU"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "Memoria virtual"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "Memoria residente"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "Memoria escribible"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "Memoria compartida"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "Contexto de seguridad"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "Línea de comandos"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan
 #. ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "Canal en espera"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "Grupo de control"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Finalizar proceso…"
+msgstr[1] "_Finalizar procesos…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -766,6 +777,23 @@ msgstr "Afinidad no soportada"
 #, c-format
 msgid "Priority failed on %i: %s"
 msgstr "La prioridad falló en %i: %s"
+
+#: src/actions/gsm-actions.c:98
+#, fuzzy
+msgid "Kill helper failed"
+msgstr "Asistente de asesinato fallido"
+
+#: src/actions/gsm-actions.c:236
+#, fuzzy
+#| msgid "Affinity failed on %i: %s"
+msgid "Affinity helper failed"
+msgstr "Falló el ayudante de afinidad"
+
+#: src/actions/gsm-actions.c:325
+#, fuzzy
+#| msgid "Priority failed on %i: %s"
+msgid "Priority helper failed"
+msgstr "Ayudante prioritario fallido"
 
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
@@ -1479,7 +1507,7 @@ msgstr "Columna de ordenación de archivos abiertos"
 msgid "Open files sort order"
 msgstr "Orden de colocación de archivos abiertos"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "Icono"
 
@@ -1506,9 +1534,10 @@ msgstr "¿Terminar %s?"
 #. SIGSTOP
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
-#, c-format
-msgid "Stop %s?"
-msgstr "¿Detener %s?"
+#, fuzzy, c-format
+#| msgid "Force Stop %s?"
+msgid "Temporarily Stop %s?"
+msgstr "¿Detener temporalmente %s?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1529,11 +1558,13 @@ msgstr[1] "¿Terminar los %d procesos seleccionados?"
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
-#, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "¿Detener el proceso seleccionado?"
-msgstr[1] "¿Detener los %d procesos seleccionados?"
+#, fuzzy, c-format
+#| msgid "Force Stop Selected Process?"
+#| msgid_plural "Force Stop %d Selected Processes?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "¿Detener temporalmente el proceso seleccionado?"
+msgstr[1] "¿Detener temporalmente %d procesos seleccionados?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1562,14 +1593,19 @@ msgstr "_Finalizar"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
+#, fuzzy
+#| msgid ""
+#| "Stopping processes can result in data loss, crashes, and system failures"
 msgid ""
-"Stopping processes can result in data loss, crashes, and system failures"
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
 msgstr ""
-"Detener procesos puede causar pérdida de datos, roturas y fallos del sistema"
+"Detener (pausar) los procesos puede provocar la pérdida de datos, bloqueos y "
+"fallos del sistema"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Detener"
+msgid "_Pause"
+msgstr "_Pausar"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1583,33 +1619,27 @@ msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Cambiar la prioridad del proceso seleccionado"
 msgstr[1] "Cambiar la prioridad de los %d procesos seleccionados"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "_Finalizar proceso…"
-msgstr[1] "_Finalizar procesos…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "Nombre"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "Memoria del servidor X"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Prioridad"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "Unidad"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "Sesión"
 
@@ -1617,27 +1647,27 @@ msgstr "Sesión"
 #. belongs to, only
 #. for multi-seat environments. See
 #. http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "Estado"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "Propietario"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "Lectura total de disco"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "Escritura total en disco"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "Lectura de disco"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "Escritura en disco"
 
@@ -1731,15 +1761,34 @@ msgid "Very Low Priority"
 msgstr "Prioridad muy baja"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
 
+#~ msgid "_Stop…"
+#~ msgstr "_Detener…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "_Terminar…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "¿Detener %s?"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "¿Detener el proceso seleccionado?"
+#~ msgstr[1] "¿Detener los %d procesos seleccionados?"
+
+#~ msgid "_Stop"
+#~ msgstr "_Detener"
+
 #, fuzzy
 #~ msgctxt "shortcut window"
 #~ msgid "General"
-#~ msgstr "General"
+#~ msgstr "Aspectos generales"
 
 #, fuzzy
 #~ msgctxt "shortcut window"
@@ -1769,7 +1818,7 @@ msgstr "%s/s"
 #, fuzzy
 #~ msgctxt "shortcut window"
 #~ msgid "Show dependencies"
-#~ msgstr "Mostrar dependencias"
+#~ msgstr "Show dependencies"
 
 #, fuzzy
 #~ msgctxt "shortcut window"
@@ -1779,7 +1828,7 @@ msgstr "%s/s"
 #, fuzzy
 #~ msgctxt "shortcut window"
 #~ msgid "Memory maps"
-#~ msgstr "mapas de memoria"
+#~ msgstr "Mapas de memoria"
 
 #, fuzzy
 #~ msgctxt "shortcut window"
@@ -1788,32 +1837,32 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Show the application’s version"
-#~ msgstr "Mostrar la versión de la aplicación."
+#~ msgstr "Mostrar la versión de la aplicación"
 
 #, fuzzy, c-format
 #~ msgid ""
 #~ "Cannot change the priority of process with PID %d to %d.\n"
 #~ "%s"
-#~ msgstr "No se puede cambiar la prioridad del proceso con PID %d a %d.\n"
+#~ msgstr ""
+#~ "No se puede cambiar la prioridad del proceso con PID %d a %d.\n"
+#~ "%s"
 
 #, fuzzy
 #~ msgid "_OK"
-#~ msgstr "_DE ACUERDO"
+#~ msgstr "_Aceptar"
 
 #, fuzzy, c-format
 #~ msgid ""
 #~ "Cannot kill process with PID %d with signal %d.\n"
 #~ "%s"
-#~ msgstr "No se puede finalizar el proceso con PID %d con señal %d.\n"
+#~ msgstr ""
+#~ "No se puede matar el proceso con PID %d con la señal %d.\n"
+#~ "%s"
 
 #, fuzzy
 #~ msgctxt "Menu item to Open Search for Open Files dialog"
 #~ msgid "_Search for Open Files…"
 #~ msgstr "_Buscar archivos abiertos..."
-
-#, fuzzy
-#~ msgid "The GNOME Project"
-#~ msgstr "El proyecto GNOME"
 
 #, fuzzy
 #~ msgctxt "shortcut window"
@@ -1826,19 +1875,19 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Open _Files"
-#~ msgstr "Abrir _archivos"
+#~ msgstr "Abrir archivos"
 
 #, fuzzy
 #~ msgid "Custom"
-#~ msgstr "Costumbre"
+#~ msgstr "CUSTOM"
 
 #, fuzzy
 #~ msgid "_Continue"
-#~ msgstr "_Continuar"
+#~ msgstr "Continuar"
 
 #, fuzzy
 #~ msgid "_Kill"
-#~ msgstr "_Matar"
+#~ msgstr "MATAR"
 
 #, fuzzy
 #~ msgid "Graphs"
@@ -1846,7 +1895,7 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Set Network Totals _Unit Separately"
-#~ msgstr "Establecer totales de red _Unidad por separado"
+#~ msgstr "Establecer totales de red_unidad por separado"
 
 #, fuzzy
 #~ msgid ""
@@ -1854,30 +1903,31 @@ msgstr "%s/s"
 #~ "value. A lower nice value corresponds to a higher priority.</i></small>"
 #~ msgstr ""
 #~ "<small><i><b>Nota:</b> La prioridad de un proceso viene dada por su valor "
-#~ "agradable. "
+#~ "agradable. Un valor Nice más bajo corresponde a una prioridad más alta.</"
+#~ "i></small>"
 
 #, fuzzy
 #~ msgid "%d %b %k∶%M"
-#~ msgstr "%d %b %k∶%M"
+#~ msgstr "%d %b %k %M"
 
 #, fuzzy
 #~ msgid "Received invalid color data\n"
-#~ msgstr "Se recibieron datos de color no válidos"
+#~ msgstr "Datos de color no válidos recibidos"
 
 #, fuzzy, c-format
 #~ msgid "_Memory maps for process “%s” (PID %u):"
-#~ msgstr "_Mapas de memoria para el proceso “%s” (PID %u):"
+#~ msgstr "_Mapas de memoria para el proceso «%s» (PID %u):"
 
 #, fuzzy, c-format
 #~ msgid "_Files opened by process “%s” (PID %u):"
-#~ msgstr "_Archivos abiertos por el proceso “%s” (PID %u):"
+#~ msgstr "_Archivos abiertos por el proceso «%s» (PID %u):"
 
 #, fuzzy
 #~ msgid ""
 #~ "Main window size and position in the form (width, height, xpos, ypos)"
 #~ msgstr ""
-#~ "Tamaño de la ventana principal y posición en el formulario (ancho, alto, "
-#~ "xpos, ypos)"
+#~ "Tamaño y posición de la ventana principal en la forma (ancho, alto, xpos, "
+#~ "ypos)"
 
 #, fuzzy
 #~ msgid "Set network totals unit separately"
@@ -1885,49 +1935,49 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Width of process “Total disk read” column"
-#~ msgstr "Ancho de la columna “Lectura total del disco” del proceso"
+#~ msgstr "Ancho de la columna \"Lectura total del disco\" del proceso"
 
 #, fuzzy
 #~ msgid "Show process “Total disk read” column on startup"
 #~ msgstr ""
-#~ "Mostrar la columna \"Lectura total del disco\" del proceso al iniciar"
+#~ "Mostrar el proceso \"Lectura total del disco\" en la columna de inicio"
 
 #, fuzzy
 #~ msgid "Width of process “Total disk write” column"
-#~ msgstr "Ancho de la columna “Escritura total en disco” del proceso"
+#~ msgstr "Anchura de la columna de proceso \"Escritura total en disco\""
 
 #, fuzzy
 #~ msgid "Show process “Total disk write” column on startup"
 #~ msgstr ""
-#~ "Mostrar la columna \"Escritura total en disco\" del proceso al iniciar"
+#~ "Mostrar el proceso \"Total de escritura en disco\" en la columna de inicio"
 
 #, fuzzy, c-format
 #~ msgid "Are you sure you want to kill the selected process “%s” (PID: %u)?"
 #~ msgstr ""
-#~ "¿Está seguro de que desea eliminar el proceso seleccionado “%s” (PID: %u)?"
+#~ "¿Está seguro de que desea matar el proceso seleccionado \"%s\" (PID: %u)?"
 
 #, fuzzy, c-format
 #~ msgid "Are you sure you want to end the selected process “%s” (PID: %u)?"
 #~ msgstr ""
-#~ "¿Está seguro de que desea finalizar el proceso seleccionado “%s” (PID: "
+#~ "¿Está seguro de que desea finalizar el proceso seleccionado \"%s\" (PID: "
 #~ "%u)?"
 
 #, fuzzy, c-format
 #~ msgid "Are you sure you want to stop the selected process “%s” (PID: %u)?"
 #~ msgstr ""
-#~ "¿Está seguro de que desea detener el proceso seleccionado “%s” (PID: %u)?"
+#~ "¿Está seguro de que desea detener el proceso seleccionado \"%s\" (PID: "
+#~ "%u)?"
 
 #, fuzzy, c-format
 #~ msgid "Are you sure you want to kill the selected process?"
 #~ msgid_plural "Are you sure you want to kill the %d selected processes?"
-#~ msgstr[0] "¿Está seguro de que desea finalizar el proceso seleccionado?"
-#~ msgstr[1] ""
-#~ "¿Está seguro de que desea eliminar los %d procesos seleccionados?"
+#~ msgstr[0] "¿Está seguro de que desea matar el proceso seleccionado?"
+#~ msgstr[1] "¿Está seguro de que desea matar los %d procesos seleccionados?"
 
 #, fuzzy, c-format
 #~ msgid "Are you sure you want to end the selected process?"
 #~ msgid_plural "Are you sure you want to end the %d selected processes?"
-#~ msgstr[0] "¿Estás seguro de que deseas finalizar el proceso seleccionado?"
+#~ msgstr[0] "Estas seguro de finalizar proceso?"
 #~ msgstr[1] ""
 #~ "¿Está seguro de que desea finalizar los %d procesos seleccionados?"
 
@@ -1943,15 +1993,17 @@ msgstr "%s/s"
 #~ "security risk. Only unresponsive processes should be killed."
 #~ msgstr ""
 #~ "Matar un proceso puede destruir datos, interrumpir la sesión o introducir "
-#~ "un riesgo de seguridad. "
+#~ "un riesgo de seguridad. Solo se deben eliminar los procesos que no "
+#~ "responden."
 
 #, fuzzy
 #~ msgid ""
 #~ "Ending a process may destroy data, break the session or introduce a "
 #~ "security risk. Only unresponsive processes should be ended."
 #~ msgstr ""
-#~ "Finalizar un proceso puede destruir datos, interrumpir la sesión o "
-#~ "introducir un riesgo de seguridad. "
+#~ "Terminar un proceso puede destruir datos, interrumpir la sesión o "
+#~ "introducir un riesgo de seguridad. Solo se deben finalizar los procesos "
+#~ "que no responden."
 
 #, fuzzy
 #~ msgid ""
@@ -1959,7 +2011,8 @@ msgstr "%s/s"
 #~ "security risk. Only unresponsive processes should be stopped."
 #~ msgstr ""
 #~ "Detener un proceso puede destruir datos, interrumpir la sesión o "
-#~ "introducir un riesgo de seguridad. "
+#~ "introducir un riesgo de seguridad. Solo se deben detener los procesos que "
+#~ "no responden."
 
 #, fuzzy
 #~ msgid "Note:"
@@ -1967,7 +2020,7 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "N/A"
-#~ msgstr "N / A"
+#~ msgstr "N/A"
 
 #, fuzzy
 #~ msgid "Process Name"
@@ -1975,15 +2028,15 @@ msgstr "%s/s"
 
 #, fuzzy, no-c-format
 #~ msgid "% CPU"
-#~ msgstr "% UPC"
+#~ msgstr "CPU %process heading"
 
 #, fuzzy, c-format
 #~ msgid "CPU %d"
-#~ msgstr "procesador %d"
+#~ msgstr "CPU %d"
 
 #, fuzzy
 #~ msgid "_Update Interval in Seconds:"
-#~ msgstr "_Intervalo de actualización en segundos:"
+#~ msgstr "Intervalo de actualización (en milisegundos)"
 
 #, fuzzy
 #~ msgid "Show _all file systems"
@@ -1991,7 +2044,7 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "CPU History"
-#~ msgstr "Historial de la CPU"
+#~ msgstr "Historia de CPU"
 
 #, fuzzy
 #~ msgid "System Monitor Preferences"
@@ -1999,13 +2052,15 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "End _Process"
-#~ msgstr "Finalizar _proceso"
+#~ msgstr "Finalizar proceso"
 
 #, fuzzy
 #~ msgid ""
 #~ "%s (%.1f%%) of %s\n"
 #~ "Cache: %s"
-#~ msgstr "%s (%.1f%%) de %s\n"
+#~ msgstr ""
+#~ "%s (%.1f%%) de %s\n"
+#~ "Caché: %s"
 
 #, fuzzy
 #~ msgid "org.gnome.SystemMonitor"
@@ -2013,7 +2068,7 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "utilities-system-monitor"
-#~ msgstr "monitor-del-sistema-de-utilidades"
+#~ msgstr "utilities-system-monitor"
 
 #, fuzzy
 #~ msgid "About"
@@ -2037,11 +2092,11 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "%.3g kbit"
-#~ msgstr "%.3g kbits"
+#~ msgstr "%.3g kbit"
 
 #, fuzzy
 #~ msgid "%.3g Mbit"
-#~ msgstr "%.3g Mbits"
+#~ msgstr "%.3g Mbit"
 
 #, fuzzy
 #~ msgid "%.3g Gbit"
@@ -2054,13 +2109,13 @@ msgstr "%s/s"
 #, fuzzy
 #~ msgid "%u bit"
 #~ msgid_plural "%u bits"
-#~ msgstr[0] "%u poco"
+#~ msgstr[0] "%u bit"
 #~ msgstr[1] "%u bits"
 
 #, fuzzy
 #~ msgid "%u byte"
 #~ msgid_plural "%u bytes"
-#~ msgstr[0] "%u bytes"
+#~ msgstr[0] "%u byte"
 #~ msgstr[1] "%u bytes"
 
 #, fuzzy
@@ -2074,7 +2129,7 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "'%s' is not a valid Perl regular expression."
-#~ msgstr "'%s' no es una expresión regular de Perl válida."
+#~ msgstr "\"%s\" no es una expresión regular válida."
 
 #, fuzzy
 #~ msgid "%lld second"
@@ -2084,19 +2139,19 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "_Name contains:"
-#~ msgstr "_El nombre contiene:"
+#~ msgstr "El nombre contiene"
 
 #, fuzzy
 #~ msgid "_Find"
-#~ msgstr "_Encontrar"
+#~ msgstr "_Buscar"
 
 #, fuzzy
 #~ msgid "C_lear"
-#~ msgstr "Claro"
+#~ msgstr "Bo&rrar"
 
 #, fuzzy
 #~ msgid "S_earch results:"
-#~ msgstr "Resultados de la búsqueda:"
+#~ msgstr "Resultados de S_Earch:"
 
 #, fuzzy
 #~ msgid "Properties of process \"%s\" (PID %u):"
@@ -2112,7 +2167,7 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Sensitive"
-#~ msgstr "Sensible"
+#~ msgstr "Delicado"
 
 #, fuzzy
 #~ msgid "The sensitivity value"
@@ -2125,23 +2180,23 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "_Draw as stacked area chart"
-#~ msgstr "_Dibujar como gráfico de áreas apiladas"
+#~ msgstr "_Dibujar como gráfico de área apilada"
 
 #, fuzzy
 #~ msgid "Show _processor usage graph"
-#~ msgstr "Mostrar gráfico de uso del procesador"
+#~ msgstr "Mostrar gráfico de uso de_procesador"
 
 #, fuzzy
 #~ msgid "Show _memory and swap usage graph"
-#~ msgstr "Mostrar gráfico de uso de memoria e intercambio"
+#~ msgstr "Mostrar _memoria y gráfico de uso de intercambio"
 
 #, fuzzy
 #~ msgid "Show _network traffic graph"
-#~ msgstr "Mostrar gráfico de tráfico de red"
+#~ msgstr "Mostrar gráfico de tráfico de_red"
 
 #, fuzzy
 #~ msgid "Main Window X position"
-#~ msgstr "Posición X de la ventana principal"
+#~ msgstr "Ventana principal X posición"
 
 #, fuzzy
 #~ msgid "Main Window Y position"
@@ -2156,11 +2211,11 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "_View"
-#~ msgstr "_Vista"
+#~ msgstr "_Ver"
 
 #, fuzzy
 #~ msgid "Stop process"
-#~ msgstr "Detener proceso"
+#~ msgstr "Detener el proceso"
 
 #, fuzzy
 #~ msgid "Continue process if stopped"
@@ -2168,11 +2223,11 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Force process to finish normally"
-#~ msgstr "Forzar el proceso para que finalice normalmente"
+#~ msgstr "Forzar que el proceso finalice normalmente"
 
 #, fuzzy
 #~ msgid "Force process to finish immediately"
-#~ msgstr "Forzar el proceso para que finalice inmediatamente"
+#~ msgstr "Forzar que el proceso finalice inmediatamente"
 
 #, fuzzy
 #~ msgid "Refresh the process list"
@@ -2180,7 +2235,7 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Open the memory maps associated with a process"
-#~ msgstr "Abrir los mapas de memoria asociados a un proceso."
+#~ msgstr "Abrir los mapas de memoria asociados a un proceso"
 
 #, fuzzy
 #~ msgid "View the files opened by a process"
@@ -2192,11 +2247,11 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Show parent/child relationship between processes"
-#~ msgstr "Mostrar relación padre/hijo entre procesos"
+#~ msgstr "Mostrar la relación padre/hijo entre los procesos"
 
 #, fuzzy
 #~ msgid "Show active processes"
-#~ msgstr "Mostrar procesos activos"
+#~ msgstr "Procesos activos"
 
 #, fuzzy
 #~ msgid "Show only user-owned processes"
@@ -2204,7 +2259,7 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Set process priority to very high"
-#~ msgstr "Establecer la prioridad del proceso en muy alta"
+#~ msgstr "Establecer la prioridad del proceso en muy alto"
 
 #, fuzzy
 #~ msgid "Set process priority to high"
@@ -2220,7 +2275,7 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Set process priority to very low"
-#~ msgstr "Establecer la prioridad del proceso en muy baja"
+#~ msgstr "Establecer la prioridad del proceso en muy bajo"
 
 #, fuzzy
 #~ msgid "Set process priority manually"
@@ -2230,7 +2285,9 @@ msgstr "%s/s"
 #~ msgid ""
 #~ "Determines which processes to show by default. 0 is All, 1 is user, and 2 "
 #~ "is active"
-#~ msgstr "Determina qué procesos mostrar de forma predeterminada. "
+#~ msgstr ""
+#~ "Determina qué procesos mostrar de forma predeterminada. 0 es Todo, 1 es "
+#~ "usuario y 2 está activo"
 
 #, fuzzy
 #~ msgid "Sent"
@@ -2246,7 +2303,7 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "_Monitor"
-#~ msgstr "_Monitor"
+#~ msgstr "Monitor"
 
 #, fuzzy
 #~ msgid "_Edit"
@@ -2254,7 +2311,7 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Search for _Open Files"
-#~ msgstr "Buscar _archivos abiertos"
+#~ msgstr "Búsqueda de archivos"
 
 #, fuzzy
 #~ msgid "Quit the program"
@@ -2278,15 +2335,15 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "%d-bit"
-#~ msgstr "%d bits"
+#~ msgstr "%d-bit"
 
 #, fuzzy
 #~ msgid "Kernel %s"
-#~ msgstr "Núcleo %s"
+#~ msgstr "Kernel:\t%s"
 
 #, fuzzy
 #~ msgid "GNOME %s"
-#~ msgstr "Gnomo %s"
+#~ msgstr "GNOME %s"
 
 #, fuzzy
 #~ msgid "Hardware"
@@ -2302,11 +2359,11 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "System Status"
-#~ msgstr "Estado del sistema"
+#~ msgstr "System Status"
 
 #, fuzzy
 #~ msgid "Available disk space:"
-#~ msgstr "Espacio disponible en disco:"
+#~ msgstr "Espacio libre en disco"
 
 #, fuzzy
 #~ msgid "<i>N/A</i>"
@@ -2318,11 +2375,11 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "Default graph CPU color"
-#~ msgstr "Color de CPU del gráfico predeterminado"
+#~ msgstr "Color predeterminado del gráfico de la CPU"
 
 #, fuzzy
 #~ msgid "_Change Priority…"
-#~ msgstr "_Cambiar prioridad…"
+#~ msgstr "Prioridad de cambio"
 
 #, fuzzy
 #~ msgid "Processor %d:"
@@ -2334,16 +2391,16 @@ msgstr "%s/s"
 
 #, fuzzy
 #~ msgid "_Change Priority..."
-#~ msgstr "_Cambiar prioridad..."
+#~ msgstr "Prioridad de cambio"
 
 #, fuzzy
 #~ msgid "Show process 'arguments' column on startup"
-#~ msgstr "Mostrar la columna 'argumentos' del proceso al inicio"
+#~ msgstr "Mostrar la columna de 'argumentos' del proceso al iniciar"
 
 #, fuzzy
 #~ msgid "Width of process 'arguments' column"
-#~ msgstr "Ancho de la columna 'argumentos' del proceso"
+#~ msgstr "Ancho de la columna de 'argumentos' del proceso"
 
 #, fuzzy
 #~ msgid "Width of process 'estimated memory usage' column"
-#~ msgstr "Ancho de la columna 'uso estimado de memoria' del proceso"
+#~ msgstr "Ancho de la columna \"uso estimado de memoria\" del proceso"
