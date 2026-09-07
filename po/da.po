@@ -4,7 +4,7 @@
 # Ole Laursen <olau@hardworking.dk>, 2001-2005.
 # Martin Willemoes Hansen <mwh@sysrq.dk>, 2004-2005.
 # Lasse Bang Mikkelsen <lbm@fatalerror.dk>, 2006.
-# Ask Hjorth Larsen <asklarsen@gmail.com>, 2007, 09, 16, 18, 23-26.
+# Ask Hjorth Larsen <askhl@proton.me>, 2007, 09, 16, 18, 23-26.
 # Kenneth Nielsen <k.nielsen81@gmail.com>, 2008, 2012-2013.
 # Joe Hansen <joedalton2@yahoo.dk>, 2017.
 # scootergrisen, 2021.
@@ -28,10 +28,10 @@ msgstr ""
 "Project-Id-Version: gnome-system-monitor master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2026-03-06 05:41+0000\n"
-"PO-Revision-Date: 2026-03-09 23:58+0100\n"
-"Last-Translator: Ask Hjorth Larsen <asklarsen@gmail.com>\n"
-"Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
+"POT-Creation-Date: 2026-08-29 17:41+0000\n"
+"PO-Revision-Date: 2026-09-08 00:03+0200\n"
+"Last-Translator: Ask Hjorth Larsen <askhl@proton.me>\n"
+"Language-Team: Danish <danskgruppen@groups.io>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -123,23 +123,23 @@ msgstr "Indstil affinitet"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Send stop-signal"
+msgid "Send Stop (Pause) Signal"
+msgstr "Send stop-signal (pause)"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "Send fortsæt-signal"
+msgid "Send Continue (Resume) Signal"
+msgstr "Send fortsæt-signal (resume)"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "Send afslutningssignal"
+msgid "Send Terminate (End Process) Signal"
+msgstr "Send afslutningssignal (end process)"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "Send termineringssignal (kill)"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "Send termineringssignal (force stop)"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -218,13 +218,13 @@ msgid "_Resources"
 msgstr "_Ressourcer"
 
 #: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111
-#: src/interface.cpp:272 src/proctable.cpp:345
+#: src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
 #: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311
-#: src/proctable.cpp:352
+#: src/proctable.cpp:356
 msgid "Memory"
 msgstr "Hukommelse"
 
@@ -465,19 +465,21 @@ msgstr "Bruger_tilpasset"
 msgid "Set _Affinity…"
 msgstr "Indstil _affinitet …"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_Stands …"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_Pause …"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_Fortsæt"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
 msgstr "_Afslut …"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "_Tving til at standse …"
 
@@ -556,6 +558,10 @@ msgstr "Ressourceoversigt"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "Filsystemsvisning"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "GNOME-projektet"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -654,20 +660,20 @@ msgstr "Detaljer"
 msgid "Process ID"
 msgstr "Proces-id"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "Bruger"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "Status"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "Startet"
 
 # scootergrisen: bruges til at vise en streng f.eks. "Normal"
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "Prioritet"
 
@@ -675,42 +681,48 @@ msgstr "Prioritet"
 msgid "Usage"
 msgstr "Brug"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "CPU-tid"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "Virtuel hukommelse"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "Resident hukommelse"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "Skrivbar hukommelse"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "Delt hukommelse"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "Sikkerhedskontekst"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "Kommandolinje"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "Ventekanal"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "Styringsgruppe"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Afslut proces …"
+msgstr[1] "_Afslut processer …"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -776,6 +788,18 @@ msgstr "Affinitet understøttes ikke"
 msgid "Priority failed on %i: %s"
 msgstr "Prioritet mislykkedes på %i: %s"
 
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "Termineringshjælper fejlede"
+
+#: src/actions/gsm-actions.c:236
+msgid "Affinity helper failed"
+msgstr "Affinitetshjælper fejlede"
+
+#: src/actions/gsm-actions.c:325
+msgid "Priority helper failed"
+msgstr "Prioritetshjælper fejlede"
+
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
 msgstr "En simpel proces- og systemovervåger."
@@ -825,8 +849,8 @@ msgstr ""
 "scootergrisen\n"
 "\n"
 "Dansk-gruppen\n"
-"Websted http://dansk-gruppen.dk\n"
-"E-mail <dansk@dansk-gruppen.dk>"
+"Websted https://l10n.gnome.org/teams/da/\n"
+"E-mail <danskgruppen@groups.io>"
 
 #. xgettext: ? stands for unknown
 #: src/legacy/e_date.c:175
@@ -900,8 +924,8 @@ msgstr "%.0f %%"
 #, c-format
 msgid "%u hr"
 msgid_plural "%u hrs"
-msgstr[0] "%u tim."
-msgstr[1] "%u tim."
+msgstr[0] "%u time"
+msgstr[1] "%u timer"
 
 #: src/load-graph.cpp:127
 #, c-format
@@ -1485,7 +1509,7 @@ msgstr "Sorteringskolonne for åbne filer"
 msgid "Open files sort order"
 msgstr "Sorteringsrækkefølge for åbne filer"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "Ikon"
 
@@ -1513,8 +1537,8 @@ msgstr "Afslut %s?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "Stands %s?"
+msgid "Temporarily Stop %s?"
+msgstr "Stands %s midlertidigt?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1536,10 +1560,10 @@ msgstr[1] "Afslut de %d valgte processer?"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Stands den valgte proces?"
-msgstr[1] "Stands de %d valgte processer?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "Stands den valgte proces midlertidigt?"
+msgstr[1] "Stands de %d valgte processer midlertidigt?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1567,12 +1591,13 @@ msgstr "_Afslut"
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
 msgid ""
-"Stopping processes can result in data loss, crashes, and system failures"
-msgstr "Standsning af en proces kan medføre tab af data, nedbrud og systemfejl"
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
+msgstr "Standsning af en proces (pause) kan medføre tab af data, nedbrud og systemfejl"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Stands"
+msgid "_Pause"
+msgstr "_Pause"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1586,60 +1611,54 @@ msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Skift prioritet på den valgte proces"
 msgstr[1] "Skift prioritet på de %d valgte processer"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "_Afslut proces …"
-msgstr[1] "_Afslut processer …"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "Navn"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "X-serverhukommelse"
 
 # scootergrisen: bruges til at vise et tal fra "-20" til "20" f.eks. "0"
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "Id"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "Unit"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "Session"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "Sæde"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "Ejer"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "Disklæsning i alt"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "Diskskrivning i alt"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "Disklæsning"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "Diskskrivning"
 
@@ -1733,10 +1752,29 @@ msgid "Very Low Priority"
 msgstr "Meget lav prioritet"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Stop…"
+#~ msgstr "_Stands …"
+
+#~ msgid "_Terminate…"
+#~ msgstr "_Afslut …"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "Stands %s?"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "Stands den valgte proces?"
+#~ msgstr[1] "Stands de %d valgte processer?"
+
+#~ msgid "_Stop"
+#~ msgstr "_Stands"
 
 #~ msgctxt "shortcut window"
 #~ msgid "General"
@@ -1803,9 +1841,6 @@ msgstr "%s/s"
 #~ msgctxt "Menu item to Open Search for Open Files dialog"
 #~ msgid "_Search for Open Files…"
 #~ msgstr "_Søg efter åbne filer …"
-
-#~ msgid "The GNOME Project"
-#~ msgstr "GNOME-projektet"
 
 #~ msgid "Open _Files"
 #~ msgstr "Åbne _filer"
