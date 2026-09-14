@@ -23,6 +23,11 @@ load_selinux (void)
     GModule *selinux = g_module_open ("libselinux.so.1",
                                       G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
 
+    if (!selinux) {
+      g_debug ("Could not load libselinux.so.0");
+      return FALSE;
+    }
+
     if (!g_module_symbol (selinux, "getpidcon", (gpointer *) &getpidcon)) {
       g_debug ("Could not load getpidcon from libselinux.so.0");
       return FALSE;
