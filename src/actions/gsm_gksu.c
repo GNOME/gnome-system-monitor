@@ -13,24 +13,31 @@
 static gboolean (*gksu_run) (const char *, GError **);
 
 
-static void
+static inline gboolean
 load_gksu (void)
 {
   static GModule *module = NULL;
 
   if (g_once_init_enter_pointer (&module)) {
-    GModule *gksu = g_module_open ("libgksu2.so",
-                                   static_cast<GModuleFlags>(G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL));
+    GModule *gksu =
+      g_module_open ("libgksu2.so", G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
+
+    if (!gksu) {
+      g_debug ("Could not load libgksu2.so");
+      return FALSE;
+    }
 
     if (!g_module_symbol (gksu, "gksu_run", (gpointer *) &gksu_run)) {
       g_debug ("Could not load gksu_run from libgksu2.so");
-      return;
+      return FALSE;
     } else {
       g_debug ("Loaded gksu_run from libgksu2.so");
     }
 
     g_once_init_leave_pointer (&module, g_steal_pointer (&gksu));
   }
+
+  return module != NULL;
 }
 
 
@@ -57,6 +64,5 @@ gsm_gksu_create_root_password_dialog (const char *command)
 gboolean
 procman_has_gksu (void)
 {
-  load_gksu ();
-  return gksu_run != NULL;
+  return load_gksu ();
 }

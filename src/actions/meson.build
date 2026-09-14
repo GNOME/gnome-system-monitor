@@ -1,8 +1,8 @@
 libgsm_actions_sources = [
   config_h,
-  'gsm_gksu.cpp',
+  'gsm_gksu.c',
   'gsm_gksu.h',
-  'gsm_gnomesu.cpp',
+  'gsm_gnomesu.c',
   'gsm_gnomesu.h',
   'gsm_pkexec.cpp',
   'gsm_pkexec.h',
