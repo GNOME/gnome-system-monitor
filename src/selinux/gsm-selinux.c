@@ -14,56 +14,78 @@ static void (*freecon) (char *);
 static int (*is_selinux_enabled) (void);
 
 
-static gboolean
-load_selinux (void)
+static inline GModule *
+load_selinux_module (void)
+{
+  g_autoptr (GError) error = NULL;
+  GModule *module =
+    g_module_open_full ("libselinux.so.1",
+                        G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL,
+                        &error);
+
+  if (error) {
+    g_debug ("Could not load libselinux.so.1: %s", error->message);
+    goto fail;
+  }
+
+  if (!module) {
+    g_debug ("Could not load libselinux.so.1");
+    goto fail;
+  }
+
+  if (!g_module_symbol (module, "getpidcon", (gpointer *) &getpidcon)) {
+    g_debug ("Could not load getpidcon from libselinux.so.1");
+    goto fail;
+  } else {
+    g_debug ("Loaded getpidcon from libselinux.so.1");
+  }
+
+  if (!g_module_symbol (module, "freecon", (gpointer *) &freecon)) {
+    g_debug ("Could not load freecon from libselinux.so.1");
+    goto fail;
+  } else {
+    g_debug ("Loaded freecon from libselinux.so.1");
+  }
+  
+  if (!g_module_symbol (module,
+                        "is_selinux_enabled",
+                        (gpointer *) &is_selinux_enabled)) {
+    g_debug ("Could not load is_selinux_enabled from libselinux.so.1");
+    goto fail;
+  } else {
+    g_debug ("Loaded is_selinux_enabled from libselinux.so.1");
+  }
+
+  g_module_make_resident (module);
+
+  return g_steal_pointer (&module);
+
+fail:
+  g_clear_pointer (&module, g_module_close);
+
+  return NULL;
+}
+
+
+static inline GModule *
+get_selinux_module (void)
 {
   static GModule *module = NULL;
 
   if (g_once_init_enter_pointer (&module)) {
-    GModule *selinux = g_module_open ("libselinux.so.1",
-                                      G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
+    GModule *gksu = load_selinux_module ();
 
-    if (!selinux) {
-      g_debug ("Could not load libselinux.so.0");
-      return FALSE;
-    }
-
-    if (!g_module_symbol (selinux, "getpidcon", (gpointer *) &getpidcon)) {
-      g_debug ("Could not load getpidcon from libselinux.so.0");
-      return FALSE;
-    } else {
-      g_debug ("Loaded getpidcon from libselinux.so.0");
-    }
-
-    if (!g_module_symbol (selinux, "freecon", (gpointer *) &freecon)) {
-      g_debug ("Could not load freecon from libselinux.so.0");
-      return FALSE;
-    } else {
-      g_debug ("Loaded freecon from libselinux.so.0");
-    }
-
-    if (!g_module_symbol (selinux,
-                          "is_selinux_enabled",
-                          (gpointer *) &is_selinux_enabled)) {
-      g_debug ("Could not load is_selinux_enabled from libselinux.so.0");
-      return FALSE;
-    } else {
-      g_debug ("Loaded is_selinux_enabled from libselinux.so.0");
-    }
-
-    g_module_make_resident (selinux);
-
-    g_once_init_leave_pointer (&module, g_steal_pointer (&selinux));
+    g_once_init_leave_pointer (&module, g_steal_pointer (&gksu));
   }
 
-  return module != NULL;
+  return module;
 }
 
 
 gboolean
 gsm_selinux_is_enabled (void)
 {
-  if (!load_selinux ()) {
+  if (get_selinux_module () == NULL) {
     return FALSE;
   }
 
@@ -89,7 +111,7 @@ gsm_selinux_get_context (pid_t pid)
   g_autofree char *result = NULL;
   char *con = NULL;
 
-  if (!load_selinux ()) {
+  if (get_selinux_module () == NULL) {
     goto out;
   }
 
