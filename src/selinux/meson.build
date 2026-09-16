@@ -4,7 +4,7 @@ libgsm_selinux_sources = [
   'gsm-selinux.h',
 ]
 
-libgsm_selinux_dependencies = [glib, gmodule]
+libgsm_selinux_dependencies = [glib, gmodule, libgsm_utils_dep]
 
 libgsm_selinux = static_library(
   'gsm-selinux',
