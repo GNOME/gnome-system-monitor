@@ -1,3 +1,4 @@
+subdir('utils')
 subdir('action-impls')
 subdir('actions')
 subdir('legacy')
