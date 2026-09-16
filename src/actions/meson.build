@@ -10,7 +10,12 @@ libgsm_actions_sources = [
   'gsm-actions.h',
 ]
 
-libgsm_actions_dependencies = [glib, gmodule, libgsm_actions_impl_dep]
+libgsm_actions_dependencies = [
+  glib,
+  gmodule,
+  libgsm_actions_impl_dep,
+  libgsm_utils_dep,
+]
 
 libgsm_actions = static_library(
   'gsm-actions',
