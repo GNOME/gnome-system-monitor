@@ -1,0 +1,2147 @@
+# Norwegian Nynorsk translation for gnome-system-monitor.
+# Copyright (C) 2026 gnome-system-monitor's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-system-monitor package.
+# Roy-Magne Mo <rmo@sunnmore.net>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-system-monitor main\n"
+"POT-Creation-Date: 2026-09-16 04:51+0000\n"
+"PO-Revision-Date: 2026-09-19 00:34+0200\n"
+"Last-Translator: Roy-Magne Mo <rmo@sunnmore.net>\n"
+"Language-Team: Norwegian Nynorsk <nn@li.org>\n"
+"Language: nn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr "Roy-Magne Mo <rmo@sunnmore.net>"
+
+#. (itstool) path: credit/name
+#: C/memory-map-what.page:12 C/process-identify-file.page:11
+#: C/process-explain.page:11 C/process-columns.page:11
+#: C/process-update-speed.page:11 C/cpu-multicore.page:11
+#: C/process-many.page:11 C/process-priority-change.page:14
+#: C/commandline.page:11 C/mem-swap.page:12 C/solaris-mode.page:11
+#: C/process-priority-what.page:11 C/process-files.page:11
+#: C/process-identify-hog.page:11 C/units.page:11 C/cpu-check.page:15
+#: C/net-bits.page:11 C/fs-device.page:13 C/fs-diskusage.page:13
+#: C/process-forcequit.page:9 C/memory-map-use.page:13 C/mem-check.page:12
+#: C/cpu-mem-normal.page:11 C/fs-info.page:13 C/net-check.page:11
+#: C/index.page:14 C/process-kill.page:12 C/process-status.page:14
+#: C/fs-showall.page:11
+msgid "Phil Bull"
+msgstr "Phil Bull"
+
+#. (itstool) path: credit/years
+#: C/memory-map-what.page:14 C/process-identify-file.page:13
+#: C/process-explain.page:13 C/process-update-speed.page:13
+#: C/commandline.page:13 C/mem-swap.page:14 C/solaris-mode.page:13
+#: C/process-priority-what.page:19 C/process-identify-hog.page:13
+#: C/units.page:13 C/net-bits.page:13 C/process-forcequit.page:11
+#: C/memory-map-use.page:15 C/mem-check.page:14 C/net-check.page:13
+msgid "2011"
+msgstr "2011"
+
+#. (itstool) path: credit/name
+#: C/memory-map-what.page:18 C/process-identify-file.page:17
+#: C/process-explain.page:17 C/process-columns.page:17
+#: C/process-update-speed.page:17 C/commandline.page:16 C/mem-swap.page:18
+#: C/solaris-mode.page:17 C/process-priority-what.page:17
+#: C/process-identify-hog.page:17 C/units.page:17 C/net-bits.page:17
+#: C/memory-map-use.page:19 C/mem-check.page:18 C/net-check.page:17
+msgid "Michael Hill"
+msgstr "Michael Hill"
+
+#. (itstool) path: credit/years
+#: C/memory-map-what.page:20 C/process-identify-file.page:19
+#: C/process-explain.page:19 C/process-columns.page:19
+#: C/process-update-speed.page:19 C/mem-swap.page:20 C/solaris-mode.page:19
+#: C/process-priority-what.page:13 C/process-identify-hog.page:19
+#: C/units.page:19 C/net-bits.page:19 C/memory-map-use.page:21
+#: C/mem-check.page:20 C/net-check.page:19
+msgid "2011, 2014"
+msgstr "2011, 2014"
+
+#. (itstool) path: info/desc
+#: C/memory-map-what.page:23
+msgid "The memory map of a process can help diagnose certain memory issues."
+msgstr ""
+"Minnekartet til ein prosess kan hjelpe med å diagnostisere visse "
+"minneproblem."
+
+#. (itstool) path: page/title
+#: C/memory-map-what.page:27
+msgid "What is a memory map?"
+msgstr "Kva er eit minnekart?"
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:40
+msgid ""
+"<gui>Virtual memory</gui> is a representation of the combined <gui>physical "
+"memory</gui> and <link xref=\"mem-swap\">swap space</link> in a system. It "
+"enables running processes to access <em>more</em> than the existing physical "
+"memory by <gui>mapping</gui> locations in physical memory to files on disk."
+msgstr ""
+"<gui>Virtuelt minne</gui> er ei framstilling av det samla <gui>fysiske "
+"minnet</gui> og <link xref=\"mem-swap\">swap-området</link> i eit system. "
+"Det gjer at køyrande prosessar kan få tilgang til <em>meir</em> enn det "
+"eksisterande fysiske minnet ved å <gui>kartleggje</gui> plasseringar i "
+"fysisk minne til filer på disk."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:46
+msgid ""
+"When a program is launched, the system assigns it a unique process ID (PID) "
+"and its <em>instructions</em> and <em>data</em> are loaded into memory in "
+"<em>pages</em>. The page table of each process maps the correspondence "
+"between its pages in virtual memory and their location in physical memory. "
+"The <gui>memory map</gui> displays the total virtual memory use of the "
+"process, and can be used to determine the memory cost of running a single or "
+"multiple instances of the program, to ensure the use of the correct shared "
+"libraries, to see the results of adjusting various performance tuning "
+"parameters the program may have, or to diagnose issues such as memory leaks."
+msgstr ""
+"Når eit program vert lansert, tildeler systemet det ein unik prosess-ID "
+"(PID) og <em>instruksjonane</em> og <em>dataa</em> vert lada inn i minnet i "
+"<em>sider</em>. Sidetabellen for kvar prosess kartlegg samsvaret mellom "
+"sidene i det virtuelle minnet og plasseringa i det fysiske minnet. "
+"<gui>Minnekartet</gui> viser det totale virtuelle minnebruket til prosessen,"
+" og kan brukast til å rekne ut minnekostnaden ved å køyre einskildståande "
+"eller fleire instansar av programmet, for å sikre at dei rette delte "
+"biblioteka vert brukte, for å sjå resultata av justeringar av ulike "
+"ytingsinnstillingar programmet kan ha, eller for å diagnostisere problem som"
+" minnelekkasjar."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:57
+msgid ""
+"If multiple copies of a program are running, the instructions (or <em>text</"
+"em>) of the program only need to be loaded once into physical memory. Each "
+"time a new instance of the program is launched (as a unique process with its "
+"own virtual memory pages), its page table maps the location of the text in "
+"virtual memory to those instructions in the original real memory location. "
+"In addition, any dynamic shared libraries used by the process appear as "
+"distinct in virtual memory, but are shared references to a single copy of "
+"the library's text segment in real memory. When accounting for the total "
+"memory use of a process, it is important to note that the cost of shared "
+"libraries loaded into memory can be spread across all processes currently "
+"using them."
+msgstr ""
+"Dersom fleire kopiar av ein app køyrer, treng instruksjonane (eller "
+"<em>teksten</em>) til appen berre å verte lada éin gong inn i fysisk minne. "
+"Kvar gong ein ny instans av appen vert lansert (som ein unik prosess med "
+"sine eigne virtuelle minnesider), kartlegg pagetabellen plasseringa av "
+"teksten i virtuelt minne til dei instruksjonane i den opphavlege ekte "
+"minneplasseringa. I tillegg vert alle dynamiske delte bibliotek som vert "
+"brukte av prosessen, vist som separate i virtuelt minne, men er delte "
+"referansar til éin kopi av bibliotekets tekstsegment i ekte minne. Når ein "
+"tek omsyn til det totale minnebruken til ein prosess, er det viktig å merke "
+"seg at kostnaden for delte bibliotek som er lada inn i minnet, kan spreiast "
+"over alle prosessar som brukar dei for tida."
+
+#. (itstool) path: page/p
+#: C/memory-map-what.page:69
+msgid ""
+"When the system needs more pages of memory than are available, some of the "
+"existing pages will be <em>paged out</em> or written to the <gui>swap space</"
+"gui>. Text pages are flagged read-execute in memory and don't need to be "
+"written to swap since they can be re-loaded from their original location on "
+"disk. Data pages have read-write permissions, and if modified when in "
+"memory, they are labeled <em>dirty</em>, and when designated for swapping, "
+"must be paged out. When a page in swap space is required by a running "
+"process, it needs to be swapped back in before use, perhaps causing another "
+"page to be paged out."
+msgstr ""
+"Når systemet treng fleire minnesider enn det som er tilgjengeleg, vert nokre"
+" av dei eksisterande sidene <em>skuva ut</em> eller skrivne til <gui>swap-"
+"området</gui>. Tekstsider er merkte som lese-utfør i minnet og treng ikkje å"
+" verte skrivne til swap, sidan dei kan lastast på nytt frå den opphavlege "
+"plasseringa på disken. Datasider har lese-skrive-tilgang, og om dei vert "
+"endra medan dei ligg i minnet, vert dei merkte som <em>skitne</em>, og når "
+"dei skal flyttast til swap, må dei skrivast ut. Når ei side i swap-området "
+"vert etterspurd av ein køyrande prosess, må ho hentast tilbake før bruk, "
+"noko som kanskje fører til at ei anna side vert skuva ut."
+
+#. (itstool) path: info/desc
+#: C/process-identify-file.page:22
+msgid "Search for a file that's open to display which process is using it."
+msgstr "Søk etter ein fil som er open for å vise kva prosess som brukar han."
+
+#. (itstool) path: page/title
+#: C/process-identify-file.page:25
+msgid "Find which program is using a specific file"
+msgstr "Finn kva app som brukar ei bestemt fil"
+
+#. (itstool) path: page/p
+#: C/process-identify-file.page:33
+msgid ""
+"Sometimes an error message will tell you a device (like the sound device or "
+"the DVD ROM) is busy, or the file you want to edit is in use. To find the "
+"process or processes responsible:"
+msgstr ""
+"Av og til vil ei feilmelding fortelje deg at ei eining (som lyd-eininga "
+"eller DVD-ROM-en) er oppteken, eller at fila du vil redigere er i bruk. For "
+"å finne prosessen eller prosessane som er ansvarlege:"
+
+#. (itstool) path: item/p
+#: C/process-identify-file.page:38
+msgid ""
+"Click <guiseq><gui>System Monitor</gui><gui>Search for Open Files</gui></"
+"guiseq>."
+msgstr ""
+"Klikk <guiseq><gui>Systemovervakar</gui><gui>Søk etter opne "
+"filer</gui></guiseq>."
+
+#. (itstool) path: item/p
+#: C/process-identify-file.page:41
+msgid ""
+"Enter a filename or part of a filename. This could be <file>/dev/snd</file> "
+"for the sound device or <file>/media/cdrom</file> for the DVD ROM."
+msgstr ""
+"Skriv inn eit filnamn eller del av eit filnamn. Dette kan vere "
+"<file>/dev/snd</file> for lydinnretninga eller <file>/media/cdrom</file> for"
+" DVD-ROM-en."
+
+#. (itstool) path: item/p
+#: C/process-identify-file.page:45
+msgid "Click <gui>Find</gui>."
+msgstr "Klikk <gui>Finn</gui>."
+
+#. (itstool) path: page/p
+#: C/process-identify-file.page:49
+msgid ""
+"This will display a list of running processes that are currently accessing "
+"the file or files that match the search. Quitting the program should allow "
+"you to access the device or edit the file."
+msgstr ""
+"Dette vil vise ei liste over køyrande prosessar som for tida har tilgang til"
+" fila eller filene som passar søket. Du kan avslutte appen for å få tilgang "
+"til eininga eller redigere fila."
+
+#. (itstool) path: info/desc
+#: C/process-explain.page:22
+msgid "A process can be manipulated from the process list."
+msgstr "Ein prosess kan handterast frå prosesslista."
+
+#. (itstool) path: page/title
+#: C/process-explain.page:25
+msgid "What is a process?"
+msgstr "Kva er ein prosess?"
+
+#. (itstool) path: page/p
+#: C/process-explain.page:34
+msgid ""
+"A <gui>process</gui> is a program or application being executed by the "
+"system. When an application is launched, the system assigns a unique process "
+"ID (PID), and its instructions and data are loaded into memory."
+msgstr ""
+"Ein <gui>prosess</gui> er eit program eller ein app som vert køyrt av "
+"systemet. Når ein app vert starta, tildeler systemet ein unik prosess-ID "
+"(PID), og instruksjonane og dataa vert lasta inn i minnet."
+
+#. (itstool) path: page/p
+#: C/process-explain.page:38
+msgid ""
+"The <gui>Processes</gui> tab displays information on processes, and allows "
+"you to <gui>Stop</gui>, <gui>Continue</gui>, <gui>End</gui>, <gui>Kill</"
+"gui>, or change the priority of a process. If you choose to display <gui>All "
+"Processes</gui>, the process list will include <em>system processes</em>, "
+"which run in the background providing various services that keep a computer "
+"running."
+msgstr ""
+"Fana <gui>Prosessar</gui> viser informasjon om prosessar, og lèt deg bruke "
+"<gui>Stopp</gui>, <gui>Hald fram</gui>, <gui>Avslutt</gui> og <gui>Tving "
+"avslutting</gui> på ein prosess eller endre prioriteten hans. Vel du å vise "
+"<gui>Alle prosessar</gui>, vil prosesslista ta med <em>systemprosessar</em>,"
+" som køyrer i bakgrunnen og gjev ulike tenester som held ein datamaskin i "
+"gang."
+
+#. (itstool) path: credit/years
+#: C/process-columns.page:13 C/cpu-multicore.page:13 C/process-many.page:13
+#: C/process-priority-change.page:16 C/commandline.page:18
+#: C/process-files.page:13 C/cpu-check.page:17 C/fs-device.page:15
+#: C/fs-diskusage.page:15 C/cpu-mem-normal.page:13 C/fs-info.page:15
+#: C/index.page:16 C/process-kill.page:14 C/process-status.page:16
+#: C/fs-showall.page:13
+msgid "2014"
+msgstr "2014"
+
+#. (itstool) path: info/desc
+#: C/process-columns.page:22
+msgid "Various other columns can be shown in the <gui>Processes</gui> tab."
+msgstr "Ulike andre kolonnar kan visast i <gui>Prosessar</gui>-fana."
+
+#. (itstool) path: page/title
+#: C/process-columns.page:25
+msgid "Display different information about processes"
+msgstr "Vis ulike opplysningar om prosessar"
+
+#. (itstool) path: page/p
+#: C/process-columns.page:27
+msgid "To display different or additional information in the process list:"
+msgstr "For å vise ulike eller tilleggsinformasjonar i prosesslista:"
+
+#. (itstool) path: item/p
+#: C/process-columns.page:30 C/process-update-speed.page:38 C/net-bits.page:38
+#: C/mem-check.page:65
+msgid "Click <guiseq><gui>System Monitor</gui><gui>Preferences</gui></guiseq>."
+msgstr ""
+"Klikk <guiseq><gui>Systemovervakar</gui><gui>Innstillingar</gui></guiseq>."
+
+#. (itstool) path: item/p
+#: C/process-columns.page:32 C/solaris-mode.page:44
+#: C/process-identify-hog.page:40 C/memory-map-use.page:53 C/mem-check.page:83
+msgid "Click the <gui>Processes</gui> tab."
+msgstr "Klikk på <gui>Prosessar</gui>-fana."
+
+#. (itstool) path: item/p
+#: C/process-columns.page:33
+msgid "Select the desired headings in the <gui>Information Fields</gui> list."
+msgstr "Vel ynskte overskrifter i <gui>Informasjonsfelt</gui>-lista."
+
+#. (itstool) path: page/p
+#: C/process-columns.page:37
+msgid ""
+"For each process listed in the <gui>Processes</gui> tab, <app>System "
+"Monitor</app> provides information in a number of categories. For detailed "
+"descriptions of what the columns mean, check the <link "
+"href=\"man:ps\"><cmd>ps</cmd> man page</link>."
+msgstr ""
+"For kvar prosess som er oppført i <gui>Prosessar</gui>-fana, gjev "
+"<app>Systemovervakar</app> informasjon i fleire kategoriar. For detaljerte "
+"skildringar av kva kolonnane tyder, sjå <link href=\"man:ps\"><cmd>ps</cmd> "
+"man-sida</link>."
+
+#. (itstool) path: info/desc
+#: C/process-update-speed.page:22
+msgid ""
+"Refresh the information shown in the System Monitor with a longer or shorter "
+"interval."
+msgstr ""
+"Oppdater informasjonen som vert vist i Systemovervakinga med eit lengre "
+"eller kortare intervall."
+
+#. (itstool) path: page/title
+#: C/process-update-speed.page:26
+msgid "Make the information update faster or slower"
+msgstr "Gjer at informasjonen vert oppdatert raskare eller seinare"
+
+#. (itstool) path: page/p
+#: C/process-update-speed.page:35
+msgid "To change the information refresh speed:"
+msgstr "For å endre oppdateringsfarten:"
+
+#. (itstool) path: item/p
+#: C/process-update-speed.page:41
+msgid ""
+"Click the desired tab (<gui>Processes</gui>, <gui>Resources</gui> or "
+"<gui>File Systems</gui>)."
+msgstr ""
+"Klikk på ønskt fane (<gui>Prosessar</gui>, <gui>Ressursar</gui> eller "
+"<gui>Filsystem</gui>)."
+
+#. (itstool) path: item/p
+#: C/process-update-speed.page:44 C/mem-check.page:72
+msgid "Enter a value for <gui>Update interval in seconds</gui>."
+msgstr "Oppgi ein verdi for <gui>Oppdateringsintervall i sekund</gui>."
+
+#. (itstool) path: note/p
+#: C/process-update-speed.page:48
+msgid ""
+"Setting the <gui>Update interval</gui> to a lower value will cause "
+"<gui>System Monitor</gui> itself to use more of the CPU."
+msgstr ""
+"Å setje <gui>Oppdateringsintervall</gui> til ein lågare verdi gjer at "
+"<gui>Systemovervakar</gui> sjølv brukar meir av prosessoren."
+
+#. (itstool) path: info/desc
+#: C/cpu-multicore.page:16
+msgid ""
+"Computers with more processors find it easier to run many programs at the "
+"same time."
+msgstr ""
+"Datamaskinar med fleire prosessorar synest det er lettare å køyre mange "
+"program samtidig."
+
+#. (itstool) path: page/title
+#: C/cpu-multicore.page:19
+msgid "Why do I have more than one processor?"
+msgstr "Kvifor har eg meir enn éin prosessor?"
+
+#. (itstool) path: page/p
+#: C/cpu-multicore.page:21
+msgid ""
+"Many computers have more than one processor (CPU). These are sometimes "
+"referred to as multi-core systems."
+msgstr ""
+"Mange datamaskinar har meir enn éin prosessor (CPU). Desse vert av og til "
+"kalla fleirkjernesystem."
+
+#. (itstool) path: page/p
+#: C/cpu-multicore.page:23
+msgid ""
+"The workload of running all of the programs on your computer is shared "
+"between the processors. The more processors you have, the more the work can "
+"be shared out. This reduces the load on each processor, which can help make "
+"the computer run faster."
+msgstr ""
+"Arbeidsmengda med å køyre alle appane på datamaskina di vert delt mellom "
+"prosessorane. Jo fleire prosessorar du har, dess meir kan arbeidet delast "
+"opp. Dette reduserer belastninga på kvar prosessor, noko som kan hjelpe til "
+"med å få datamaskina til å køyre raskare."
+
+#. (itstool) path: page/p
+#: C/cpu-multicore.page:25
+msgid ""
+"The computer automatically decides how best to share the work between "
+"processors; you don't need to do this yourself."
+msgstr ""
+"Datamaskina avgjer automatisk korleis arbeidet best kan delast mellom "
+"prosessorar; du treng ikkje gjere dette sjølv."
+
+#. (itstool) path: info/desc
+#: C/process-many.page:16
+msgid "Lots of system processes run automatically in the background."
+msgstr "Mange systemprosessar køyrer automatisk i bakgrunnen."
+
+#. (itstool) path: page/title
+#: C/process-many.page:19
+msgid "Why are there processes listed that I did not start?"
+msgstr "Kvifor er det oppførte prosessar som eg ikkje har starta?"
+
+#. (itstool) path: page/p
+#: C/process-many.page:21
+msgid ""
+"There are usually lots of processes listed under the <gui>Processes</gui> "
+"tab. Only a few of these will be programs that you started yourself. The "
+"others are mostly processes that are needed by the operating system to make "
+"the computer run correctly. These are started automatically when you log in, "
+"and typically run quietly in the background."
+msgstr ""
+"Det er vanlegvis mange prosessar som er lista under "
+"<gui>Prosessar</gui>-fana. Berre nokre få av desse er program som du sjølv "
+"har starta. Dei andre er stort sett prosessar som operativsystemet treng for"
+" at datamaskina skal fungere korrekt. Desse vert starta automatisk når du "
+"loggar inn, og køyrer typisk stille i bakgrunnen."
+
+#. (itstool) path: info/desc
+#: C/process-priority-change.page:19
+msgid ""
+"Decide whether a process should get a bigger or smaller share of the "
+"processor's time."
+msgstr ""
+"Avgjer om ein prosess skal få ein større eller mindre del av prosessortida."
+
+#. (itstool) path: page/title
+#: C/process-priority-change.page:22
+msgid "Change the priority of a process"
+msgstr "Endre prioriteten til ein prosess"
+
+#. (itstool) path: page/p
+#: C/process-priority-change.page:24
+msgid ""
+"You can tell the computer that certain processes should have a higher "
+"priority than others, and so should be given a bigger share of the available "
+"computing time. This can make them run faster, but only in certain cases. "
+"You can also give a process a <em>lower</em> priority if you think it is "
+"taking up too much processing power."
+msgstr ""
+"Du kan fortelje datamaskina at visse prosessar skal ha høgare prioritet enn "
+"andre, og dermed få ein større del av den tilgjengelege reknetyda. Dette kan"
+" få dei til å køyre raskare, men berre i visse tilfelle. Du kan også gje ein"
+" prosess ein <em>lågare</em> prioritet dersom du meiner han brukar for mykje"
+" prosesseringskraft."
+
+#. (itstool) path: item/p
+#: C/process-priority-change.page:27
+msgid ""
+"Go to the <gui>Processes</gui> tab and click on the process you want to have "
+"a different priority."
+msgstr ""
+"Gå til <gui>Prosessar</gui>-fana og klikk på prosessen du vil ha ein annan "
+"prioritet."
+
+#. (itstool) path: item/p
+#: C/process-priority-change.page:28
+msgid ""
+"Right-click the process, and use the <gui>Change Priority</gui> menu to "
+"assign the process a higher or lower priority."
+msgstr ""
+"Høgreklikk på prosessen, og bruk <gui>Endre prioritet</gui>-menyen for å "
+"tildele prosessen høgare eller lågare prioritet."
+
+#. (itstool) path: page/p
+#: C/process-priority-change.page:31
+msgid ""
+"There is typically little need to change process priorities manually. The "
+"computer will usually do a good job of managing them itself. (The system for "
+"managing the priority of processes is called <link xref=\"process-priority-"
+"what\">nice</link>.)"
+msgstr ""
+"Det er som regel lite behov for å endre prosessprioritetar manuelt. "
+"Datamaskina vil som regel gjere ein god jobb med å styre dei sjølv. "
+"(Systemet for å styre prosessprioritet vert kalla <link xref=\"process-"
+"priority-what\">nice</link>.)"
+
+#. (itstool) path: section/title
+#: C/process-priority-change.page:35
+msgid "Does higher priority make a process run faster?"
+msgstr "Gjev høgare prioritet ein raskare prosess?"
+
+#. (itstool) path: section/p
+#: C/process-priority-change.page:37
+msgid ""
+"The computer shares its processing time between all of the running "
+"processes. This is normally shared intelligently, so programs that are doing "
+"more work automatically get a bigger share of the resources. Most of the "
+"time, processes will get as much processing time as they need, and so will "
+"already be running as fast as possible. Changing their priority won't make a "
+"difference."
+msgstr ""
+"Datamaskina deler prosesseringstida si mellom alle dei køyrande prosessane. "
+"Dette vert normalt delt intelligent, slik at appane som gjer meir arbeid "
+"automatisk får ein større del av ressursane. Som regel får prosessane så "
+"mykje prosesseringstid som dei treng, og vil dermed allereie køyre så fort "
+"som mogleg. Å endre prioriteten deira vil ikkje utgjere nokon skilnad."
+
+#. (itstool) path: section/p
+#: C/process-priority-change.page:39
+msgid ""
+"If your computer is running several computationally-intensive programs at "
+"once, however, its processing time may be \"over-subscribed\" (that is, the "
+"<link xref=\"process-identify-hog\">processor's full capacity</link> will be "
+"in use). You may notice that other programs run slower than usual because "
+"there is not enough processing time to share between all of them."
+msgstr ""
+"Men om datamaskina køyrer fleire reknemessig krevjande app samtidig, kan "
+"prosesseringstida verte «overteken» (det vil seie at <link xref=\"process-"
+"identify-hog\">prosessorkapasiteten</link> vert utnytta fullt ut). Du kan "
+"merke at andre appar køyrer langsamare enn vanleg fordi det ikkje er nok "
+"prosesseringstid til å dele mellom alle."
+
+#. (itstool) path: section/p
+#: C/process-priority-change.page:41
+msgid ""
+"In this case, changing the priority of processes can be helpful. You could "
+"lower the priority of one of the computationally-intensive processes to free "
+"up more processing time for other programs. Alternatively, you could "
+"increase the priority of a process that is more important to you, and that "
+"you want to run faster."
+msgstr ""
+"I dette tilfellet kan det vere nyttig å endre prioriteten på prosessane. Du "
+"kan senke prioriteten til ein av dei reknemessig krevjande prosessane for å "
+"frigjere meir prosesseringstid til andre appar. Alternativt kan du auke "
+"prioriteten til ein prosess som er viktigare for deg, og som du ønskjer å "
+"køyre raskare."
+
+#. (itstool) path: info/desc
+#: C/commandline.page:21
+msgid ""
+"Information in System Monitor can also be found using command line tools."
+msgstr ""
+"Informasjon i Systemovervaking kan også finnast ved hjelp av "
+"kommandolinjeverktøy."
+
+#. (itstool) path: page/title
+#: C/commandline.page:25
+msgid "Get the same information from the command line"
+msgstr "Få same informasjon frå kommandolinja"
+
+#. (itstool) path: page/p
+#: C/commandline.page:33
+msgid ""
+"Most of the information displayed by System Monitor can also be obtained "
+"using these command line tools."
+msgstr ""
+"Det meste av informasjonen som System Monitor viser kan òg hentast med desse"
+" kommandolinjeverktøya."
+
+#. (itstool) path: td/p
+#: C/commandline.page:39
+msgid "<cmd>top</cmd>"
+msgstr "<cmd>top</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:40
+msgid ""
+"provides a continually updated list of running processes, and allows you to "
+"manipulate them."
+msgstr ""
+"gjev ei stadig oppdatert liste over køyrande prosessar, og let deg styre "
+"dei."
+
+#. (itstool) path: td/p
+#: C/commandline.page:45
+msgid "<cmd>lsof</cmd>"
+msgstr "<cmd>lsof</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:46
+msgid "provides a list of open files and the processes that opened them."
+msgstr "gjev ei liste over opne filer og prosessane som opna dei."
+
+#. (itstool) path: td/p
+#: C/commandline.page:51
+msgid "<cmd>free -m</cmd>"
+msgstr "<cmd>free -m</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:52
+msgid "shows you how much memory is available."
+msgstr "viser deg kor mykje minne som er tilgjengeleg."
+
+#. (itstool) path: td/p
+#: C/commandline.page:56
+msgid "<cmd>vmstat</cmd>"
+msgstr "<cmd>vmstat</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:57
+msgid "provides information about current virtual memory use."
+msgstr "gjev informasjon om noverande bruk av virtuell minne."
+
+#. (itstool) path: td/p
+#: C/commandline.page:61
+msgid "<cmd>df -h</cmd>"
+msgstr "<cmd>df -h</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:62
+msgid "displays available disk space on mounted filesystems."
+msgstr "viser tilgjengeleg diskplass på monterte filsystem."
+
+#. (itstool) path: td/p
+#: C/commandline.page:66
+msgid "<cmd>pmap</cmd>"
+msgstr "<cmd>pmap</cmd>"
+
+#. (itstool) path: td/p
+#: C/commandline.page:67
+msgid "displays the memory map of a process."
+msgstr "viser minnekartet til ein prosess."
+
+#. (itstool) path: info/desc
+#: C/mem-swap.page:23
+msgid ""
+"Swap memory allows your computer to run more applications at the same time "
+"than will fit into the system memory (RAM)."
+msgstr ""
+"Swap-minne gjer at datamaskina di kan køyre fleire appar samtidig enn det "
+"som får plass i systemminnet (RAM)."
+
+#. (itstool) path: page/title
+#: C/mem-swap.page:27
+msgid "What is \"swap\" memory?"
+msgstr "Kva er «swap»-minne?"
+
+#. (itstool) path: page/p
+#: C/mem-swap.page:35
+msgid ""
+"Swap memory or <em>swap space</em> is the on-disk component of the virtual "
+"memory system. It is pre-configured as a <em>swap partition</em> or a "
+"<em>swap file</em> when Linux is first installed, but can also be added "
+"later."
+msgstr ""
+"Swap-minne eller <em>swap-område</em> er diskkomponenten i det virtuelle "
+"minnesystemet. Det er førehandsinnstilt som ein <em>swap-partisjon</em> "
+"eller ei <em>swap-fil</em> når Linux vert installert for fyrste gong, men "
+"kan også leggjast til seinare."
+
+#. (itstool) path: note/p
+#: C/mem-swap.page:41
+msgid ""
+"Disk access is <em>very</em> slow compared to memory access. The system runs "
+"more slowly if there is excessive swapping, or <em>thrashing</em>, when the "
+"system is unable to find enough free memory. In this situation the only "
+"solution is to add more RAM."
+msgstr ""
+"Disktilgang er <em>svært</em> langsam samanlikna med minnetilgang. Systemet "
+"køyrer langsamare viss det er overdriven swapping, eller <em>thrashing</em>,"
+" når systemet ikkje klarer å finne nok ledig minne. I denne situasjonen er "
+"den einaste løysinga å leggje til meir RAM."
+
+#. (itstool) path: page/p
+#: C/mem-swap.page:47
+msgid ""
+"To see whether swapping, or <em>paging</em>, has become a performance issue:"
+msgstr ""
+"For å sjå om swapping, eller <em>paging</em>, har vorte eit ytingsproblem:"
+
+#. (itstool) path: item/p
+#: C/mem-swap.page:52 C/net-bits.page:41 C/mem-check.page:45
+#: C/mem-check.page:69 C/net-check.page:38
+msgid "Click the <gui>Resources</gui> tab."
+msgstr "Klikk på <gui>Ressursar</gui>-fana."
+
+#. (itstool) path: item/p
+#: C/mem-swap.page:55
+msgid ""
+"The <gui>Memory and Swap History</gui> graph shows memory and swap use as "
+"percentages."
+msgstr "Grafen <gui>Minne og swap</gui> viser minne- og swap-bruk i prosent."
+
+#. (itstool) path: info/desc
+#: C/solaris-mode.page:22
+msgid "Use Solaris mode to reflect the number of CPUs."
+msgstr "Bruk Solaris-modus for å spegle talet på CPU-ar."
+
+#. (itstool) path: page/title
+#: C/solaris-mode.page:25
+msgid "What is Solaris mode?"
+msgstr "Kva er Solaris-modus?"
+
+#. (itstool) path: page/p
+#: C/solaris-mode.page:33
+msgid ""
+"In a system that has multiple CPUs or <link xref=\"cpu-multicore\">cores</"
+"link>, processes can use more than one at the same time. It is possible for "
+"the <gui>% CPU</gui> column to display values that total greater than 100% "
+"(i.e. 400% in a 4-CPU system). <gui>Solaris mode</gui> divides the <gui>% "
+"CPU</gui> for each process by the number of CPUs in the system so that the "
+"total will be 100%."
+msgstr ""
+"I eit system med fleire CPU-ar eller <link xref=\"cpu-"
+"multicore\">kjerner</link> kan prosessar bruke meir enn éin samtidig. Det er"
+" mogleg at <gui>% CPU</gui>-kolonna viser verdiar som til saman vert meir "
+"enn 100 % (det vil seie 400 % i eit system med 4 CPU-ar). <gui>Solaris-"
+"modus</gui> deler <gui>% CPU</gui> for kvar prosess på talet på CPU-ar i "
+"systemet slik at summen vert 100 %."
+
+#. (itstool) path: page/p
+#: C/solaris-mode.page:40
+msgid "To display the <gui>% CPU</gui> in <gui>Solaris mode</gui>:"
+msgstr "For å vise <gui>% CPU</gui> i <gui>Solaris-modus</gui>:"
+
+#. (itstool) path: item/p
+#: C/solaris-mode.page:43
+msgid "Click <gui>Preferences</gui> in the app menu."
+msgstr "Klikk <gui>Innstillingar</gui> i app-menyen."
+
+#. (itstool) path: item/p
+#: C/solaris-mode.page:45
+msgid "Select <gui>Divide CPU Usage by CPU Count</gui>."
+msgstr "Vel <gui>Del CPU-bruk på CPU-talet</gui>."
+
+#. (itstool) path: note/p
+#: C/solaris-mode.page:48
+msgid ""
+"The term <gui>Solaris mode</gui> derives from Sun's UNIX, compared to the "
+"Linux default of IRIX mode, named for SGI's UNIX."
+msgstr ""
+"Omgrepet <gui>Solaris-modus</gui> stammar frå Sun sin UNIX, samanlikna med "
+"Linux sin standard IRIX-modus, kalla opp etter SGI sin UNIX."
+
+#. (itstool) path: info/desc
+#: C/process-priority-what.page:22
+msgid "The <em>nice</em> value of a process is used to adjust its priority."
+msgstr ""
+"Den <em>fine</em> verdien til ein prosess vert nytta til å justere "
+"prioriteten."
+
+#. (itstool) path: page/title
+#: C/process-priority-what.page:25
+msgid "What is the <em>nice</em> value of a process?"
+msgstr "Kva er <em>nice</em>-verdien til ein prosess?"
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:27
+msgid ""
+"The priority of a process determines the share of time the process is "
+"alotted on a system's one or more processors (CPUs or cores). A <em>nice</"
+"em> process, or one with a higher nice value, concedes priority to other "
+"processes. Adjusting the nice value will increase or decrease the scheduling "
+"priority."
+msgstr ""
+"Prioriteten til ein prosess avgjer kor mykje tid prosessen får på systemet "
+"sine éin eller fleire prosessorar (CPU-ar eller kjerne). Ein <em>nice</em> "
+"prosess, eller ein med høgare nice-verdi, gjev frå seg prioritet til andre "
+"prosessar. Justering av nice-verdien vil auke eller minke "
+"planleggingsprioriteten."
+
+#. (itstool) path: page/p
+#: C/process-priority-what.page:32
+msgid ""
+"The lower the nice value, the higher the priority of the process. The nice "
+"value ranges from -20 (low nice, higher priority) to 20 (lower priority). "
+"The default value of nice is usually 0."
+msgstr ""
+"Lågare nice-verdi tyder høgare prioritet for prosessen. Nice-verdien går frå"
+" -20 (låg nice, høgare prioritet) til 20 (lågare prioritet). Standardverdien"
+" for nice er som regel 0."
+
+#. (itstool) path: info/desc
+#: C/process-files.page:16
+msgid "View files being accessed by processes."
+msgstr "Vis filer som vert brukte av prosessar."
+
+#. (itstool) path: page/title
+#: C/process-files.page:19
+msgid "List which files a process has open"
+msgstr "Vis kva filer ein prosess har opne"
+
+#. (itstool) path: page/p
+#: C/process-files.page:21
+msgid ""
+"Processes sometimes need to keep files open. They could be files that you "
+"are viewing or editing, or temporary or system files that the process needs "
+"to work properly."
+msgstr ""
+"Prosessar treng av og til å halde filer opne. Det kan vere filer som du ser "
+"på eller redigerer, eller mellombelse filer eller systemfiler som prosessen "
+"treng for å fungere skikkeleg."
+
+#. (itstool) path: page/p
+#: C/process-files.page:23
+msgid "To see which files a process has open:"
+msgstr "For å sjå kva filer ein prosess har opne:"
+
+#. (itstool) path: item/p
+#: C/process-files.page:25
+msgid ""
+"Find the process in the <gui>Processes</gui> tab and click once to select it."
+msgstr ""
+"Finn prosessen i <gui>Prosessar</gui>-fana og klikk éin gong for å velje "
+"han."
+
+#. (itstool) path: item/p
+#: C/process-files.page:26
+msgid "Right-click the process and select <gui>Open Files</gui>."
+msgstr "Høgreklikk på prosessen og vel <gui>Opne filer</gui>."
+
+#. (itstool) path: page/p
+#: C/process-files.page:29
+msgid ""
+"In the list of open files that appears, you might find some special files "
+"called <em>sockets</em>. These are actually a way for processes to "
+"communicate with one another, and are not normal files that you can view or "
+"edit."
+msgstr ""
+"I lista over opne filer som dukkar opp, kan du finne nokre spesielle filer "
+"kalla <em>sockets</em>. Dette er eigentleg ein måte for prosessar å "
+"kommunisere med kvarandre, og er ikkje vanlege filer som du kan sjå eller "
+"redigere."
+
+#. (itstool) path: info/desc
+#: C/process-identify-hog.page:22
+msgid ""
+"Sort the list of processes by <gui>% CPU</gui> to see which application is "
+"using up the computer's resources."
+msgstr ""
+"Sorter prosesslista etter <gui>% CPU</gui> for å sjå kva app som brukar "
+"ressursane til datamaskina."
+
+#. (itstool) path: page/title
+#: C/process-identify-hog.page:26
+msgid "Which program is making the computer run slowly?"
+msgstr "Kva for eit program gjer at datamaskina køyrer seint?"
+
+#. (itstool) path: page/p
+#: C/process-identify-hog.page:35
+msgid ""
+"A program that is using more than its share of the CPU may slow down the "
+"whole computer. To find which process could be doing this:"
+msgstr ""
+"Eit program som brukar meir enn sin del av prosessoren kan gjere heile "
+"datamaskina tregare. For å finne kva prosess som kan gjere dette:"
+
+#. (itstool) path: item/p
+#: C/process-identify-hog.page:43
+msgid ""
+"Click the <gui>% CPU</gui> column header to sort the processes according to "
+"CPU use."
+msgstr ""
+"Klikk på kolonneoverskrifta <gui>% CPU</gui> for å sortere prosessane etter "
+"CPU-bruk."
+
+#. (itstool) path: note/p
+#: C/process-identify-hog.page:46
+msgid ""
+"The arrow in the column header shows the sort direction; click again to "
+"reverse it. The arrow should point up."
+msgstr ""
+"Pila i kolonneoverskrifta viser sorteringsretninga; klikk på nytt for å snu."
+" Pila skal peike opp."
+
+#. (itstool) path: page/p
+#: C/process-identify-hog.page:52
+msgid ""
+"The processes at the top of the list are using the highest percentage CPU. "
+"Once you identify which one might be using more resources than it should, "
+"you can decide whether to close the program itself, or close other programs "
+"to try to reduce the CPU load."
+msgstr ""
+"Prosessane øvst i lista brukar den største delen av CPU-en. Når du har funne"
+" ut kva for ein som kan bruke meir ressursar enn han bør, kan du avgjere om "
+"du skal stengje sjølve appen, eller stengje andre appar for å prøve å "
+"redusere CPU-belastninga."
+
+#. (itstool) path: note/p
+#: C/process-identify-hog.page:58
+msgid ""
+"A process that has hung or crashed might use 100% CPU. If this happens you "
+"may need to <link xref=\"process-kill\">kill</link> the process."
+msgstr ""
+"Ein prosess som har låst seg eller krasja kan bruke 100 % CPU. Om dette "
+"skjer, må du kanskje <link xref=\"process-kill\">tvinge prosessen til å "
+"avslutte</link>."
+
+#. (itstool) path: info/desc
+#: C/units.page:22
+msgid "Units of measure for memory and disk space"
+msgstr "Måleeiningar for minne og diskplass"
+
+#. (itstool) path: page/title
+#: C/units.page:25
+msgid "Is GiB the same as GB (gigabyte)?"
+msgstr "Er GiB det same som GB (gigabyte)?"
+
+#. (itstool) path: page/p
+#: C/units.page:32
+msgid ""
+"The memory and disk space statistics are displayed using <em>IEC binary "
+"prefixes</em>, KiB, MiB, GiB, TiB (for kibi, mebi, gibi and tebi). These are "
+"intended to distinguish binary reporting of sizes used in System Monitor "
+"(multiples of 1024) from decimal sizes (multiples of 1000) commonly used, "
+"for instance, in packaging of hard disks."
+msgstr ""
+"Minne- og diskplassstatistikk vert vist med <em>IEC-binære prefiks</em>, "
+"KiB, MiB, GiB, TiB (for kibi, mebi, gibi og tebi). Desse er meinte å skilje "
+"binær rapportering av storleikar brukt i Systemovervaking (multiplar av "
+"1024) frå desimale storleikar (multiplar av 1000) som vanlegvis vert brukt, "
+"til dømes i pakking av harddiskar."
+
+#. (itstool) path: page/p
+#: C/units.page:38
+msgid "Typical binary units:"
+msgstr "Typiske binære einingar:"
+
+#. (itstool) path: item/p
+#: C/units.page:40
+msgid "1 KiB = 1024 bytes"
+msgstr "1 KiB = 1024 byte"
+
+#. (itstool) path: item/p
+#: C/units.page:41
+msgid "1 MiB = 1048576 bytes"
+msgstr "1 MiB = 1048576 byte"
+
+#. (itstool) path: item/p
+#: C/units.page:42
+msgid "1 GiB = 1073741842 bytes"
+msgstr "1 GiB = 1073741842 byte"
+
+#. (itstool) path: page/p
+#: C/units.page:45
+msgid ""
+"An external hard drive, advertised as 1.0 TB (terabytes), would display as "
+"0.909 TiB (tebibytes)."
+msgstr ""
+"Ein ekstern harddisk, annonsert som 1,0 TB (terabyte), vil visast som 0,909 "
+"TiB (tebibyte)."
+
+#. (itstool) path: info/desc
+#: C/cpu-check.page:20
+msgid ""
+"The amount of CPU being used tells you how much work the computer is trying "
+"to do."
+msgstr ""
+"Mengda CPU som vert brukt fortel deg kor mykje arbeid datamaskina prøver å "
+"gjere."
+
+#. (itstool) path: page/title
+#: C/cpu-check.page:23
+msgid "Check how much processor (CPU) capacity is being used"
+msgstr "Sjå kor mykje prosessorkapasitet (CPU) som vert brukt"
+
+#. (itstool) path: page/p
+#: C/cpu-check.page:25
+msgid ""
+"To check how much of your computer's processor is currently being used, go "
+"to the <gui>Resources</gui> tab and look at the <gui>CPU History</gui> "
+"chart. This tells you how much work the computer is currently doing."
+msgstr ""
+"For å sjekke kor mykje av prosessoren på datamaskina di som vert brukt no, "
+"gå til <gui>Ressursar</gui>-fana og sjå på <gui>CPU-"
+"historikk</gui>-diagrammet. Dette fortel deg kor mykje arbeid datamaskina "
+"gjer no."
+
+#. (itstool) path: page/p
+#: C/cpu-check.page:27
+msgid ""
+"Many computers have more than one processor (sometimes called <em>multi-"
+"core</em> systems). Each processor is shown separately on the chart. If you "
+"want, you can change the color used for each processor by clicking one of "
+"the colored blocks below the chart."
+msgstr ""
+"Mange datamaskinar har meir enn éin prosessor (nokre gongar kalla "
+"<em>fleirkjerne</em> system). Kvar prosessor vert vist kvar for seg på "
+"diagrammet. Om du vil, kan du endre fargen som vert brukt for kvar prosessor"
+" ved å klikke på eit av dei farga felta under diagrammet."
+
+#. (itstool) path: page/p
+#: C/cpu-check.page:29
+msgid ""
+"You can also change how rapidly the chart is updated (the update interval), "
+"and how the lines for each processor are displayed (e.g. as a stacked area "
+"chart). Change the relevant options by clicking <gui>System Monitor</gui>, "
+"then select <gui>Preferences</gui>, and then the <gui>Resources</gui> tab."
+msgstr ""
+"Du kan òg endre kor raskt diagrammet vert oppdatert "
+"(oppdateringsintervallet), og korleis linjene for kvar prosessor vert viste "
+"(t.d. som eit stabla arealdiagram). Endre dei relevante vala ved å klikke på"
+" <gui>Systemovervakar</gui>, vel deretter <gui>Innstillingar</gui>, og så "
+"<gui>Ressursar</gui>-fana."
+
+#. (itstool) path: info/desc
+#: C/net-bits.page:22
+msgid "Choose the units to display your network speed."
+msgstr "Vel einingar for å vise nettverkshastigheita di."
+
+#. (itstool) path: page/title
+#: C/net-bits.page:25
+msgid "Show the network speed in bits instead of bytes per second"
+msgstr "Vis nettverksfarten i bit i staden for byte per sekund"
+
+#. (itstool) path: page/p
+#: C/net-bits.page:32
+msgid ""
+"Network speed is often shown in bits per second, rather than bytes per "
+"second. This is called the <em>bit rate</em>, or <em>data rate</em>."
+msgstr ""
+"Nettverksfarten vert ofte vist i bit per sekund, heller enn byte per sekund."
+" Dette vert kalla <em>bitrate</em>, eller <em>datafart</em>."
+
+#. (itstool) path: page/p
+#: C/net-bits.page:35
+msgid "To display the network speed in bits:"
+msgstr "For å vise nettverksfarten i bit:"
+
+#. (itstool) path: item/p
+#: C/net-bits.page:42
+msgid "Select <gui>Show network speed in bits</gui>."
+msgstr "Vel <gui>Vis nettverksfart i bit</gui>."
+
+#. (itstool) path: info/desc
+#: C/fs-device.page:18
+msgid "Each device corresponds to a <em>partition</em> on a hard disk."
+msgstr "Kvar eining svarar til ei <em>partisjon</em> på ein harddisk."
+
+#. (itstool) path: page/title
+#: C/fs-device.page:21
+msgid "What are the different devices in the File Systems tab?"
+msgstr "Kva er dei ulike einingane i fana Filsystem?"
+
+#. (itstool) path: page/p
+#: C/fs-device.page:23
+msgid ""
+"Each device listed under the <gui>File Systems</gui> tab is a storage disk "
+"(like a hard drive or USB memory stick), or a disk partition. For each "
+"device, you can see what its total capacity is, how much of its capacity has "
+"been used, and some technical information about what <link xref=\"fs-"
+"info\">type of filesystem it is</link> and <link xref=\"fs-info\">where it "
+"is \"mounted\"</link>."
+msgstr ""
+"Kvar eining som er oppført under <gui>Filsystem</gui>-fana er ein "
+"lagringsdisk (som ein harddisk eller USB-minnepinn), eller ein "
+"diskpartisjon. For kvar eining kan du sjå kva den totale kapasiteten er, kor"
+" mykje av kapasiteten som er brukt, og noko teknisk informasjon om kva <link"
+" xref=\"fs-info\">type filsystem det er</link> og <link xref=\"fs-info\">kor"
+" den er «montert»</link>."
+
+#. (itstool) path: page/p
+#: C/fs-device.page:25
+msgid ""
+"The disk space on a single physical hard disk can be split up into multiple "
+"chunks, called <em>partitions</em>, each of which can be used as if it were "
+"a separate disk. If your hard disk has been partitioned (perhaps by you or "
+"the computer manufacturer), each partition will be listed separately in the "
+"File Systems list."
+msgstr ""
+"Lagringsplassen på éin fysisk harddisk kan delast opp i fleire stykke, kalla"
+" <em>partisjonar</em>, og kvar av desse kan brukast som om det var ein eigen"
+" disk. Om harddisken din har vorte partisjonert (kanskje av deg eller "
+"datamaskinprodusenten), vil kvar partisjon verte oppført separat i lista "
+"over filsystem."
+
+#. (itstool) path: note/p
+#: C/fs-device.page:28
+msgid ""
+"You can manage disks and partitions and see more detailed disk information "
+"with the <app>Disks</app> application."
+msgstr ""
+"Med <app>Diskar</app>-appen kan du administrere diskar og partisjonar og sjå"
+" meir detaljert diskinformasjon."
+
+#. (itstool) path: info/desc
+#: C/fs-diskusage.page:18
+msgid ""
+"The <gui>File Systems</gui> tab shows how much space is being used on each "
+"hard disk."
+msgstr ""
+"Fana <gui>Filsystem</gui> viser kor mykje plass som vert brukt på kvar "
+"harddisk."
+
+#. (itstool) path: page/title
+#: C/fs-diskusage.page:21
+msgid "Check how much disk space is being used"
+msgstr "Sjå kor mykje lagringsplass som vert brukt"
+
+#. (itstool) path: page/p
+#: C/fs-diskusage.page:23
+msgid ""
+"To check how much space is available on a disk, go to the <gui>File Systems</"
+"gui> tab and look at the <gui>Used</gui> and <gui>Available</gui> columns."
+msgstr ""
+"For å sjekke kor mykje plass som er ledig på ein disk, går du til fana "
+"<gui>Filsystem</gui> og ser på kolonnane <gui>Brukt</gui> og "
+"<gui>Tilgjengeleg</gui>."
+
+#. (itstool) path: page/p
+#: C/fs-diskusage.page:25
+msgid ""
+"If several devices are shown, and you are looking for the one that has your "
+"Home folder on it, look for the disk that has <file>/</file> or <file>/home</"
+"file> listed under <gui>Directory</gui>. This is usually (but not always) "
+"the disk where your personal files are stored."
+msgstr ""
+"Viss fleire einingar vert viste, og du leitar etter den som har Home-mappa "
+"di, leitar du etter disken som har <file>/</file> eller <file>/home</file> "
+"oppført under <gui>Katalog</gui>. Dette er vanlegvis (men ikkje alltid) "
+"disken der dei personlege filene dine vert lagra."
+
+#. (itstool) path: section/title
+#: C/fs-diskusage.page:29
+msgid "Freeing-up disk space"
+msgstr "Frigjer lagringsplass"
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:31
+msgid ""
+"If you don't have much disk space left, there are a few things you can do to "
+"try and free up some space."
+msgstr ""
+"Viss du ikkje har mykje diskplass att, er det nokre få ting du kan gjere for"
+" å prøve å frigjere litt plass."
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:33
+msgid ""
+"One is to delete unwanted files manually. You can use the <app>Disk Usage "
+"Analyzer</app> application to tell you which files and folders are taking up "
+"the most space. After deleting some files, you should then empty the "
+"<gui>Trash</gui> to make sure they are fully removed from the computer."
+msgstr ""
+"Det er å slette uønskte filer manuelt. Du kan bruke <app>Analyse av "
+"diskplass</app>-appen for å få vite kva filer og mapper som tek mest plass. "
+"Etter at du har sletta nokre filer, bør du tømme <gui>papirkorga</gui> for å"
+" vere sikker på at dei er heilt fjerna frå datamaskina."
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:35
+msgid ""
+"You can also remove temporary files in various applications. For example, "
+"web browsers and software managers often keep sizeable temporary files "
+"around. (How you remove them depends on the application.)"
+msgstr ""
+"Du kan også fjerne mellombelse filer i ulike appar. Til dømes held "
+"nettlesarar og programvarehandterarar ofte på store mellombelse filer. "
+"(Korleis du fjernar dei, avheng av appen.)"
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:37
+msgid ""
+"You can also try uninstalling some unwanted applications. Use your usual "
+"software manager to do this."
+msgstr ""
+"Du kan også prøve å avinstallere nokre uønskte appar. Bruk det vanlege "
+"programvarestyringsverktøyet ditt til dette."
+
+#. (itstool) path: section/p
+#: C/fs-diskusage.page:39
+msgid ""
+"Another way of freeing disk space is to \"archive\" old files by moving them "
+"to an external hard disk or online \"cloud\" storage, for example."
+msgstr ""
+"Ein annan måte å frigjere diskplass på er å «arkivere» gamle filer ved å "
+"flytte dei til ein ekstern harddisk eller til dømes til ei nettbasert «sky»,"
+" for eksempel."
+
+#. (itstool) path: info/desc
+#: C/process-forcequit.page:14
+msgid ""
+"If an application has frozen, you can force it to close by \"killing\" it."
+msgstr ""
+"Dersom ein app har låst seg, kan du tvinge han til å lukke ved å «drepe» "
+"han."
+
+#. (itstool) path: page/title
+#: C/process-forcequit.page:17
+msgid "Close an application that's not responding"
+msgstr "Lukk ein app som ikkje svarar"
+
+#. (itstool) path: page/p
+#: C/process-forcequit.page:28
+msgid "Short introductory text..."
+msgstr "Kort innleiande tekst..."
+
+#. (itstool) path: item/p
+#: C/process-forcequit.page:31
+msgid "First step..."
+msgstr "Første steg..."
+
+#. (itstool) path: item/p
+#: C/process-forcequit.page:32
+msgid "Second step..."
+msgstr "Andre steg..."
+
+#. (itstool) path: item/p
+#: C/process-forcequit.page:33
+msgid "Third step..."
+msgstr "Tredje steg..."
+
+#. (itstool) path: info/desc
+#: C/memory-map-use.page:24
+msgid "View the memory map of a process."
+msgstr "Vis minnekartet til ein prosess."
+
+#. (itstool) path: page/title
+#: C/memory-map-use.page:27
+msgid "Using memory maps"
+msgstr "Brukar minnekart"
+
+#. (itstool) path: page/p
+#: C/memory-map-use.page:34
+msgid ""
+"<gui>Virtual memory</gui> is a representation of the combined <gui>physical "
+"memory</gui> and <link xref=\"mem-swap\">swap space</link> in a system. It "
+"enables running processes to access <em>more</em> than the existing physical "
+"memory by <gui>mapping</gui> locations in physical memory to files on disk. "
+"When the system needs more pages of memory than are available, some of the "
+"existing pages will be <em>paged out</em> or written to the swap space."
+msgstr ""
+"<gui>Virtuelt minne</gui> er ei framstilling av det samla <gui>fysiske "
+"minnet</gui> og <link xref=\"mem-swap\">swap-området</link> i eit system. "
+"Det gjer det mogleg for køyrande prosessar å få tilgang til <em>meir</em> "
+"enn det eksisterande fysiske minnet ved å <gui>kartleggje</gui> plasseringar"
+" i fysisk minne til filer på disk. Når systemet treng fleire minnesider enn "
+"det som er tilgjengeleg, vil nokre av dei eksisterande sidene verte <em>sida"
+" ut</em> eller skrivne til swap-området."
+
+#. (itstool) path: page/p
+#: C/memory-map-use.page:42
+msgid ""
+"The <gui>memory map</gui> displays the total virtual memory use of the "
+"process, and can be used to determine the memory cost of running a single or "
+"multiple instances of the program, to ensure the use of the correct shared "
+"libraries, to see the results of adjusting various performance tuning "
+"parameters the program may have, or to diagnose issues such as memory leaks."
+msgstr ""
+"<gui>minnekartet</gui> viser det totale virtuelle minnebruket til prosessen,"
+" og kan brukast til å avgjere minnekostnaden ved å køyre einskildståande "
+"eller fleire instansar av appen, til å sikre bruk av dei rette delte "
+"biblioteka, til å sjå resultata av justeringar av ulike ytingsinnstillingar "
+"som appen kan ha, eller til å diagnostisere problem som minnelekkasjar."
+
+#. (itstool) path: page/p
+#: C/memory-map-use.page:49
+msgid ""
+"To display the <link xref=\"memory-map-what\">memory map</link> of a process:"
+msgstr ""
+"For å vise <link xref=\"memory-map-what\">minnekartet</link> til ein "
+"prosess:"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:54
+msgid "Right click the desired process in the <gui>process list</gui>."
+msgstr "Høgreklikk på den ynskte prosessen i <gui>prosesslista</gui>."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:55
+msgid "Click <gui>Memory Maps</gui>."
+msgstr "Klikk <gui>Minnekart</gui>."
+
+#. (itstool) path: section/title
+#: C/memory-map-use.page:59
+msgid "Reading the memory map"
+msgstr "Les minnekartet"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:63
+msgid "Addresses are displayed in hexadecimal (base 16)."
+msgstr "Adresser vert viste i heksadesimalt (grunn 16)."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:66
+msgid "Sizes are displayed in <link xref=\"units\">IEC binary prefixes</link>."
+msgstr "Storleikar vert vist med <link xref=\"units\">IEC-binære prefiks</link>."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:70
+msgid ""
+"At runtime the process can allocate more memory dynamically into an area "
+"called the <em>heap</em>, and store arguments and variables into another "
+"area called the <em>stack</em>."
+msgstr ""
+"Ved køyretid kan prosessen dynamisk tildele meir minne til eit område kalla "
+"<em>heap</em>, og lagre argument og variablar i eit anna område kalla "
+"<em>stack</em>."
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:75
+msgid ""
+"The program itself and each of the shared libraries has three entries each, "
+"one for the read-execute text segment, one for the read-write data segment "
+"and one for a read-only data segment. Both data segments need to be paged "
+"out at swap time."
+msgstr ""
+"Sjølve appen og kvar av dei delte biblioteka har tre oppføringar kvar, éi "
+"for lese-utfør tekstsegmentet, éi for lese-skrive datasegmentet og éi for "
+"eit lese-berre datasegment. Begge datasegmenta må skrivast ut til disk når "
+"minnet vert flytta til swap."
+
+#. (itstool) path: table/title
+#: C/memory-map-use.page:83
+msgid "Properties"
+msgstr "Eigenskapar"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:85
+msgid "Filename"
+msgstr "Filnamn"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:86
+msgid ""
+"The location of a shared library that is currently used by the process. If "
+"this field is blank, the memory information in this row describes memory "
+"that is owned by the process whose name is displayed above the memory-map "
+"table."
+msgstr ""
+"Plasseringa til eit delt bibliotek som vert brukt av prosessen for tida. Om "
+"dette feltet er tomt, skildrar minneinformasjonen i denne rada minne som er "
+"eigd av prosessen med namnet som vert vist over minnekartet."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:92
+msgid "VM Start"
+msgstr "VM-start"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:93
+msgid ""
+"The address at which the memory segment begins. VM Start, VM End and VM "
+"Offset together specify the location on disk to which the shared library is "
+"mapped."
+msgstr ""
+"Adressa der minnesegmentet byrjar. VM Start, VM End og VM Offset "
+"spesifiserer saman plasseringa på disk der delte biblioteket er kartlagt."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:98
+msgid "VM End"
+msgstr "VM-slutt"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:99
+msgid "The address at which the memory segment ends."
+msgstr "Adressa der minnesegmentet sluttar."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:102
+msgid "VM Size"
+msgstr "VM-storleik"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:103
+msgid "The size of the memory segment."
+msgstr "Storleiken på minnesegmentet."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:106
+msgid "Flags"
+msgstr "Flagg"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:107
+msgid ""
+"The following flags describe the different types of memory-segment access "
+"that the process can have:"
+msgstr ""
+"Dei følgjande flagga skildrar dei ulike typane minnesegment-tilgang som "
+"prosessen kan ha:"
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:111
+msgid "<gui>p</gui>"
+msgstr "<gui>p</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:112
+msgid ""
+"The memory segment is private to the process, and is not accessible to other "
+"processes."
+msgstr ""
+"Minnesegmentet er privat for prosessen, og er ikkje tilgjengeleg for andre "
+"prosessar."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:116
+msgid "<gui>r</gui>"
+msgstr "<gui>r</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:117
+msgid "The process has permission to read from the memory segment."
+msgstr "Prosessen har løyve til å lese frå minnesegmentet."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:120
+msgid "<gui>s</gui>"
+msgstr "<gui>s</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:121
+msgid "The memory segment is shared with other processes."
+msgstr "Minnesegmentet vert delt med andre prosessar."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:124
+msgid "<gui>w</gui>"
+msgstr "<gui>w</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:125
+msgid "The process has permission to write into the memory segment."
+msgstr "Prosessen har løyve til å skrive i minnesegmentet."
+
+#. (itstool) path: item/title
+#: C/memory-map-use.page:128
+msgid "<gui>x</gui>"
+msgstr "<gui>x</gui>"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:129
+msgid ""
+"The process has permission to execute instructions that are contained within "
+"the memory segment."
+msgstr ""
+"Prosessen har løyve til å utføre instruksjonar som er innehalde i "
+"minnesegmentet."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:136
+msgid "VM Offset"
+msgstr "VM avstand"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:137
+msgid ""
+"The location of the address within the memory segment, measured from VM "
+"Start."
+msgstr "Plasseringa til adressa innanfor minnesegmentet, målt frå VM Start."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:141
+msgid "Private, Shared, Clean, Dirty"
+msgstr "Privat, delt, rein, skitten"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:148
+msgid "<em>private</em> pages are accessed by one process"
+msgstr "<em>private</em> sider vert handsama av ein prosess"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:150
+msgid "<em>shared</em> pages can be accessed by more than one process"
+msgstr "<em>delt</em> sider kan få tilgang av meir enn éin prosess"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:152
+msgid ""
+"<em>clean</em> pages have not yet been modified while in memory and can be "
+"discarded when designated to be swapped out"
+msgstr ""
+"<em>reine</em> sider har enno ikkje vorte endra medan dei ligg i minnet, og "
+"kan kastast når dei vert valde til å flyttast til swap"
+
+#. (itstool) path: item/p
+#: C/memory-map-use.page:155
+msgid ""
+"<em>dirty</em> pages have been modified while in memory and must be written "
+"to disk when designated to be swapped out"
+msgstr ""
+"<em>skitne</em> sider har vorte endra i minnet og må skrivast til disk når "
+"dei er valde til å flyttast til swap"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:160
+msgid "Device"
+msgstr "Eining"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:161
+msgid ""
+"The major and minor numbers of the device on which the shared library "
+"filename is located. Together these specify a partition on the system."
+msgstr ""
+"Hovud- og undernummeret til eininga der namnet på det delte biblioteket er "
+"plassert. Saman spesifiserer desse ein partisjon på systemet."
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:166
+msgid "Inode"
+msgstr "Innode"
+
+#. (itstool) path: td/p
+#: C/memory-map-use.page:167
+msgid ""
+"The inode on the device from which the shared library location is loaded "
+"into memory. An inode is the structure the filesystem uses to store a file, "
+"and the number assigned to it is unique."
+msgstr ""
+"Inoden på eininga som delte bibliotekplasseringa vert lasta inn i minnet "
+"frå. Ein inode er strukturen filsystemet brukar for å lagre ei fil, og "
+"nummeret som er tildelt er unikt."
+
+#. (itstool) path: credit/name
+#: C/mem-check.page:24
+msgid "Ekaterina Gerasimova"
+msgstr "Ekaterina Gerasimova"
+
+#. (itstool) path: info/desc
+#: C/mem-check.page:28
+msgid ""
+"The <gui>Resources</gui> tab tells you how much of your computer's memory "
+"(RAM) is being used."
+msgstr ""
+"Fana <gui>Ressursar</gui> fortel deg kor mykje av minnet til datamaskina "
+"(RAM) som vert brukt."
+
+#. (itstool) path: page/title
+#: C/mem-check.page:32
+msgid "How much memory is being used?"
+msgstr "Kor mykje minne vert brukt?"
+
+#. (itstool) path: page/p
+#: C/mem-check.page:41
+msgid "To check the current memory usage of your computer:"
+msgstr "For å sjekke kor mykje minne datamaskina brukar:"
+
+#. (itstool) path: page/p
+#: C/mem-check.page:49
+msgid ""
+"<gui>Memory and Swap History</gui> displays a running line graph for memory "
+"and swap as a percentage of the total available. These are plotted against "
+"time, with the current time at the right."
+msgstr ""
+"<gui>Minne og swap</gui> viser ein løpande linjegraf for minne og swap som "
+"prosentdel av totalt tilgjengeleg. Desse vert plotta mot tid, med noverande "
+"tid til høgre."
+
+#. (itstool) path: note/p
+#: C/mem-check.page:54
+msgid ""
+"The color of each line is indicated by the pie graphs below. Click the pie "
+"graph to change the color of the line graph."
+msgstr ""
+"Fargen på kvar linje er vist med kakediagramma under. Klikk på "
+"kakediagrammet for å endre fargen på linjediagrammet."
+
+#. (itstool) path: page/p
+#: C/mem-check.page:58
+msgid ""
+"The <gui>Memory</gui> pie graph shows memory usage in <link "
+"xref=\"units\">GiB</link> and as a percentage of the total available."
+msgstr ""
+"<gui>Minne</gui>-sirkeldiagrammet viser minnebruk i <link "
+"xref=\"units\">GiB</link> og som prosentdel av det totale tilgjengelege."
+
+#. (itstool) path: page/p
+#: C/mem-check.page:61
+msgid "To change the <gui>update interval</gui>:"
+msgstr "For å endre <gui>oppdateringsintervallet</gui>:"
+
+#. (itstool) path: section/title
+#: C/mem-check.page:77
+msgid "Which processes are using the most memory?"
+msgstr "Kva prosessar brukar mest minne?"
+
+#. (itstool) path: section/p
+#: C/mem-check.page:79
+msgid "To check which processes are using the most memory:"
+msgstr "For å sjekke kva prosessar som brukar mest minne:"
+
+#. (itstool) path: item/p
+#: C/mem-check.page:86
+msgid ""
+"Click the <gui>Memory</gui> column header to sort the processes according to "
+"memory use."
+msgstr ""
+"Klikk på kolonneoverskrifta <gui>Minne</gui> for å sortere prosessane etter "
+"minnebruk."
+
+#. (itstool) path: note/p
+#: C/mem-check.page:89
+msgid ""
+"The arrow in the column header shows the sort direction; click again to "
+"reverse it. If the arrow points up, the processes using the most memory "
+"appear at the top of the list."
+msgstr ""
+"Pila i kolonneoverskrifta viser sorteringsretninga; klikk på nytt for å snu "
+"ho. Dersom pila peikar oppover, er det prosessane som brukar mest minne som "
+"vert viste øvst i lista."
+
+#. (itstool) path: info/desc
+#: C/cpu-mem-normal.page:16
+msgid ""
+"If the computer is doing a lot of work, it will use more processor time and "
+"more memory."
+msgstr ""
+"Viss datamaskina gjer mykje arbeid, vil ho bruke meir prosessortid og meir "
+"minne."
+
+#. (itstool) path: page/title
+#: C/cpu-mem-normal.page:19
+msgid "Is it normal for my computer to be using this much CPU or memory?"
+msgstr "Er det normalt at datamaskina mi brukar så mykje CPU eller minne?"
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:21
+msgid ""
+"All of the programs running on your computer share CPU (processor) time and "
+"memory. If you run many programs at once, or if some programs are doing a "
+"lot of work, a higher percentage of both of these things will be used."
+msgstr ""
+"Alle programma som køyrer på datamaskina di deler CPU-tid (prosessor) og "
+"minne. Om du køyrer mange program samtidig, eller om nokre program gjer "
+"mykje arbeid, vil ein høgare prosentdel av begge delar verte brukt."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:23
+msgid ""
+"If the CPU usage is around 100%, this means that your computer is trying to "
+"do more work than it has the capacity for. This is usually OK, but it means "
+"that programs may slow down a little. Computers tend to use close to 100% of "
+"the CPU when they are doing computationally-intensive things like running "
+"games."
+msgstr ""
+"Dersom CPU-bruken er rundt 100 %, tyder det at datamaskina prøver å gjere "
+"meir arbeid enn ho har kapasitet til. Dette er som regel OK, men det tyder "
+"at programma kan verte litt tregare. Datamaskinar har ein tendens til å "
+"bruke nær 100 % av CPU-en når dei gjer reknemessig krevjande oppgåver som å "
+"køyre spel."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:25
+msgid ""
+"If the processor is running at 100% for a long time, this could make your "
+"computer annoyingly slow. In this case, you should <link xref=\"process-"
+"identify-hog\">find out which program is using up so much CPU time</link>."
+msgstr ""
+"Viss prosessoren køyrer på 100 % over lengre tid, kan dette gjere "
+"datamaskina irriterande treg. I eit slikt tilfelle bør du <link "
+"xref=\"process-identify-hog\">finne ut kva app som brukar så mykje CPU-"
+"tid</link>."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:27
+msgid ""
+"If the memory usage is close to 100%, this can slow things down a lot. This "
+"is because the computer will then try to use your hard disk as a temporary "
+"memory store, called <link xref=\"mem-swap\">swap memory</link>. Hard disks "
+"are much slower than the system memory."
+msgstr ""
+"Viss minnebruken er nær 100 %, kan dette gjere at ting går mykje tregare. "
+"Dette er fordi datamaskina då vil prøve å bruke harddisken din som eit "
+"mellombels minne, kalla <link xref=\"mem-swap\">swap-minne</link>. "
+"Harddiskar er mykje tregare enn systemminnet."
+
+#. (itstool) path: page/p
+#: C/cpu-mem-normal.page:29
+msgid ""
+"You can try to free up some system memory by closing some programs. If "
+"things get too slow, try restarting the computer."
+msgstr ""
+"Du kan prøve å frigjere litt systemminne ved å lukke nokre appar. Viss ting "
+"vert for trege, prøv å starte datamaskina på nytt."
+
+#. (itstool) path: note/p
+#: C/cpu-mem-normal.page:32
+msgid ""
+"The memory shown in the <gui>Resources</gui> tab is <em>system memory</em> "
+"(also called RAM). This is used to hold programs temporarily, while they are "
+"running on the computer. This is not the same as a hard disk or other kinds "
+"of memory, which are used to store files and programs more permanently."
+msgstr ""
+"Minnet som vert vist i <gui>Ressursar</gui>-fana er <em>systemminne</em> (òg"
+" kalla RAM). Dette vert brukt til å halde program mellombels medan dei "
+"køyrer på datamaskina. Dette er ikkje det same som ein harddisk eller andre "
+"typar minne, som vert brukt til å lagre filer og program meir permanent."
+
+#. (itstool) path: info/desc
+#: C/fs-info.page:18
+msgid ""
+"Explanations of all of the fields shown in the <gui>File System</gui> tab."
+msgstr ""
+"Forklaringar av alle felta som vert viste i <gui>Filsystem</gui>-fana."
+
+#. (itstool) path: page/title
+#: C/fs-info.page:21
+msgid "Learn what the File Systems information means"
+msgstr "Lær kva filsysteminformasjonen tyder"
+
+#. (itstool) path: page/p
+#: C/fs-info.page:23
+msgid ""
+"The File Systems tab lists which disks are attached to the computer, what "
+"they are named, and how much disk space is available on them."
+msgstr ""
+"Filsystem-fana listar opp kva diskar som er tilkopla datamaskina, kva namn "
+"dei har, og kor mykje diskplass som er tilgjengeleg på dei."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:27
+msgid ""
+"<gui>Device</gui> lists the name that the operating system has assigned to "
+"the disk. Every bit of computer hardware that is attached to the computer is "
+"given an entry in the <file>/dev</file> directory that is used to identify "
+"it. For hard disks, it will usually look something like <file>/dev/sda</"
+"file>."
+msgstr ""
+"<gui>Eining</gui> viser namnet som operativsystemet har tildelt disken. Kvar"
+" bit av maskinvare som er kopla til datamaskina, vert gjeve ei oppføring i "
+"<file>/dev</file>-mappa som vert brukt til å identifisere han. For "
+"harddiskar vil det som regel sjå ut som <file>/dev/sda</file>."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:31
+msgid ""
+"<gui>Directory</gui> tells you where the disk or partition is <em>mounted</"
+"em>. Mounting is the technical term for making a disk or partition available "
+"for use. A disk can be physically connected to the computer, but unless it "
+"is also mounted, the files on it cannot be accessed. When a disk is mounted, "
+"it will be linked to a folder that you can then go to in order to access the "
+"files on the disk. For example, if the <gui>Directory</gui> is listed as "
+"<file>/media/disk</file>, you can access the files by going to the <file>/"
+"media/disk</file> folder on your computer."
+msgstr ""
+"<gui>Katalog</gui> fortel deg kor disken eller partisjonen er "
+"<em>montert</em>. Montering er det tekniske namnet på å gjere ein disk eller"
+" partisjon tilgjengeleg for bruk. Ein disk kan vere fysisk kopla til "
+"datamaskina, men med mindre han også er montert, kan du ikkje få tilgang til"
+" filene på han. Når ein disk er montert, vert han knytt til ei mappe som du "
+"så kan gå til for å få tilgang til filene på disken. Om <gui>Katalog</gui> "
+"til dømes er oppført som <file>/media/disk</file>, kan du få tilgang til "
+"filene ved å gå til mappa <file>/media/disk</file> på datamaskina di."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:35
+msgid ""
+"<gui>Type</gui> tells you the type of <em>filesystem</em> that is used on "
+"the disk or partition. A filesystem specifies how the computer should store "
+"files on the disk. Some operating systems can only understand some "
+"filesystem types and not others, so it can be useful to check which "
+"filesystem an external hard disk uses, for example."
+msgstr ""
+"<gui>Type</gui> fortel deg kva type <em>filsystem</em> som er brukt på "
+"disken eller partisjonen. Eit filsystem bestemmer korleis datamaskina skal "
+"lagre filer på disken. Enkelte operativsystem kan berre forstå visse "
+"filsystemtypar og ikkje andre, så det kan vere nyttig å sjekke kva filsystem"
+" ein ekstern harddisk brukar, til dømes."
+
+#. (itstool) path: item/p
+#: C/fs-info.page:39
+msgid ""
+"<gui>Total</gui> shows the total capacity of the disk and <gui>Available</"
+"gui> shows how much of that capacity is available to use for files and "
+"programs. <gui>Used</gui> shows how much disk space is already being used."
+msgstr ""
+"<gui>Totalt</gui> viser den totale kapasiteten til disken og "
+"<gui>Tilgjengeleg</gui> viser kor mykje av den kapasiteten som er "
+"tilgjengeleg til bruk for filer og appar. <gui>Brukt</gui> viser kor mykje "
+"diskplass som allereie er i bruk."
+
+#. (itstool) path: page/p
+#: C/fs-info.page:44
+msgid ""
+"The sum of Used and Available will not necessarily add up to the Total. This "
+"is because some disk space might be reserved for use by the system. The "
+"important number to look at is the Available column, as this tells you how "
+"much disk space you can actually use."
+msgstr ""
+"Summen av brukt og ledig vil ikkje nødvendigvis leggje seg på det totale. "
+"Dette er fordi noko diskplass kan vere reservert til bruk av systemet. Det "
+"viktige talet å sjå på er kolonna for ledig, då denne fortel deg kor mykje "
+"diskplass du faktisk kan bruke."
+
+#. (itstool) path: page/p
+#: C/fs-info.page:45
+msgid ""
+"You might also find that the Total doesn't match up with the advertised "
+"capacity of your hard disk. This is normal, and happens for a couple of "
+"reasons. One is that hard disk manufacturers use a slightly different way of "
+"counting disk capacity to everyone else. Another is that some disk space "
+"might be reserved for use by the operating system. If there is a big "
+"difference from the capacity you expect, it might be because your disk has "
+"been split up into multiple partitions."
+msgstr ""
+"Det kan òg hende at det totale ikkje stemmer med den annonserte kapasiteten "
+"på harddisken din. Dette er normalt, og skjer av eit par grunnar. Ein grunn "
+"er at produsentane av harddiskar brukar ein litt annan måte å telje "
+"diskkapasiteten på enn alle andre. Ein annan er at noko diskplass kan vere "
+"reservert til bruk av operativsystemet. Dersom det er stor forskjell frå "
+"kapasiteten du forventar, kan det vere fordi disken din er delt opp i fleire"
+" partisjonar."
+
+#. (itstool) path: info/desc
+#: C/net-check.page:22
+msgid ""
+"The <gui>Resources</gui> tab shows you the volume of data that's passing "
+"over your network connections."
+msgstr ""
+"Fana <gui>Ressursar</gui> viser deg datamengda som går over "
+"nettverkstilknytingane dine."
+
+#. (itstool) path: page/title
+#: C/net-check.page:27
+msgid "Check network usage and connection speed"
+msgstr "Sjekk nettverksbruk og tilkoplingfart"
+
+#. (itstool) path: page/p
+#: C/net-check.page:35
+msgid "To check the current network usage of your computer:"
+msgstr "For å sjekke nettverksbruken til datamaskina di:"
+
+#. (itstool) path: item/p
+#: C/net-check.page:42
+msgid ""
+"<gui>Network History</gui> displays a running line graph for the volume of "
+"data passing over your network connections, split up into data received and "
+"sent. These are plotted against time, with the current time at the right."
+msgstr ""
+"<gui>Nettverkshistorikk</gui> viser ei linjegraf som viser datamengda som "
+"går over nettverkstilkoplingane dine, delt opp i mottatt og sendt data. "
+"Desse er plotta mot tid, med notida til høgre."
+
+#. (itstool) path: note/p
+#: C/net-check.page:46
+msgid ""
+"The color of each line is indicated by the down and up arrows (for "
+"<gui>Receiving</gui> and <gui>Sending</gui> respectively) underneath the "
+"graph. Click an arrow to change the color of the corresponding line graph."
+msgstr ""
+"Fargen på kvar linje vert vist med pilane ned og opp (for <gui>Mottek</gui> "
+"og <gui>Sender</gui> høvesvis) under grafen. Klikk på ei pil for å endre "
+"fargen på den tilhøyrande linjegrafen."
+
+#. (itstool) path: item/p
+#: C/net-check.page:52
+msgid ""
+"Below the graph is shown <gui>Receiving</gui> and <gui>Sending</gui> <link "
+"xref=\"net-bits\">bit rate</link> or connection speed, as well as total data "
+"transferred in each direction."
+msgstr ""
+"Under grafen vert <gui>Mottek</gui> og <gui>Sender</gui> <link xref=\"net-"
+"bits\">bitrate</link> eller tilkoplingfart vist, samt total mengd data som "
+"er overført i kvar retning."
+
+#. (itstool) path: info/title
+#: C/index.page:7
+msgctxt "link:trail"
+msgid "System Monitor"
+msgstr "Systemovervakar"
+
+#. (itstool) path: info/title
+#: C/index.page:8
+msgctxt "link"
+msgid "System Monitor"
+msgstr "Systemovervakar"
+
+#. (itstool) path: info/title
+#: C/index.page:9
+msgctxt "text"
+msgid "System Monitor"
+msgstr "Systemovervakar"
+
+#. (itstool) path: credit/name
+#: C/index.page:20
+msgid "Patrick Pace"
+msgstr "Patrick Pace"
+
+#. (itstool) path: credit/years
+#: C/index.page:22
+msgid "2017"
+msgstr "2017"
+
+#. (itstool) path: info/desc
+#: C/index.page:25
+msgid ""
+"System Monitor shows you what programs are running and how much processor "
+"time, memory, and disk space are being used."
+msgstr ""
+"Systemovervaking viser kva appar som køyrer og kor mykje prosessortid, minne"
+" og diskplass som vert brukt."
+
+#. (itstool) path: page/title
+#: C/index.page:29
+msgid "<_:media-1/> System Monitor"
+msgstr "<_:media-1/> Systemovervaking"
+
+#. (itstool) path: page/p
+#: C/index.page:34
+msgid ""
+"<app>System Monitor</app> shows you what programs are running and how much "
+"processor time, memory, and disk space are being used."
+msgstr ""
+"<app>Systemovervakar</app> viser kva appar som køyrer og kor mykje "
+"prosessortid, minne og diskplass som vert brukt."
+
+#. (itstool) path: section/title
+#: C/index.page:37
+msgid "Monitoring the CPU"
+msgstr "Overvakar prosessoren"
+
+#. (itstool) path: section/title
+#: C/index.page:42
+msgid "Memory usage"
+msgstr "Minnebruk"
+
+#. (itstool) path: section/title
+#: C/index.page:47
+msgid "Questions about processes"
+msgstr "Spørsmål om prosessar"
+
+#. (itstool) path: section/title
+#: C/index.page:52
+msgid "Common tasks with processes"
+msgstr "Vanlege oppgåver med prosessar"
+
+#. (itstool) path: section/title
+#: C/index.page:57
+msgid "Information about file systems"
+msgstr "Informasjon om filsystem"
+
+#. (itstool) path: section/title
+#: C/index.page:62
+msgid "Network information"
+msgstr "Nettverksinformasjon"
+
+#. (itstool) path: section/title
+#: C/index.page:67
+msgid "Miscellaneous"
+msgstr "Diverse"
+
+#. (itstool) path: info/desc
+#: C/process-kill.page:17
+msgid "If a program stops working or freezes, you can force it to close."
+msgstr ""
+"Viss eit program sluttar å fungere eller frys, kan du tvinge det til å "
+"stengje."
+
+#. (itstool) path: page/title
+#: C/process-kill.page:21
+msgid "Force Stop (\"kill\") a program immediately"
+msgstr "Tving ein app til å avslutte («drep») med ein gong"
+
+#. (itstool) path: page/p
+#: C/process-kill.page:23
+msgid ""
+"If a program stops working or freezes, you can force it to close (\"kill\" "
+"it) using <app>System Monitor</app>. Go to the <gui>Processes</gui> tab and "
+"click to select the process you want to end. First, click <gui>End Process</"
+"gui> to try to let it exit cleanly."
+msgstr ""
+"Viss eit program sluttar å fungere eller frys, kan du tvinge det til å "
+"stengje ( «drepe» det ) ved å bruke <app>Systemovervakar</app>. Gå til "
+"<gui>Prosessar</gui>-fana og klikk for å velje prosessen du vil avslutte. "
+"Først klikkar du på <gui>Avslutt prosess</gui> for å prøve å la det avslutte"
+" på ein ryddig måte."
+
+#. (itstool) path: page/p
+#: C/process-kill.page:25
+msgid ""
+"If the process does not close after a few seconds, right-click it and select "
+"<gui>Force Stop</gui> from the menu that appears."
+msgstr ""
+"Viss prosessen ikkje vert avslutta etter nokre sekund, høgreklikk på han og "
+"vel <gui>Tving avslutting</gui> frå menyen som kjem fram."
+
+#. (itstool) path: page/p
+#: C/process-kill.page:27
+msgid ""
+"Using <gui>End Process</gui> tries to close the process properly, giving it "
+"time to save files and so on, whereas <gui>Force Stop</gui> forces it to "
+"close straight away. For some programs, this might mean that you lose "
+"unsaved files. You should always try <gui>End Process</gui> first."
+msgstr ""
+"Ved å bruke <gui>Avslutt prosess</gui> prøver du å avslutte prosessen på ein"
+" ordentleg måte, slik at han får tid til å lagre filer og så bortetter, "
+"medan <gui>Tving avslutting</gui> tvingar han til å avslutte med det same. "
+"For enkelte appar kan dette tyde at du mistar usparede filer. Du bør alltid "
+"prøve <gui>Avslutt prosess</gui> først."
+
+#. (itstool) path: info/desc
+#: C/process-status.page:19
+msgid "The status of a process can be running, sleeping, stopped, or zombie."
+msgstr ""
+"Statusen til ein prosess kan vere køyrande, sovande, stoppa eller zombie."
+
+#. (itstool) path: page/title
+#: C/process-status.page:22
+msgid "What do the process statuses mean?"
+msgstr "Kva tyder prosessstatusane?"
+
+#. (itstool) path: page/p
+#: C/process-status.page:24
+msgid ""
+"The status of a process tells you whether it is currently doing something or "
+"not. There are four statuses that a process can have:"
+msgstr ""
+"Statusen til ein prosess fortel deg om han gjer noko no eller ikkje. Det "
+"finst fire statusar som ein prosess kan ha:"
+
+#. (itstool) path: item/title
+#: C/process-status.page:28
+msgid "Running"
+msgstr "Køyrer"
+
+#. (itstool) path: item/p
+#: C/process-status.page:29
+msgid ""
+"Processes that are currently doing something (for example, a web browser "
+"loading a web page). Running processes are those that are actively using the "
+"processor (CPU)."
+msgstr ""
+"Prosessar som for tida gjer noko (til dømes ein nettlesar som lastar ei "
+"nettside). Køyrande prosessar er dei som aktivt brukar prosessoren (CPU)."
+
+#. (itstool) path: item/title
+#: C/process-status.page:34
+msgid "Sleeping"
+msgstr "Sovande"
+
+#. (itstool) path: item/p
+#: C/process-status.page:35
+msgid ""
+"Processes that are not currently doing anything (for example, because they "
+"are waiting for something to happen). They don't use any of the processor's "
+"time, but still take up memory. If they need to do something, they will "
+"\"wake up\" and change their status to <em>running</em>."
+msgstr ""
+"Prosessar som ikkje gjer noko akkurat no (til dømes fordi dei ventar på at "
+"noko skal skje). Dei brukar ikkje noko av prosessortida, men tek framleis "
+"opp minne. Om dei må gjere noko, vil dei «vakne» og endre statusen sin til "
+"<em>køyrande</em>."
+
+#. (itstool) path: item/title
+#: C/process-status.page:41
+msgid "Stopped"
+msgstr "Stoppa"
+
+#. (itstool) path: item/p
+#: C/process-status.page:42
+msgid ""
+"A <em>stopped</em> process is one that has been put to sleep manually. You "
+"might want to stop a process temporarily if it is using too much processing "
+"time, for example."
+msgstr ""
+"Ein <em>stoppa</em> prosess er ein som har vorte lagd i dvale manuelt. Du "
+"vil kanskje mellombels stoppe ein prosess viss han til dømes brukar for "
+"mykje prosesseringstid."
+
+#. (itstool) path: item/p
+#: C/process-status.page:45
+msgid ""
+"To do this, click the process in the <gui>Processes</gui> tab, then right-"
+"click it and select <gui>Pause</gui> from the menu that appears. You can "
+"wake it up again by clicking <gui>Resume</gui> on the same menu."
+msgstr ""
+"For å gjere dette, klikkar du på prosessen i <gui>Prosessar</gui>-fana, "
+"høgreklikkar på han og vel <gui>Pause</gui> frå menyen som kjem opp. Du kan "
+"vekkje han att ved å klikke <gui>Hald fram</gui> i same meny."
+
+#. (itstool) path: item/title
+#: C/process-status.page:51
+msgid "Zombie"
+msgstr "Zombie"
+
+#. (itstool) path: item/p
+#: C/process-status.page:52
+msgid ""
+"A zombie process is one that has finished running and will never start "
+"again, but is being kept in the list of processes for some reason. This "
+"usually happens because it was started by another program that needs to know "
+"if it finished successfully or not, but which has not checked on the process "
+"yet."
+msgstr ""
+"Ein zombieprosess er ein prosess som har fullført køyringa og aldri vil "
+"starte på nytt, men som av ein eller annan grunn vert halden i prosesslista."
+" Dette skjer som regel fordi han vart starta av eit anna program som treng å"
+" vite om han vart fullført på ein god måte eller ikkje, men som enno ikkje "
+"har sjekka prosessen."
+
+#. (itstool) path: item/p
+#: C/process-status.page:57
+msgid ""
+"Zombie processes do not use any memory or processing time, and will "
+"eventually go away. You do not need to do anything to get rid of them."
+msgstr ""
+"Zombie-prosessar brukar ikkje noko minne eller prosesseringstid, og vil til "
+"slutt forsvinne. Du treng ikkje gjere noko for å verte kvitt dei."
+
+#. (itstool) path: page/p
+#: C/process-status.page:62
+msgid "The majority of processes will either be running or sleeping."
+msgstr "Dei fleste prosessane vil anten køyre eller sove."
+
+#. (itstool) path: info/desc
+#: C/fs-showall.page:16
+msgid "There are hidden file systems that the operating system uses."
+msgstr "Det finst skjulte filsystem som operativsystemet brukar."
+
+#. (itstool) path: page/title
+#: C/fs-showall.page:19
+msgid "Show all file systems, including hidden and system ones"
+msgstr "Vis alle filsystem, òg gøymde filsystem og systemfilsystem"
+
+#. (itstool) path: page/p
+#: C/fs-showall.page:21
+msgid ""
+"By default, the <gui>File Systems</gui> tab only shows disks and partitions "
+"that hold your files and applications. There are also a number of special "
+"filesystems that the operating system uses, but these are hidden by default."
+msgstr ""
+"Som standard viser <gui>Filsystem</gui>-fana berre diskar og partisjonar som"
+" inneheld filene og appane dine. Det finst også fleire spesielle filsystem "
+"som operativsystemet brukar, men desse er skjulte som standard."
+
+#. (itstool) path: page/p
+#: C/fs-showall.page:23
+msgid ""
+"To see these special filesystems, click <guiseq><gui>System Monitor</"
+"gui><gui>Preferences</gui></guiseq>, and under the <gui>File Systems</gui> "
+"tab, check <gui>Show all file systems</gui>."
+msgstr ""
+"For å sjå desse spesielle filsystema, klikk "
+"<guiseq><gui>Systemovervakar</gui><gui>Innstillingar</gui></guiseq>, og "
+"under fana <gui>Filsystem</gui>, merk <gui>Vis alle filsystem</gui>."
+
+#. (itstool) path: page/p
+#: C/fs-showall.page:25
+msgid ""
+"Most of the entries in the list are \"virtual\" filesystems. These are not "
+"real disks or partitions. Instead, they are used by the operating system as "
+"a convenient layer of abstraction for various things, like managing hardware "
+"devices and storing temporary files. The system manages these automatically, "
+"so there is rarely any need for you to look at them yourself."
+msgstr ""
+"Dei fleste oppføringane i lista er «virtuelle» filsystem. Dette er ikkje "
+"ekte diskar eller partisjonar. I staden vert dei brukte av operativsystemet "
+"som eit praktisk abstraksjonslag for ulike ting, som å styre "
+"maskinvareeiningar og lagre mellombelse filer. Systemet styrer desse "
+"automatisk, så det er sjeldan behov for at du sjølv ser på dei."
