@@ -925,9 +925,10 @@ create_main_window (GsmApplication *app)
   g_action_change_state (action,
                          g_settings_get_value (app->settings->gobj (), GSM_SETTING_SHOW_WHOSE_PROCESSES));
 
-  // Surface is available only after a widget has been shown
-  gtk_window_present (GTK_WINDOW (app->main_window));
-
+  // Apply the saved size before the window is mapped. Resizing an already
+  // mapped window makes GTK4 on X11 re-send its stale (0,0) origin, which
+  // the window manager obeys, so the window jumps to the top-left of the
+  // leftmost monitor.
   g_object_set (GTK_WINDOW (app->main_window),
                 "default-width",
                 g_settings_get_int (app->settings->gobj (), GSM_SETTING_WINDOW_WIDTH),
@@ -942,6 +943,8 @@ create_main_window (GsmApplication *app)
                 "maximized",
                 g_settings_get_boolean (app->settings->gobj (), GSM_SETTING_MAXIMIZED),
                 NULL);
+
+  gtk_window_present (GTK_WINDOW (app->main_window));
 
   update_page_activities (app);
 
