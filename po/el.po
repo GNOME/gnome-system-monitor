@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2026-02-02 05:43+0000\n"
+"POT-Creation-Date: 2026-09-11 15:59+0000\n"
 "PO-Revision-Date: 2024-09-03 23:06+0300\n"
 "Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: team@gnome.gr\n"
@@ -113,24 +113,32 @@ msgid "Set Affinity"
 msgstr "Ορισμός συγγένειας"
 
 #: data/shortcuts-dialog.ui:70
+#| msgctxt "shortcuts dialog"
+#| msgid "Send Stop Signal"
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Αποστολή σήματος παύσης (STOP)"
+msgid "Send Stop (Pause) Signal"
+msgstr "Αποστολή σήματος παύσης (Stop)"
 
 #: data/shortcuts-dialog.ui:76
+#| msgctxt "shortcuts dialog"
+#| msgid "Send Continue Signal"
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "Αποστολή σήματος συνέχισης (CONT)"
+msgid "Send Continue (Resume) Signal"
+msgstr "Αποστολή σήματος συνέχισης (Continue)"
 
 #: data/shortcuts-dialog.ui:82
+#| msgctxt "shortcuts dialog"
+#| msgid "Send Terminate Signal"
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "Αποστολή σήματος τερματισμού (TERM)"
+msgid "Send Terminate (End Process) Signal"
+msgstr "Αποστολή σήματος τερματισμού (Terminate)"
 
 #: data/shortcuts-dialog.ui:88
+#| msgctxt "shortcuts dialog"
+#| msgid "Send Kill Signal"
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "Αποστολή σήματος βίαιου τερματισμού (KILL)"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "Αποστολή σήματος βίαιου τερματισμού (Kill)"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -209,13 +217,13 @@ msgid "_Resources"
 msgstr "_Πόροι"
 
 #: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111
-#: src/interface.cpp:272 src/proctable.cpp:345
+#: src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
 #: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311
-#: src/proctable.cpp:352
+#: src/proctable.cpp:356
 msgid "Memory"
 msgstr "Μνήμη"
 
@@ -456,19 +464,22 @@ msgstr "Προσαρμο_σμένη"
 msgid "Set _Affinity…"
 msgstr "Ορισμός _σχέσης…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_Διακοπή…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr ""
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_Συνέχιση"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+#| msgid "_End"
+msgid "_End…"
 msgstr "_Τερματισμός…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "_Εξαναγκασμός διακοπής…"
 
@@ -548,6 +559,10 @@ msgstr "Επισκόπηση πόρων"
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:36
 msgid "File Systems view"
 msgstr "Προβολή συστημάτων αρχείων"
+
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "Το έργο GNOME"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
@@ -646,19 +661,19 @@ msgstr "Λεπτομέρειες"
 msgid "Process ID"
 msgstr "ID διεργασίας"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "Χρήστης"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "Κατάσταση"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "Ξεκίνησε"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "Προτεραιότητα"
 
@@ -666,42 +681,48 @@ msgstr "Προτεραιότητα"
 msgid "Usage"
 msgstr "Χρήση"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "Χρόνος CPU"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "Εικονική μνήμη"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "Παραμένουσα μνήμη"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "Εγγράψιμη μνήμη"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "Κοινόχρηστη μνήμη"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "Περιβάλλον ασφάλειας"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "Γραμμή εντολών"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "Κανάλι αναμονής"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "Ομάδα ελέγχου"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "_Τερματισμός διεργασίας…"
+msgstr[1] "_Τερματισμός διεργασιών…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -766,6 +787,20 @@ msgstr "Η συγγένεια (Affinity) δεν υποστηρίζεται"
 #, c-format
 msgid "Priority failed on %i: %s"
 msgstr "Αποτυχία ορισμού προτεραιότητας στο %i: %s"
+
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "Αποτυχία του βοηθητικού προγράμματος βίαιου τερματισμού (Kill)"
+
+#: src/actions/gsm-actions.c:236
+#| msgid "Affinity failed on %i: %s"
+msgid "Affinity helper failed"
+msgstr "Αποτυχία του βοηθητικού προγράμματος συγγένειας (Affinity)"
+
+#: src/actions/gsm-actions.c:325
+#| msgid "Priority failed on %i: %s"
+msgid "Priority helper failed"
+msgstr "Αποτυχία του βοηθητικού προγράμματος προτεραιότητας"
 
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
@@ -1481,7 +1516,7 @@ msgstr "Στήλη ταξινόμησης ανοιχτών αρχείων"
 msgid "Open files sort order"
 msgstr "Σειρά ταξινόμησης ανοιχτών αρχείων"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "Εικονίδιο"
 
@@ -1509,8 +1544,9 @@ msgstr "Τερματισμός %s;"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "Διακοπή %s;"
+#| msgid "Force Stop %s?"
+msgid "Temporarily Stop %s?"
+msgstr "Προσωρινή διακοπή %s;"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1532,10 +1568,12 @@ msgstr[1] "Τερματισμός %d επιλεγμένων διεργασιών
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Διακοπή επιλεγμένης διεργασίας;"
-msgstr[1] "Διακοπή %d επιλεγμένων διεργασιών;"
+#| msgid "Force Stop Selected Process?"
+#| msgid_plural "Force Stop %d Selected Processes?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "Προσωρινή διακοπή επιλεγμένης διεργασίας;"
+msgstr[1] "Προσωρινή διακοπή %d επιλεγμένων διεργασιών;"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1564,15 +1602,18 @@ msgstr "_Τερματισμός"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
+#| msgid ""
+#| "Stopping processes can result in data loss, crashes, and system failures"
 msgid ""
-"Stopping processes can result in data loss, crashes, and system failures"
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
 msgstr ""
-"Η διακοπή διεργασιών μπορεί να προκαλέσει απώλεια δεδομένων, σφάλματα και "
-"αποτυχίες συστήματος"
+"Η διακοπή (παύση) διεργασιών μπορεί να προκαλέσει απώλεια δεδομένων, "
+"καταρρεύσεις και αποτυχίες συστήματος"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Διακοπή"
+msgid "_Pause"
+msgstr "_Παύση"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1586,59 +1627,53 @@ msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "Αλλαγή προτεραιότητας επιλεγμένης διεργασίας"
 msgstr[1] "Αλλαγή προτεραιότητας %d επιλεγμένων διεργασιών"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "_Τερματισμός διεργασίας…"
-msgstr[1] "_Τερματισμός διεργασιών…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "Όνομα"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "Μνήμη διακομιστή X"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Nice"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "Μονάδα"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "Συνεδρία"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "Θέση"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "Ιδιοκτήτης"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "Σύνολο ανάγνωσης δίσκου"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "Σύνολο εγγραφής δίσκου"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "Ανάγνωση δίσκου"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "Εγγραφή δίσκου"
 
@@ -1732,10 +1767,29 @@ msgid "Very Low Priority"
 msgstr "Πολύ χαμηλή προτεραιότητα"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Stop…"
+#~ msgstr "_Διακοπή…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "_Τερματισμός…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "Διακοπή %s;"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "Διακοπή επιλεγμένης διεργασίας;"
+#~ msgstr[1] "Διακοπή %d επιλεγμένων διεργασιών;"
+
+#~ msgid "_Stop"
+#~ msgstr "_Διακοπή"
 
 #~ msgctxt "shortcut window"
 #~ msgid "General"
@@ -1815,9 +1869,6 @@ msgstr "%s/s"
 #~ msgctxt "Menu item to Open Search for Open Files dialog"
 #~ msgid "_Search for Open Files…"
 #~ msgstr "_Αναζήτηση για ανοικτά αρχεία…"
-
-#~ msgid "The GNOME Project"
-#~ msgstr "Το έργο GNOME"
 
 #~ msgid "Open _Files"
 #~ msgstr "Άνοιγμα αρ_χείων"
