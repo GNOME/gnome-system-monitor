@@ -9,23 +9,21 @@
 # pan93412 <pan93412@gmail.com>, 2019.
 # Freddy Cheng <freddy4212@gmail.com>, 2022.
 #
-# SPDX-FileCopyrightText: 2024 Kisaragi Hiu <mail@kisaragi-hiu.com>
+# SPDX-FileCopyrightText: 2024, 2026 Kisaragi Hiu <mail@kisaragi-hiu.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor 3.3.4\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
-"issues\n"
-"POT-Creation-Date: 2026-02-02 05:43+0000\n"
-"PO-Revision-Date: 2026-02-10 11:30+0000\n"
-"Last-Translator: Weblate Admin <webadmin@darkbear.duckdns.org>\n"
-"Language-Team: Chinese (Traditional Han script) <http://darkbear.duckdns.org/"
-"projects/gnome-50/gnome-system-monitor-po-ui-main/zh_Hant/>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
+"POT-Creation-Date: 2026-09-11 15:59+0000\n"
+"PO-Revision-Date: 2026-10-11 20:46+0800\n"
+"Last-Translator: Cheng-Chia Tseng <zerngjia@gmail.com>\n"
+"Language-Team: Chinese (Traditional) <zh-l10n@lists.slat.org>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15.2\n"
+"X-Generator: Poedit 3.9\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
 msgid "Device"
@@ -59,8 +57,7 @@ msgstr "已用"
 msgid "GNOME System Monitor"
 msgstr "GNOME 系統監控"
 
-#: data/gnome-system-monitor-kde.desktop.in.in:3
-#: data/org.gnome.SystemMonitor.desktop.in.in:3
+#: data/gnome-system-monitor-kde.desktop.in.in:3 data/org.gnome.SystemMonitor.desktop.in.in:3
 msgid "View current processes and monitor system state"
 msgstr "檢視執行中的程序與監控系統運作狀況"
 
@@ -68,8 +65,8 @@ msgstr "檢視執行中的程序與監控系統運作狀況"
 #: data/gnome-system-monitor-kde.desktop.in.in:15
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
 msgstr ""
-"Monitor;System;Process;CPU;Memory;Network;History;Usage;監視器;系統;處理器;記"
-"憶體;網路;紀錄;使用量;"
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;監視器;系統;處理器;記憶體;網路;紀錄;使用"
+"量;"
 
 #: data/shortcuts-dialog.ui:6
 msgctxt "shortcuts dialog"
@@ -113,23 +110,23 @@ msgstr "設定親和性"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "傳送停止訊號"
+msgid "Send Stop (Pause) Signal"
+msgstr "傳送停止（暫停）訊號"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
+msgid "Send Continue (Resume) Signal"
 msgstr "傳送繼續訊號"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "傳送終止訊號"
+msgid "Send Terminate (End Process) Signal"
+msgstr "傳送終止（結束程序）訊號"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "傳送截殺訊號"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "傳送截殺（強制停止）訊號"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -207,14 +204,13 @@ msgstr "搜尋程序與使用者"
 msgid "_Resources"
 msgstr "資源(_R)"
 
-#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111
-#: src/interface.cpp:272 src/proctable.cpp:345
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111 src/interface.cpp:272
+#: src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311
-#: src/proctable.cpp:352
+#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311 src/proctable.cpp:356
 msgid "Memory"
 msgstr "記憶體"
 
@@ -455,19 +451,21 @@ msgstr "自訂(_T)"
 msgid "Set _Affinity…"
 msgstr "設定親和性(_A)…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "停止(_S)…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "暫停(_P)…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "繼續(_R)"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
-msgstr "終止(_T)…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
+msgstr "結束(_E)…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "強行終止(_F)…"
 
@@ -477,8 +475,7 @@ msgstr "開啟的檔案"
 
 #: data/openfiles.ui:45
 msgctxt ""
-"FD here means File Descriptor. Use a short translation if possible, and at "
-"most 2-3 characters"
+"FD here means File Descriptor. Use a short translation if possible, and at most 2-3 characters"
 msgid "FD"
 msgstr "FD"
 
@@ -508,26 +505,23 @@ msgstr "檢視與管理系統資源"
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:10
 msgid ""
-"System Monitor is a process viewer and system monitor with an attractive, "
-"easy-to-use interface."
+"System Monitor is a process viewer and system monitor with an attractive, easy-to-use interface."
 msgstr "《系統監控》為程序檢視器與系統監視器，具有優雅且易於使用的介面。"
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:14
 msgid ""
-"System Monitor can help you find out what applications are using the "
-"processor or the memory of your computer, can manage the running "
-"applications, force stop processes not responding, and change the state or "
-"priority of existing processes."
+"System Monitor can help you find out what applications are using the processor or the memory of "
+"your computer, can manage the running applications, force stop processes not responding, and "
+"change the state or priority of existing processes."
 msgstr ""
-"《系統監控》能協助您找出哪個應用程式正在使用電腦上的處理器或記憶體，並能管理"
-"執行中的應用程式、強行終止沒有回應的程序、更改現有程序的狀態或優先等級。"
+"《系統監控》能協助您找出哪個應用程式正在使用電腦上的處理器或記憶體，並能管理執行中的應用程式、強"
+"行終止沒有回應的程序、更改現有程序的狀態或優先等級。"
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:20
 msgid ""
-"The resource graphs feature shows you a quick overview of what is going on "
-"with your computer displaying recent network, memory and processor usage."
-msgstr ""
-"資源圖表功能為電腦運作情況的快速概覽，能顯示網路、記憶體與處理器的即時用量。"
+"The resource graphs feature shows you a quick overview of what is going on with your computer "
+"displaying recent network, memory and processor usage."
+msgstr "資源圖表功能為電腦運作情況的快速概覽，能顯示網路、記憶體與處理器的即時用量。"
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:28
 msgid "Process list view"
@@ -541,12 +535,16 @@ msgstr "資源概覽檢視"
 msgid "File Systems view"
 msgstr "檔案系統檢視"
 
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "GNOME 專案"
+
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Manager;Activity;"
 msgstr ""
-"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Manager;Activity;"
-"監視器;監控;系統;程序;處理器;記憶體;網路;紀錄;使用量;效能;工作;管理員;活動;"
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Manager;Activity;監視"
+"器;監控;系統;程序;處理器;記憶體;網路;紀錄;使用量;效能;工作;管理員;活動;"
 
 #: data/preferences.ui:6
 msgid "Preferences"
@@ -640,19 +638,19 @@ msgstr "詳細資料"
 msgid "Process ID"
 msgstr "程序 ID"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "使用者"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "狀態"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "開始時間"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "優先等級"
 
@@ -660,42 +658,47 @@ msgstr "優先等級"
 msgid "Usage"
 msgstr "用量"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "CPU 時間"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "虛擬記憶體"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "常駐記憶體"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "可寫記憶體"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "共享記憶體"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "安全情境"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "命令列"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "WCHAN"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "控制群組"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "結束程序(_E)…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -703,8 +706,8 @@ msgstr "更多動作"
 
 #: data/renice.ui:4
 msgid ""
-"The priority of a process is given by its nice value. A lower nice value "
-"corresponds to a higher priority."
+"The priority of a process is given by its nice value. A lower nice value corresponds to a "
+"higher priority."
 msgstr "程序的優先等級由它的 Nice 值決定。較低的 Nice 值代表擁更高的優先等級。"
 
 #: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:194
@@ -747,17 +750,29 @@ msgstr "終止%i失敗：%s"
 #: src/action-impls/gsm-setaffinity.c:103
 #, c-format
 msgid "Affinity failed on %i: %s"
-msgstr ""
+msgstr "親和性於 %i 失敗：%s"
 
 #: src/action-impls/gsm-setaffinity.c:118
 #, c-format
 msgid "Affinity unsupported"
-msgstr ""
+msgstr "親和性不支援"
 
 #: src/action-impls/gsm-setpriority.c:32
 #, c-format
 msgid "Priority failed on %i: %s"
 msgstr "%i 的優先級設定失敗：%s"
+
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "終止協助程式失敗"
+
+#: src/actions/gsm-actions.c:236
+msgid "Affinity helper failed"
+msgstr "親和性協助程式失敗"
+
+#: src/actions/gsm-actions.c:325
+msgid "Priority helper failed"
+msgstr "優先級協助程式失敗"
 
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
@@ -779,8 +794,7 @@ msgstr "顯示檔案系統分頁"
 msgid "Open Failed"
 msgstr "開啟失敗"
 
-#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224
-#: src/setaffinity.cpp:124
+#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224 src/setaffinity.cpp:124
 msgid "_Close"
 msgstr "關閉(_C)"
 
@@ -982,12 +996,11 @@ msgstr "使用 Solaris 模式顯示 CPU 百分比"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:32
 msgid ""
-"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage "
-"is divided by the total number of CPUs. Otherwise, it operates in “Irix "
-"mode”."
+"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage is divided by the "
+"total number of CPUs. Otherwise, it operates in “Irix mode”."
 msgstr ""
-"若設為「True」，《system-monitor》會以「Solaris 模式」運作，即每個工作的 CPU "
-"使用量會除以 CPU 總數量來均分。否則會以「Irix 模式」運作。"
+"若設為「True」，《system-monitor》會以「Solaris 模式」運作，即每個工作的 CPU 使用量會除以 CPU 總"
+"數量來均分。否則會以「Irix 模式」運作。"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:39
 msgid "Show memory in IEC"
@@ -1015,12 +1028,11 @@ msgstr "是否要顯示所有檔案系統的相關資訊"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:74
 msgid ""
-"Whether to display information about all file systems (including types like "
-"“autofs” and “procfs”). Useful for getting a list of all currently mounted "
-"file systems."
+"Whether to display information about all file systems (including types like “autofs” and "
+"“procfs”). Useful for getting a list of all currently mounted file systems."
 msgstr ""
-"是否要顯示所有檔案系統的相關資訊（包「Autofs」和「Procfs」這類檔案系統）。啟"
-"用該選項可以檢視所有已掛載的檔案系統。"
+"是否要顯示所有檔案系統的相關資訊（包「Autofs」和「Procfs」這類檔案系統）。啟用該選項可以檢視所有"
+"已掛載的檔案系統。"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:81
 msgid "Time in milliseconds between updates of the devices list"
@@ -1113,28 +1125,22 @@ msgstr "以對數尺度顯示記憶體"
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:240
 msgid ""
-"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
-"of a line chart."
-msgstr ""
-"若設為「True」，《系統監控》會將 CPU 圖表顯示為堆疊區域圖表而非折線圖。"
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead of a line chart."
+msgstr "若設為「True」，《系統監控》會將 CPU 圖表顯示為堆疊區域圖表而非折線圖。"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show CPU chart as stacked area chart"
 msgstr "將 CPU 圖表顯示為堆疊區域圖"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:247
-msgid ""
-"Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier "
-"curves"
+msgid "Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier curves"
 msgstr "將 CPU、記憶體、網路及磁碟圖表透過貝茲曲線顯示為平滑圖表"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:249
 msgid ""
-"If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as "
-"smoothed graphs, otherwise as line charts."
-msgstr ""
-"若設為「True」，《系統監控》會將 CPU、記憶體、網路及磁碟圖表顯示為平滑圖表而"
-"非折線圖。"
+"If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as smoothed graphs, "
+"otherwise as line charts."
+msgstr "若設為「True」，《系統監控》會將 CPU、記憶體、網路及磁碟圖表顯示為平滑圖表而非折線圖。"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:256
 msgid "Show memory and swap in IEC"
@@ -1258,11 +1264,11 @@ msgstr "在程序列表中顯示「ID」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:473
 msgid "Width of process “SELinux Security Context” column"
-msgstr "程序列表的「安全本文」欄位寬度"
+msgstr "程序列表的「SELinux 安全情境」欄位寬度"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:479
 msgid "Show process “SELinux Security Context” column on startup"
-msgstr "在程序列表中顯示「安全本文」欄位"
+msgstr "初始啟動時在程序列表顯示「SELinux 安全情境」欄位"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:486
 msgid "Width of process “Command Line” column"
@@ -1453,7 +1459,7 @@ msgstr "檔案列表的欄位排序依據"
 msgid "Open files sort order"
 msgstr "檔案列表的欄位排序方向（遞增或遞減）"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "圖示"
 
@@ -1481,8 +1487,8 @@ msgstr "結束「%s」？"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "停止「%s」？"
+msgid "Temporarily Stop %s?"
+msgstr "暫時停止「%s」？"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1502,15 +1508,13 @@ msgstr[0] "結束 %d 個已選的程序嗎？"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "停止 %d 個已選的程序嗎？"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "暫時停止 %d 個已選的程序嗎？"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
-msgid ""
-"Force stopping processes can result in data loss, crashes, and system "
-"failures"
+msgid "Force stopping processes can result in data loss, crashes, and system failures"
 msgstr "強行終止程序可能會造成資料流失、程式崩潰或是系統錯誤"
 
 #: src/procdialogs.cpp:172
@@ -1529,13 +1533,12 @@ msgstr "結束(_E)"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
-msgid ""
-"Stopping processes can result in data loss, crashes, and system failures"
-msgstr "停止程序可能會造成資料流失、程式崩潰或是系統錯誤"
+msgid "Stopping (pausing) processes can result in data loss, crashes, and system failures"
+msgstr "停止（暫停）程序可能會造成資料流失、程式崩潰或是系統錯誤"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "停止(_S)"
+msgid "_Pause"
+msgstr "暫停(_P)"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1548,58 +1551,53 @@ msgid "Change Priority of the Selected Process"
 msgid_plural "Change Priority of %d Selected Processes"
 msgstr[0] "更改 %d 個已選程序的優先級"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "結束程序(_E)…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "名稱"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "X 伺服器記憶體"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Nice 值"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "單元"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "工作階段"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "座位"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "擁有者"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "總磁碟讀取"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "總磁碟寫入"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "磁碟讀取"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "磁碟寫入"
 
@@ -1693,10 +1691,28 @@ msgid "Very Low Priority"
 msgstr "優先等級非常低"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Stop…"
+#~ msgstr "停止(_S)…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "終止(_T)…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "停止「%s」？"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "停止 %d 個已選的程序嗎？"
+
+#~ msgid "_Stop"
+#~ msgstr "停止(_S)"
 
 #~ msgctxt "shortcut window"
 #~ msgid "General"
@@ -1771,15 +1787,12 @@ msgstr "%s/s"
 #~ msgid "Custom"
 #~ msgstr "自訂"
 
-#~ msgid "The GNOME Project"
-#~ msgstr "GNOME 專案"
-
 #~ msgid ""
-#~ "<small><i><b>Note:</b> The priority of a process is given by its nice "
-#~ "value. A lower nice value corresponds to a higher priority.</i></small>"
+#~ "<small><i><b>Note:</b> The priority of a process is given by its nice value. A lower nice "
+#~ "value corresponds to a higher priority.</i></small>"
 #~ msgstr ""
-#~ "<small><i><b>注意：</b> 程序的優先等級是由 Nice 值決定的。較低的 Nice 值代"
-#~ "表擁更高的優先等級。</i></small>"
+#~ "<small><i><b>注意：</b> 程序的優先等級是由 Nice 值決定的。較低的 Nice 值代表擁更高的優先等"
+#~ "級。</i></small>"
 
 #~ msgctxt "interface"
 #~ msgid "_End Process"
@@ -1815,8 +1828,7 @@ msgstr "%s/s"
 #~ msgid "_Files opened by process “%s” (PID %u):"
 #~ msgstr "程序「%s」(PID %u) 所開啟的檔案(_F)："
 
-#~ msgid ""
-#~ "Main window size and position in the form (width, height, xpos, ypos)"
+#~ msgid "Main window size and position in the form (width, height, xpos, ypos)"
 #~ msgstr "主視窗的大小與位置 (寬度, 高度, xpos, ypos)"
 
 #~ msgid "Set network totals unit separately"
@@ -1862,25 +1874,21 @@ msgstr "%s/s"
 #~ msgstr[0] "確定要結束 %d 個所選的程序嗎？"
 
 #~ msgid ""
-#~ "Killing a process may destroy data, break the session or introduce a "
-#~ "security risk. Only unresponsive processes should be killed."
+#~ "Killing a process may destroy data, break the session or introduce a security risk. Only "
+#~ "unresponsive processes should be killed."
 #~ msgstr ""
-#~ "強行終止程序恐導致資料損失、工作階段中斷，甚至造成安全風險。當程序沒有回應"
-#~ "時才需將其強行終止。"
+#~ "強行終止程序恐導致資料損失、工作階段中斷，甚至造成安全風險。當程序沒有回應時才需將其強行終"
+#~ "止。"
 
 #~ msgid ""
-#~ "Ending a process may destroy data, break the session or introduce a "
-#~ "security risk. Only unresponsive processes should be ended."
-#~ msgstr ""
-#~ "結束程序恐導致資料損失、工作階段中斷，甚至造成安全風險。當程序沒有回應時才"
-#~ "需將其結束。"
+#~ "Ending a process may destroy data, break the session or introduce a security risk. Only "
+#~ "unresponsive processes should be ended."
+#~ msgstr "結束程序恐導致資料損失、工作階段中斷，甚至造成安全風險。當程序沒有回應時才需將其結束。"
 
 #~ msgid ""
-#~ "Stopping a process may destroy data, break the session or introduce a "
-#~ "security risk. Only unresponsive processes should be stopped."
-#~ msgstr ""
-#~ "停止程序恐導致資料損失、工作階段中斷，甚至造成安全風險。當程序沒有回應時才"
-#~ "需將其停止。"
+#~ "Stopping a process may destroy data, break the session or introduce a security risk. Only "
+#~ "unresponsive processes should be stopped."
+#~ msgstr "停止程序恐導致資料損失、工作階段中斷，甚至造成安全風險。當程序沒有回應時才需將其停止。"
 
 #~ msgid "Note:"
 #~ msgstr "注意："
@@ -2074,16 +2082,11 @@ msgstr "%s/s"
 #~ msgid "Main Window Y position"
 #~ msgstr "主視窗 Y 位置"
 
-#~ msgid ""
-#~ "Determines which processes to show by default. 0 is All, 1 is user, and 2 "
-#~ "is active"
-#~ msgstr ""
-#~ "決定顯示哪一類程序。0 表示全部，1 只顯示用家自己的程序，2 只顯示目前仍然活"
-#~ "躍的程序。"
+#~ msgid "Determines which processes to show by default. 0 is All, 1 is user, and 2 is active"
+#~ msgstr "決定顯示哪一類程序。0 表示全部，1 只顯示用家自己的程序，2 只顯示目前仍然活躍的程序。"
 
 #~ msgid ""
-#~ "0 for the System Info, 1 for the processes list, 2 for the resources and "
-#~ "3 for the disks list"
+#~ "0 for the System Info, 1 for the processes list, 2 for the resources and 3 for the disks list"
 #~ msgstr "0  為系統資訊，1 為程序清單，2 為資源，3 為磁碟清單"
 
 #~ msgid "System"
