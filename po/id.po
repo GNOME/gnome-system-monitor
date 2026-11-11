@@ -7,20 +7,22 @@
 # Dirgita <dirgitadevina@yahoo.co.id>, 2011-2013.
 # Andika Triwidada <andika@gmail.com>, 2011-2013, 2014, 2025.
 # Kukuh Syafaat <kukuhsyafaat@gnome.org>, 2017-2021, 2024.
+# Herpiko Dwi Aguno <herpiko@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
-"POT-Creation-Date: 2026-02-02 05:43+0000\n"
-"PO-Revision-Date: 2026-04-07 13:00+0700\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"Report-Msgid-Bugs-To: "
+"https://gitlab.gnome.org/GNOME/gnome-system-monitor/issues\n"
+"POT-Creation-Date: 2026-10-06 21:02+0000\n"
+"PO-Revision-Date: 2026-11-11 02:23+0000\n"
+"Last-Translator: Herpiko Dwi Aguno <herpiko@gmail.com>\n"
 "Language-Team: Indonesian <gnome@i15n.org>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: pelokalan.blankon.id\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
 msgid "Device"
@@ -54,14 +56,16 @@ msgstr "Dipakai"
 msgid "GNOME System Monitor"
 msgstr "GNOME Monitor Sistem"
 
-#: data/gnome-system-monitor-kde.desktop.in.in:3 data/org.gnome.SystemMonitor.desktop.in.in:3
+#: data/gnome-system-monitor-kde.desktop.in.in:3
+#: data/org.gnome.SystemMonitor.desktop.in.in:3
 msgid "View current processes and monitor system state"
 msgstr "Melihat proses yang sedang berjalan serta memantau keadaan sistem"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/gnome-system-monitor-kde.desktop.in.in:15
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
-msgstr "Pemantauan;Sistem;Proses;CPU;Memori;Jaringan;Riwayat;Pemakaian;Monitor;"
+msgstr ""
+"Pemantauan;Sistem;Proses;CPU;Memori;Jaringan;Riwayat;Pemakaian;Monitor;"
 
 #: data/shortcuts-dialog.ui:6
 msgctxt "shortcuts dialog"
@@ -105,22 +109,22 @@ msgstr "Atur Afinitas"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Kirim Sinyal Berhenti"
+msgid "Send Stop (Pause) Signal"
+msgstr "Kirim Sinyal Jeda"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
+msgid "Send Continue (Resume) Signal"
 msgstr "Kirim Sinyal Lanjutkan"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
-msgstr "Kirim Sinyal Terminasikan"
+msgid "Send Terminate (End Process) Signal"
+msgstr "Kirim Sinyal untuk Menghentikan Proses"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
+msgid "Send Kill (Force Stop) Signal"
 msgstr "Kirim Sinyal Kill"
 
 #: data/shortcuts-dialog.ui:95
@@ -144,7 +148,6 @@ msgid "Switch to File Systems"
 msgstr "Beralih ke Sistem Berkas"
 
 #: data/shortcuts-dialog.ui:118
-#| msgid "_Apply"
 msgctxt "shortcuts dialog"
 msgid "App"
 msgstr "App"
@@ -200,13 +203,14 @@ msgstr "Cari proses dan pengguna"
 msgid "_Resources"
 msgstr "Sumbe_r Daya"
 
-#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111 src/interface.cpp:272
-#: src/proctable.cpp:345
+#: data/interface.ui:103 data/preferences.ui:50 data/procproperties.ui:111
+#: src/interface.cpp:272 src/proctable.cpp:349
 #, no-c-format
 msgid "CPU"
 msgstr "CPU"
 
-#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311 src/proctable.cpp:352
+#: data/interface.ui:134 data/procproperties.ui:127 src/interface.cpp:311
+#: src/proctable.cpp:356
 msgid "Memory"
 msgstr "Memori"
 
@@ -447,19 +451,21 @@ msgstr "U_bahan"
 msgid "Set _Affinity…"
 msgstr "Atur _Afinitas…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_Berhenti…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_Jeda"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "Lanjut_kan"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
-msgstr "Hen_tikan…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
+msgstr "_Akhiri"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "_Paksa Berhenti…"
 
@@ -468,7 +474,9 @@ msgid "Open Files"
 msgstr "Berkas Terbuka"
 
 #: data/openfiles.ui:45
-msgctxt "FD here means File Descriptor. Use a short translation if possible, and at most 2-3 characters"
+msgctxt ""
+"FD here means File Descriptor. Use a short translation if possible, and at "
+"most 2-3 characters"
 msgid "FD"
 msgstr "FD"
 
@@ -497,28 +505,32 @@ msgid "View and manage system resources"
 msgstr "Menampilkan dan mengelola sumber daya sistem"
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:10
-msgid "System Monitor is a process viewer and system monitor with an attractive, easy-to-use interface."
+msgid ""
+"System Monitor is a process viewer and system monitor with an attractive, "
+"easy-to-use interface."
 msgstr ""
-"Monitor Sistem adalah aplikasi pemantau serta pengelola kinerja sistem dengan tampilan yang atraktif "
-"serta mudah dipakai."
+"Monitor Sistem adalah aplikasi pemantau serta pengelola kinerja sistem "
+"dengan tampilan yang atraktif serta mudah dipakai."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:14
 msgid ""
-"System Monitor can help you find out what applications are using the processor or the memory of your "
-"computer, can manage the running applications, force stop processes not responding, and change the "
-"state or priority of existing processes."
+"System Monitor can help you find out what applications are using the "
+"processor or the memory of your computer, can manage the running "
+"applications, force stop processes not responding, and change the state or "
+"priority of existing processes."
 msgstr ""
-"Monitor Sistem dapat membantu Anda mengetahui aplikasi yang sedang diolah oleh prosesor atau jumlah "
-"memori pada komputer Anda, sekaligus memanajemen aplikasi yang berjalan, menghentikan proses yang "
-"membeku, serta mengubah prioritas proses yang sedang berlangsung."
+"Monitor Sistem dapat membantu Anda mengetahui aplikasi yang sedang diolah "
+"oleh prosesor atau jumlah memori pada komputer Anda, sekaligus memanajemen "
+"aplikasi yang berjalan, menghentikan proses yang membeku, serta mengubah "
+"prioritas proses yang sedang berlangsung."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:20
 msgid ""
-"The resource graphs feature shows you a quick overview of what is going on with your computer "
-"displaying recent network, memory and processor usage."
+"The resource graphs feature shows you a quick overview of what is going on "
+"with your computer displaying recent network, memory and processor usage."
 msgstr ""
-"Fitur grafik sumber daya menampilkan ikhtisar apa yang sedang terjadi pada komputer Anda, antaranya "
-"penggunaan jaringan, memori, serta prosesor."
+"Fitur grafik sumber daya menampilkan ikhtisar apa yang sedang terjadi pada "
+"komputer Anda, antaranya penggunaan jaringan, memori, serta prosesor."
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:28
 msgid "Process list view"
@@ -532,10 +544,18 @@ msgstr "Ringkasan sumber daya"
 msgid "File Systems view"
 msgstr "Tilikan Sistem Berkas"
 
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "Proyek GNOME"
+
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
-msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Manager;Activity;"
-msgstr "Pemantauan;Sistem;Proses;CPU;Memori;Jaringan;Riwayat;Pemakaian;Kinerja;Tugas;Manajer;Aktivitas;"
+msgid ""
+"Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Mana"
+"ger;Activity;"
+msgstr ""
+"Pemantauan;Sistem;Proses;CPU;Memori;Jaringan;Riwayat;Pemakaian;Kinerja;Tugas;"
+"Manajer;Aktivitas;"
 
 #: data/preferences.ui:6
 msgid "Preferences"
@@ -629,19 +649,19 @@ msgstr "Rincian"
 msgid "Process ID"
 msgstr "ID Proses"
 
-#: data/procproperties.ui:37 src/proctable.cpp:338
+#: data/procproperties.ui:37 src/proctable.cpp:342
 msgid "User"
 msgstr "Pengguna"
 
-#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:339
+#: data/procproperties.ui:55 data/procproperties.ui:90 src/proctable.cpp:343
 msgid "Status"
 msgstr "Status"
 
-#: data/procproperties.ui:58 src/proctable.cpp:347
+#: data/procproperties.ui:58 src/proctable.cpp:351
 msgid "Started"
 msgstr "Dimulai"
 
-#: data/procproperties.ui:74 src/proctable.cpp:366
+#: data/procproperties.ui:74 src/proctable.cpp:370
 msgid "Priority"
 msgstr "Prioritas"
 
@@ -649,42 +669,47 @@ msgstr "Prioritas"
 msgid "Usage"
 msgstr "Penggunaan"
 
-#: data/procproperties.ui:143 src/proctable.cpp:346
+#: data/procproperties.ui:143 src/proctable.cpp:350
 msgid "CPU Time"
 msgstr "Waktu CPU"
 
-#: data/procproperties.ui:159 src/proctable.cpp:340
+#: data/procproperties.ui:159 src/proctable.cpp:344
 msgid "Virtual Memory"
 msgstr "Memori Virtual"
 
-#: data/procproperties.ui:175 src/proctable.cpp:341
+#: data/procproperties.ui:175 src/proctable.cpp:345
 msgid "Resident Memory"
 msgstr "Memori Bertetap"
 
-#: data/procproperties.ui:191 src/proctable.cpp:342
+#: data/procproperties.ui:191 src/proctable.cpp:346
 msgid "Writable Memory"
 msgstr "Memori Dapat Ditulis"
 
-#: data/procproperties.ui:207 src/proctable.cpp:343
+#: data/procproperties.ui:207 src/proctable.cpp:347
 msgid "Shared Memory"
 msgstr "Memori Bersama"
 
-#: data/procproperties.ui:227 src/proctable.cpp:350
+#: data/procproperties.ui:227 src/proctable.cpp:354
 msgid "Security Context"
 msgstr "Konteks Keamanan"
 
-#: data/procproperties.ui:237 src/proctable.cpp:351
+#: data/procproperties.ui:237 src/proctable.cpp:355
 msgid "Command Line"
 msgstr "Baris Perintah"
 
 #. xgettext: combined noun, the function the process is waiting in, see wchan ps(1)
-#: data/procproperties.ui:247 src/proctable.cpp:354
+#: data/procproperties.ui:247 src/proctable.cpp:358
 msgid "Waiting Channel"
 msgstr "Kanal Tunggu"
 
-#: data/procproperties.ui:257 src/proctable.cpp:355
+#: data/procproperties.ui:257 src/proctable.cpp:359
 msgid "Control Group"
 msgstr "Grup Kontrol"
+
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "Akhiri Pros_es…"
 
 #: data/procproperties.ui:304
 msgid "More Actions"
@@ -692,11 +717,11 @@ msgstr "Tindakan Lainnya"
 
 #: data/renice.ui:4
 msgid ""
-"The priority of a process is given by its nice value. A lower nice value corresponds to a higher "
-"priority."
+"The priority of a process is given by its nice value. A lower nice value "
+"corresponds to a higher priority."
 msgstr ""
-"Prioritas suatu proses ditentukan oleh nilai angkatan (nice). Semakin rendah nilai angkatannya, maka "
-"semakin tinggi prioritasnya."
+"Prioritas suatu proses ditentukan oleh nilai angkatan (nice). Semakin rendah "
+"nilai angkatannya, maka semakin tinggi prioritasnya."
 
 #: data/renice.ui:9 data/setaffinity.ui:20 src/procdialogs.cpp:194
 msgid "_Cancel"
@@ -750,6 +775,18 @@ msgstr "Afinitas tidak didukung"
 msgid "Priority failed on %i: %s"
 msgstr "Prioritas gagal pada %i: %s"
 
+#: src/actions/gsm-actions.c:98
+msgid "Kill helper failed"
+msgstr "Pembantu penghentian gagal"
+
+#: src/actions/gsm-actions.c:236
+msgid "Affinity helper failed"
+msgstr "Pembantu afinitas gagal"
+
+#: src/actions/gsm-actions.c:325
+msgid "Priority helper failed"
+msgstr "Pembantu prioritas gagal"
+
 #: src/application.cpp:394
 msgid "A simple process and system monitor."
 msgstr "Monitor sederhana untuk proses dan sistem."
@@ -770,7 +807,8 @@ msgstr "Tampilkan tab Sistem Berkas"
 msgid "Open Failed"
 msgstr "Gagal Membuka"
 
-#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224 src/setaffinity.cpp:124
+#: src/disks.c:381 src/procactions.cpp:78 src/procactions.cpp:224
+#: src/setaffinity.cpp:124
 msgid "_Close"
 msgstr "_Tutup"
 
@@ -968,11 +1006,13 @@ msgstr "Modus Solaris untuk persentase CPU"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:32
 msgid ""
-"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU usage is divided by the total "
-"number of CPUs. Otherwise, it operates in “Irix mode”."
+"If TRUE, system-monitor operates in “Solaris mode” where a task’s CPU "
+"usage is divided by the total number of CPUs. Otherwise, it operates in "
+"“Irix mode”."
 msgstr ""
-"Apabila TRUE, monitor-sistem akan beroperasi dalam \"mode Solaris\", dimana penggunaan CPU tugas yang "
-"dibagi dengan cacah total CPU. Selain itu, akan bekerja dalam \"mode Irix\"."
+"Apabila TRUE, monitor-sistem akan beroperasi dalam \"mode Solaris\", dimana "
+"penggunaan CPU tugas yang dibagi dengan cacah total CPU. Selain itu, akan "
+"bekerja dalam \"mode Irix\"."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:39
 msgid "Show memory in IEC"
@@ -1000,11 +1040,13 @@ msgstr "Apakah informasi tentang semua sistem berkas harus ditampilkan"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:74
 msgid ""
-"Whether to display information about all file systems (including types like “autofs” and “procfs”). "
-"Useful for getting a list of all currently mounted file systems."
+"Whether to display information about all file systems (including types like "
+"“autofs” and “procfs”). Useful for getting a list of all currently "
+"mounted file systems."
 msgstr ""
-"Apakah menampilkan informasi tentang semua sistem berkas (termasuk yang berjenis \"autofs\" dan "
-"\"procfs\"). Sangat berguna untuk melihat semua sistem berkas yang dikaitkan."
+"Apakah menampilkan informasi tentang semua sistem berkas (termasuk yang "
+"berjenis \"autofs\" dan \"procfs\"). Sangat berguna untuk melihat semua "
+"sistem berkas yang dikaitkan."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:81
 msgid "Time in milliseconds between updates of the devices list"
@@ -1036,7 +1078,8 @@ msgstr "Kembangkan bagian memori saat awal mula"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:125
 msgid "Whether to expand the memory section in the resources tab on startup."
-msgstr "Apakah mengembangkan bagian memori dalam tab sumber daya saat awal mula."
+msgstr ""
+"Apakah mengembangkan bagian memori dalam tab sumber daya saat awal mula."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:132
 msgid "Expand network section on startup"
@@ -1044,7 +1087,8 @@ msgstr "Kembangkan bagian jaringan saat awal mula"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:134
 msgid "Whether to expand the network section in the resources tab on startup."
-msgstr "Apakah mengembangkan bagian jaringan dalam tab sumber daya saat awal mula."
+msgstr ""
+"Apakah mengembangkan bagian jaringan dalam tab sumber daya saat awal mula."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:141
 msgid "Expand disks section on startup"
@@ -1096,26 +1140,32 @@ msgstr "Tampilkan memori dalam skala logaritmik"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:240
-msgid "If TRUE, system-monitor shows the CPU chart as a stacked area chart instead of a line chart."
+msgid ""
+"If TRUE, system-monitor shows the CPU chart as a stacked area chart instead "
+"of a line chart."
 msgstr ""
-"Apabila TRUE, monitor-sistem menampilkan diagram CPU sebagai diagram wilayah yang bertumpuk, bukan "
-"diagram garis."
+"Apabila TRUE, monitor-sistem menampilkan diagram CPU sebagai diagram wilayah "
+"yang bertumpuk, bukan diagram garis."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show CPU chart as stacked area chart"
 msgstr "Tampilkan diagram CPU sebagai diagram wilayah yang bertumpuk"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:247
-msgid "Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier curves"
-msgstr "Tampilkan grafik CPU, Memori, Jaringan, dan Diska sebagai grafik halus menggunakan kurva Bezier"
+msgid ""
+"Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier "
+"curves"
+msgstr ""
+"Tampilkan grafik CPU, Memori, Jaringan, dan Diska sebagai grafik halus "
+"menggunakan kurva Bezier"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:249
 msgid ""
-"If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as smoothed graphs, otherwise "
-"as line charts."
+"If TRUE, system-monitor shows the CPU, Memory, Network, and Disk charts as "
+"smoothed graphs, otherwise as line charts."
 msgstr ""
-"Apabila TRUE, monitor-sistem menampilkan grafik CPU, Memori, Jaringan dan Diska sebagai grafik yang "
-"dihaluskan, sebaliknya grafik garis."
+"Apabila TRUE, monitor-sistem menampilkan grafik CPU, Memori, Jaringan dan "
+"Diska sebagai grafik yang dihaluskan, sebaliknya grafik garis."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:256
 msgid "Show memory and swap in IEC"
@@ -1433,7 +1483,7 @@ msgstr "Kolom pengurutan berkas terbuka"
 msgid "Open files sort order"
 msgstr "Urutan berkas terbuka"
 
-#: src/prefsdialog.cpp:86 src/prefsdialog.cpp:137
+#: src/prefsdialog.cpp:90 src/prefsdialog.cpp:153
 msgid "Icon"
 msgstr "Ikon"
 
@@ -1461,35 +1511,39 @@ msgstr "Akhiri %s?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "Hentikan %s?"
+msgid "Temporarily Stop %s?"
+msgstr "Hentikan Sementara %s?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
 #, c-format
 msgid "Force Stop Selected Process?"
 msgid_plural "Force Stop %d Selected Processes?"
-msgstr[0] "Paksa Berhenti %d Proses yang Dipilih?"
+msgstr[0] "Paksa Berhenti Proses %d yang Dipilih?"
 
 #. xgettext: primary alert message for ending multiple processes
 #: src/procdialogs.cpp:152
 #, c-format
 msgid "End Selected Process?"
 msgid_plural "End %d Selected Processes?"
-msgstr[0] "Akhiri %d Proses yang Dipilih?"
+msgstr[0] "Akhiri Proses %d yang Dipilih?"
 
 #. SIGSTOP
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Hentikan %d Proses yang Dipilih?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "Hentikan Sementara Proses %d yang Dipilih?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
-msgid "Force stopping processes can result in data loss, crashes, and system failures"
-msgstr "Memaksa menghentikan proses dapat mengakibatkan kehilangan data, crash, dan kegagalan sistem"
+msgid ""
+"Force stopping processes can result in data loss, crashes, and system "
+"failures"
+msgstr ""
+"Memaksa menghentikan proses dapat mengakibatkan kehilangan data, crash, dan "
+"kegagalan sistem"
 
 #: src/procdialogs.cpp:172
 msgid "_Force Stop"
@@ -1498,7 +1552,9 @@ msgstr "_Paksa Berhenti"
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:177
 msgid "Ending processes can result in data loss, crashes, and system failures"
-msgstr "Mengakhiri proses dapat menyebabkan kehilangan data, crash, dan kegagalan sistem"
+msgstr ""
+"Mengakhiri proses dapat menyebabkan kehilangan data, crash, dan kegagalan "
+"sistem"
 
 #: src/procdialogs.cpp:179
 msgid "_End"
@@ -1507,12 +1563,16 @@ msgstr "_Akhiri"
 #. SIGSTOP
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
-msgid "Stopping processes can result in data loss, crashes, and system failures"
-msgstr "Menghentikan proses dapat mengakibatkan kehilangan data, crash, dan kegagalan sistem"
+msgid ""
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
+msgstr ""
+"Menghentikan proses dapat mengakibatkan kehilangan data, crash, dan "
+"kegagalan sistem"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Hentikan"
+msgid "_Pause"
+msgstr "_Jeda"
 
 #: src/procdialogs.cpp:278
 #, c-format
@@ -1523,60 +1583,55 @@ msgstr "Ubah Prioritas dari %s (PID %u)"
 #, c-format
 msgid "Change Priority of the Selected Process"
 msgid_plural "Change Priority of %d Selected Processes"
-msgstr[0] "Ubah Prioritas dari %d Proses yang Dipilih"
+msgstr[0] "Ubah Prioritas dari Proses %d yang Dipilih"
 
-#: src/proctable.cpp:129
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "Akhiri Pros_es…"
-
-#: src/proctable.cpp:337
+#: src/proctable.cpp:341
 msgid "Name"
 msgstr "Nama"
 
-#: src/proctable.cpp:344
+#: src/proctable.cpp:348
 msgid "X Server Memory"
 msgstr "Memori Server X"
 
-#: src/proctable.cpp:348
+#: src/proctable.cpp:352
 msgid "Nice"
 msgstr "Angkatan"
 
-#: src/proctable.cpp:349
+#: src/proctable.cpp:353
 msgid "ID"
 msgstr "ID"
 
-#: src/proctable.cpp:356
+#: src/proctable.cpp:360
 msgid "Unit"
 msgstr "Unit"
 
-#: src/proctable.cpp:357
+#: src/proctable.cpp:361
 msgid "Session"
 msgstr "Sesi"
 
 #. TRANSLATORS: Seat = i.e. the physical seat the session of the process belongs to, only
 #. for multi-seat environments. See http://en.wikipedia.org/wiki/Multiseat_configuration
-#: src/proctable.cpp:360
+#: src/proctable.cpp:364
 msgid "Seat"
 msgstr "Seat"
 
-#: src/proctable.cpp:361
+#: src/proctable.cpp:365
 msgid "Owner"
 msgstr "Pemilik"
 
-#: src/proctable.cpp:362
+#: src/proctable.cpp:366
 msgid "Disk Read Total"
 msgstr "Total Baca Diska"
 
-#: src/proctable.cpp:363
+#: src/proctable.cpp:367
 msgid "Disk Write Total"
 msgstr "Total Tulis Diska"
 
-#: src/proctable.cpp:364
+#: src/proctable.cpp:368
 msgid "Disk Read"
 msgstr "Baca Diska"
 
-#: src/proctable.cpp:365
+#: src/proctable.cpp:369
 msgid "Disk Write"
 msgstr "Tulis Diska"
 
@@ -1670,7 +1725,25 @@ msgid "Very Low Priority"
 msgstr "Prioritas Sangat Rendah"
 
 #. xgettext: rate, 10MiB/s or 10Mbit/s
-#: src/util.cpp:742
+#: src/util.cpp:690
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Stop…"
+#~ msgstr "_Berhenti…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "Hen_tikan…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "Hentikan %s?"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "Hentikan %d Proses yang Dipilih?"
+
+#~ msgid "_Stop"
+#~ msgstr "_Hentikan"
