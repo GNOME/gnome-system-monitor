@@ -10,15 +10,16 @@
 # Aviary.pl <community-poland@mozilla.org>, 2007-2025.
 # Daniel <wbcwknvstb@proton.me>, 2026.
 # Victoria Niedzielska <victorian@gnome.org>, 2026.
+# Marcel Mrówka <micro.mail88@gmail.com>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-system-monitor\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gnome-system-monitor/"
 "issues\n"
-"POT-Creation-Date: 2026-04-27 05:21+0000\n"
-"PO-Revision-Date: 2026-06-18 21:10+0200\n"
-"Last-Translator: Victoria Niedzielska <victorian@gnome.org>\n"
+"POT-Creation-Date: 2026-08-01 19:47+0000\n"
+"PO-Revision-Date: 2026-11-15 12:38+0100\n"
+"Last-Translator: Marcel Mrówka <micro.mail88@gmail.com>\n"
 "Language-Team: Polish <https://l10n.gnome.org/teams/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +27,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Gtranslator 50.0\n"
+"X-Generator: Gtranslator 51.0\n"
 
 #: data/disks.ui:31 data/memmaps.ui:430
 msgid "Device"
@@ -63,12 +64,14 @@ msgstr "Monitor systemu GNOME"
 #: data/gnome-system-monitor-kde.desktop.in.in:3
 #: data/org.gnome.SystemMonitor.desktop.in.in:3
 msgid "View current processes and monitor system state"
-msgstr "Wyświetlanie istniejących procesów i monitorowanie stanu systemu"
+msgstr "Wyświetlaj istniejące procesy i monitoruj stan systemu"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/gnome-system-monitor-kde.desktop.in.in:15
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;"
-msgstr "Monitor;System;Proces;CPU;Procesor;Pamięć;Sieć;Historia;Użycie;Zużycie;"
+msgstr ""
+"Monitor;System;Proces;CPU;Procesor;Pamięć;Sieć;Historia;Użycie;Zużycie;Menedżer "
+"Zadań;Zasoby;"
 
 #: data/shortcuts-dialog.ui:6
 msgctxt "shortcuts dialog"
@@ -78,7 +81,7 @@ msgstr "Procesy"
 #: data/shortcuts-dialog.ui:10
 msgctxt "shortcuts dialog"
 msgid "Search"
-msgstr "Wyszukuje"
+msgstr "Wyszukiwanie"
 
 #: data/shortcuts-dialog.ui:21
 msgctxt "shortcuts dialog"
@@ -112,23 +115,23 @@ msgstr "Ustawienie koligacji"
 
 #: data/shortcuts-dialog.ui:70
 msgctxt "shortcuts dialog"
-msgid "Send Stop Signal"
-msgstr "Wysłanie sygnału zatrzymania"
+msgid "Send Stop (Pause) Signal"
+msgstr "Wysłanie sygnału zatrzymania (wstrzymania)"
 
 #: data/shortcuts-dialog.ui:76
 msgctxt "shortcuts dialog"
-msgid "Send Continue Signal"
-msgstr "Wysłanie sygnału kontynuacji"
+msgid "Send Continue (Resume) Signal"
+msgstr "Wysłanie sygnału kontynuacji (wznowienia)"
 
 #: data/shortcuts-dialog.ui:82
 msgctxt "shortcuts dialog"
-msgid "Send Terminate Signal"
+msgid "Send Terminate (End Process) Signal"
 msgstr "Wysłanie sygnału zakończenia"
 
 #: data/shortcuts-dialog.ui:88
 msgctxt "shortcuts dialog"
-msgid "Send Kill Signal"
-msgstr "Wysłanie sygnału usunięcia"
+msgid "Send Kill (Force Stop) Signal"
+msgstr "Wysłanie sygnału usunięcia (wymuszenia zatrzymania)"
 
 #: data/shortcuts-dialog.ui:95
 msgctxt "shortcuts dialog"
@@ -192,7 +195,7 @@ msgstr "Monitor systemu"
 
 #: data/interface.ui:22 data/lsof.ui:22
 msgid "Search"
-msgstr "Wyszukuje"
+msgstr "Wyszukaj"
 
 #: data/interface.ui:29
 msgid "Main Menu"
@@ -200,7 +203,7 @@ msgstr "Menu główne"
 
 #: data/interface.ui:44
 msgid "Search processes and users"
-msgstr "Wyszukiwanie procesów i użytkowników"
+msgstr "Wyszukaj procesy i użytkowników"
 
 #: data/interface.ui:58
 msgid "_Resources"
@@ -285,19 +288,19 @@ msgstr "_Systemy plików"
 #: data/lsof.ui:4
 msgctxt "Window title for Search for Open Files dialog"
 msgid "Search for Open Files"
-msgstr "Wyszukiwanie otwartych plików"
+msgstr "Wyszukaj otwarte pliki"
 
 #: data/lsof.ui:29
 msgid "Refresh"
-msgstr "Odświeżenie"
+msgstr "Odśwież"
 
 #: data/lsof.ui:45
 msgid "Filter files by name"
-msgstr "Filtrowanie plików według nazw"
+msgstr "Filtruj pliki według nazw"
 
 #: data/lsof.ui:51
 msgid "Case Insensitive"
-msgstr "Ignorowanie wielkości liter"
+msgstr "Ignoruj wielkości liter"
 
 #: data/lsof.ui:101
 msgid "Process"
@@ -454,19 +457,21 @@ msgstr "_Inny"
 msgid "Set _Affinity…"
 msgstr "U_staw koligację…"
 
-#: data/menus.ui:147 data/procproperties.ui:285
-msgid "_Stop…"
-msgstr "_Zatrzymaj…"
+#: data/menus.ui:147 src/procproperties.cpp:245
+msgid "_Pause…"
+msgstr "_Wstrzymaj…"
 
 #: data/menus.ui:151 src/procproperties.cpp:248
 msgid "_Resume"
 msgstr "_Wznów"
 
-#: data/menus.ui:155 src/procproperties.cpp:245
-msgid "_Terminate…"
+#. Translators: This is the imperative form of the "end" verb,
+#. where the user chooses to terminate the selected process(es) softly.
+#: data/menus.ui:159
+msgid "_End…"
 msgstr "Za_kończ…"
 
-#: data/menus.ui:159 data/procproperties.ui:292
+#: data/menus.ui:163 data/procproperties.ui:292
 msgid "_Force Stop…"
 msgstr "Wy_muś zatrzymanie…"
 
@@ -487,7 +492,7 @@ msgstr "Obiekt"
 
 #: data/org.gnome.gnome-system-monitor.policy.in.in:11
 msgid "Kill process"
-msgstr "Usunięcie procesu"
+msgstr "Usuń proces"
 
 #: data/org.gnome.gnome-system-monitor.policy.in.in:12
 msgid "Privileges are required to control other users’ processes"
@@ -495,7 +500,7 @@ msgstr "Wymagane są uprawnienia, aby kontrolować procesy innych użytkowników
 
 #: data/org.gnome.gnome-system-monitor.policy.in.in:22
 msgid "Renice process"
-msgstr "Zmiana priorytetu procesu"
+msgstr "Zmień priorytet procesu"
 
 #: data/org.gnome.gnome-system-monitor.policy.in.in:23
 msgid "Privileges are required to change the priority of processes"
@@ -503,7 +508,7 @@ msgstr "Wymagane są uprawnienia, aby zmieniać priorytety procesów"
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:8
 msgid "View and manage system resources"
-msgstr "Wyświetlanie i zarządzanie zasobami systemu"
+msgstr "Wyświetlaj i zarządzaj zasobami systemu"
 
 #: data/org.gnome.SystemMonitor.metainfo.xml.in.in:10
 msgid ""
@@ -545,10 +550,14 @@ msgstr "Przegląd zasobów"
 msgid "File Systems view"
 msgstr "Widok systemów plików"
 
+#: data/org.gnome.SystemMonitor.metainfo.xml.in.in:46
+msgid "The GNOME Project"
+msgstr "Projekt GNOME"
+
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/org.gnome.SystemMonitor.desktop.in.in:16
 msgid "Monitor;System;Process;CPU;Memory;Network;History;Usage;Performance;Task;Manager;Activity;"
-msgstr "Monitor;System;Proces;Procesor;CPU;Pamięć;Sieć;Historia;Użycie;Zużycie;Wydajność;Zadanie;Zadania;Zadań;Menedżer;Menadżer;Manadżer;Manedżer;Manager;Aktywność;"
+msgstr "Monitor;System;Proces;Procesor;CPU;Pamięć;Sieć;Historia;Użycie;Zużycie;Wydajność;Zadanie;Zadania;Zadań;Menedżer;Menadżer;Manadżer;Manedżer;Manager;Aktywność;Zasoby;"
 
 #: data/preferences.ui:6
 msgid "Preferences"
@@ -580,19 +589,19 @@ msgstr "_Warstwowy wykres procesorów"
 
 #: data/preferences.ui:65
 msgid "Show Memory and Swap in IEC"
-msgstr "Pamięć i przestrzeń wymiany w jednostkach IEC"
+msgstr "Wyświetlaj pamięć i przestrzeń wymiany w jednostkach IEC"
 
 #: data/preferences.ui:71
 msgid "Show Memory in Logarithmic Scale"
-msgstr "Pamięć w skali logarytmicznej"
+msgstr "Wyświetlaj pamięć w skali logarytmicznej"
 
 #: data/preferences.ui:82
 msgid "_Show Network Speed in Bits"
-msgstr "_Prędkość sieci w bitach"
+msgstr "Wyświetlaj _prędkość sieci w bitach"
 
 #: data/preferences.ui:88
 msgid "Show Network _Totals in Bits"
-msgstr "Łą_cznie pobrano/wysłano w bitach"
+msgstr "Wyświetlaj łą_cznie pobrano/wysłano w bitach"
 
 #: data/preferences.ui:97
 msgid "Processes"
@@ -600,27 +609,27 @@ msgstr "Procesy"
 
 #: data/preferences.ui:113
 msgid "Enable _Smooth Refresh"
-msgstr "Płynne _odświeżanie"
+msgstr "Włącz płynne _odświeżanie"
 
 #: data/preferences.ui:119
 msgid "Alert Before Ending or _Force Stopping Processes"
-msgstr "Ostrzeżenie przed _kończeniem lub wymuszaniem zakończenia procesów"
+msgstr "Ostrzegaj przed _kończeniem lub wymuszaniem zakończenia procesów"
 
 #: data/preferences.ui:125
 msgid "_Divide CPU Usage by CPU Count"
-msgstr "_Dzielenie użycia procesora przez liczbę procesorów"
+msgstr "_Dziel użycie procesora przez liczbę procesorów"
 
 #: data/preferences.ui:131
 msgid "Show Memory in IEC"
-msgstr "Pamięć w jednostkach IEC"
+msgstr "Wyświetlaj pamięć w jednostkach IEC"
 
 #: data/preferences.ui:138 data/preferences.ui:169
 msgid "Information Fields"
-msgstr "Wyświetlanie"
+msgstr "Pola informacji"
 
 #: data/preferences.ui:139
 msgid "Process information shown in list"
-msgstr "Informacje na liście"
+msgstr "Informacje o procesie na liście"
 
 #: data/preferences.ui:146
 msgid "File Systems"
@@ -628,11 +637,11 @@ msgstr "Systemy plików"
 
 #: data/preferences.ui:162
 msgid "Show _All File Systems"
-msgstr "W_szystkie systemy plików"
+msgstr "Wyświetlaj w_szystkie systemy plików"
 
 #: data/preferences.ui:170
 msgid "File system information shown in list"
-msgstr "Informacje na liście"
+msgstr "Informacje o systemie plików na liście"
 
 #: data/procproperties.ui:18
 msgid "Details"
@@ -699,6 +708,13 @@ msgstr "Kanał oczekujący"
 msgid "Control Group"
 msgstr "Grupa kontrolna"
 
+#: data/procproperties.ui:285 src/proctable.cpp:133
+msgid "_End Process…"
+msgid_plural "_End Processes…"
+msgstr[0] "Za_kończ proces…"
+msgstr[1] "Za_kończ procesy…"
+msgstr[2] "Za_kończ procesy…"
+
 #: data/procproperties.ui:304
 msgid "More Actions"
 msgstr "Więcej działań"
@@ -725,7 +741,7 @@ msgstr "Wartość _nice:"
 
 #: data/setaffinity.ui:15
 msgid "Set Affinity"
-msgstr "Ustawienie koligacji"
+msgstr "Ustaw koligację"
 
 #: data/setaffinity.ui:26
 msgid "_Apply"
@@ -737,11 +753,11 @@ msgstr "Wybór procesorów, na których może działać"
 
 #: data/setaffinity.ui:46
 msgid "_Run on all CPUs"
-msgstr "_Działanie na wszystkich procesorach"
+msgstr "_Działaj na wszystkich procesorach"
 
 #: data/setaffinity.ui:68
 msgid "Apply to Child _Threads"
-msgstr "Zastosowanie do _wątków potomnych"
+msgstr "Zastosuj do _wątków potomnych"
 
 #: src/action-impls/gsm-kill.c:32
 #, c-format
@@ -781,15 +797,15 @@ msgstr "Prosty monitor systemu i procesów."
 
 #: src/application.cpp:398
 msgid "Show the Processes tab"
-msgstr "Wyświetla kartę procesów"
+msgstr "Wyświetl kartę procesów"
 
 #: src/application.cpp:402
 msgid "Show the Resources tab"
-msgstr "Wyświetla kartę zasobów"
+msgstr "Wyświetl kartę zasobów"
 
 #: src/application.cpp:406
 msgid "Show the File Systems tab"
-msgstr "Wyświetla kartę systemów plików"
+msgstr "Wyświetl kartę systemów plików"
 
 #: src/disks.c:377
 msgid "Open Failed"
@@ -823,7 +839,8 @@ msgstr ""
 "Piotr Drąg <piotrdrag@gmail.com>, 2010-2025\n"
 "Aviary.pl <community-poland@mozilla.org>, 2007-2025\n"
 "Daniel <wbcwknvstb@proton.me>, 2026\n"
-"Victoria Niedzielska <victorian@gnome.org>, 2026"
+"Victoria Niedzielska <victorian@gnome.org>, 2026\n"
+"Marcel Mrówka <micro.mail88@gmail.com>, 2026"
 
 #. xgettext: ? stands for unknown
 #: src/legacy/e_date.c:175
@@ -881,11 +898,11 @@ msgstr "Zaznaczony kolor"
 
 #: src/legacy/gsm_color_button.c:593
 msgid "Type of color picker"
-msgstr "Typ wybierania kolorów"
+msgstr "Typ wybieraka kolorów"
 
 #: src/legacy/gsm_color_button.c:640
 msgid "Click to set graph colors"
-msgstr "Kliknięcie umożliwia ustawienie kolorów wykresu"
+msgstr "Kliknij, aby ustawić kolory wykresu"
 
 #. Translators: loadgraphs y axis percentage labels: 0 %, 50%, 100%
 #: src/load-graph.cpp:62 src/load-graph.cpp:77
@@ -1000,7 +1017,7 @@ msgstr "Główne okno powinno być otwierane zmaksymalizowane"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:23
 msgid "Show process dependencies in tree form"
-msgstr "Wyświetlanie zależności procesów w postaci drzewa"
+msgstr "Wyświetlaj zależności procesów w postaci drzewa"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:30
 msgid "Solaris mode for CPU percentage"
@@ -1018,15 +1035,15 @@ msgstr ""
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:39
 msgid "Show memory in IEC"
-msgstr "Wyświetlanie pamięci w jednostkach IEC"
+msgstr "Wyświetlaj pamięć w jednostkach IEC"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:46
 msgid "Enable/Disable smooth refresh"
-msgstr "Włącza/wyłącza płynne odświeżanie"
+msgstr "Włącz/wyłącz płynne odświeżanie"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:53
 msgid "Show warning dialog when killing processes"
-msgstr "Wyświetlanie okna z ostrzeżeniem przy usuwaniu procesów"
+msgstr "Wyświetlaj okno z ostrzeżeniem przy usuwaniu procesów"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:60
 msgid "Time in milliseconds between updates of the process view"
@@ -1069,7 +1086,7 @@ msgstr "Zapisuje obecnie wyświetlaną kartę"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:114
 msgid "Expand CPU section on startup"
-msgstr "Rozwijanie sekcji procesora po uruchomieniu"
+msgstr "Rozwijaj sekcję procesora po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:116
 msgid "Whether to expand the CPU section in the resources tab on startup."
@@ -1077,7 +1094,7 @@ msgstr "Czy rozwijać sekcję procesora na karcie zasobów po uruchomieniu."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:123
 msgid "Expand memory section on startup"
-msgstr "Rozwijanie sekcji pamięci po uruchomieniu"
+msgstr "Rozwijaj sekcję pamięci po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:125
 msgid "Whether to expand the memory section in the resources tab on startup."
@@ -1085,7 +1102,7 @@ msgstr "Czy rozwijać sekcję pamięci na karcie zasobów po uruchomieniu."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:132
 msgid "Expand network section on startup"
-msgstr "Rozwijanie sekcji sieci po uruchomieniu"
+msgstr "Rozwijaj sekcję sieci po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:134
 msgid "Whether to expand the network section in the resources tab on startup."
@@ -1093,7 +1110,7 @@ msgstr "Czy rozwijać sekcję sieci na karcie zasobów po uruchomieniu."
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:141
 msgid "Expand disks section on startup"
-msgstr "Rozwijanie sekcji dysków po uruchomieniu"
+msgstr "Rozwijaj sekcję dysków po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:164
 msgid "CPU colors"
@@ -1129,15 +1146,15 @@ msgstr "Domyślny kolor wykresu zapisu na dysku"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:215
 msgid "Show network traffic in bits"
-msgstr "Wyświetlanie ruchu sieciowego w bitach"
+msgstr "Wyświetlaj ruch sieciowy w bitach"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:222
 msgid "Show network totals in bits"
-msgstr "Wyświetlanie łącznie pobrano/wysłano w bitach"
+msgstr "Wyświetlaj łącznie pobrano/wysłano w bitach"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:229
 msgid "Show memory in logarithmic scale"
-msgstr "Wyświetlanie pamięci w skali logarytmicznej"
+msgstr "Wyświetlaj pamięć w skali logarytmicznej"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:231
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:240
@@ -1150,15 +1167,15 @@ msgstr ""
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:238
 msgid "Show CPU chart as stacked area chart"
-msgstr "Wyświetlanie wykresu procesorów jako skumulowany wykres warstwowy"
+msgstr "Wyświetlaj wykres procesorów jako skumulowany wykres warstwowy"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:247
 msgid ""
 "Show CPU, Memory, Network, and Disk charts as smooth graphs using Bezier "
 "curves"
 msgstr ""
-"Wyświetlanie wykresów procesorów, pamięci, sieci i dysku jako płynne wykresy "
-"za pomocą krzywych Béziera"
+"Wyświetlaj wykresy procesorów, pamięci, sieci i dysku jako płynne wykresy za "
+"pomocą krzywych Béziera"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:249
 msgid ""
@@ -1171,7 +1188,7 @@ msgstr ""
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:256
 msgid "Show memory and swap in IEC"
-msgstr "Pamięć i przestrzeń wymiany w jednostkach IEC"
+msgstr "Wyświetlaj pamięć i przestrzeń wymiany w jednostkach IEC"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:270
 msgid "Process view sort column"
@@ -1191,7 +1208,7 @@ msgstr "Szerokość kolumny nazwy procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:298
 msgid "Show process “Name” column on startup"
-msgstr "Wyświetlanie kolumny nazwy po uruchomieniu"
+msgstr "Wyświetlaj kolumnę nazwy po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:305
 msgid "Width of process “User” column"
@@ -1199,7 +1216,7 @@ msgstr "Szerokość kolumny użytkownika procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:312
 msgid "Show process “User” column on startup"
-msgstr "Wyświetlanie kolumny użytkownika procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę użytkownika procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:319
 msgid "Width of process “Status” column"
@@ -1207,7 +1224,7 @@ msgstr "Szerokość kolumny stanu procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:326
 msgid "Show process “Status” column on startup"
-msgstr "Wyświetlanie kolumny stanu procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę stanu procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:333
 msgid "Width of process “Virtual Memory” column"
@@ -1215,7 +1232,7 @@ msgstr "Szerokość kolumny pamięci wirtualnej procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:340
 msgid "Show process “Virtual Memory” column on startup"
-msgstr "Wyświetlanie kolumny pamięci wirtualnej procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę pamięci wirtualnej procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:347
 msgid "Width of process “Resident Memory” column"
@@ -1223,7 +1240,7 @@ msgstr "Szerokość kolumny pamięci rezydentnej procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:354
 msgid "Show process “Resident Memory” column on startup"
-msgstr "Wyświetlanie kolumny pamięci rezydentnej procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę pamięci rezydentnej procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:361
 msgid "Width of process “Writable Memory” column"
@@ -1231,7 +1248,7 @@ msgstr "Szerokość kolumny pamięci zapisywalnej procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:368
 msgid "Show process “Writable Memory” column on startup"
-msgstr "Wyświetlanie kolumny pamięci zapisywalnej procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę pamięci zapisywalnej procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:375
 msgid "Width of process “Shared Memory” column"
@@ -1239,7 +1256,7 @@ msgstr "Szerokość kolumny pamięci współdzielonej procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:382
 msgid "Show process “Shared Memory” column on startup"
-msgstr "Wyświetlanie kolumny pamięci współdzielonej procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę pamięci współdzielonej procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:389
 msgid "Width of process “X Server Memory” column"
@@ -1247,15 +1264,15 @@ msgstr "Szerokość kolumny pamięci serwera X procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:396
 msgid "Show process “X Server Memory” column on startup"
-msgstr "Wyświetlanie kolumny pamięci serwera X procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę pamięci serwera X procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:403
 msgid "Width of process “CPU %” column"
-msgstr "Szerokość kolumny % procesora"
+msgstr "Szerokość kolumny %. procesora"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:410
 msgid "Show process “CPU %” column on startup"
-msgstr "Wyświetlanie kolumny % procesora procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę %. procesora procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:417
 msgid "Width of process “CPU Time” column"
@@ -1263,7 +1280,7 @@ msgstr "Szerokość kolumny czasu procesora procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:424
 msgid "Show process “CPU Time” column on startup"
-msgstr "Wyświetlanie kolumny czasu procesora procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę czasu procesora procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:431
 msgid "Width of process “Started” column"
@@ -1271,7 +1288,7 @@ msgstr "Szerokość kolumny czasu uruchomienia procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:438
 msgid "Show process “Started” column on startup"
-msgstr "Wyświetlanie kolumny czasu uruchomienia procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę czasu uruchomienia procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:445
 msgid "Width of process “Nice” column"
@@ -1279,7 +1296,7 @@ msgstr "Szerokość kolumny nice procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:452
 msgid "Show process “Nice” column on startup"
-msgstr "Wyświetlanie kolumny nice procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę nice procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:459
 msgid "Width of process “ID” column"
@@ -1287,7 +1304,7 @@ msgstr "Szerokość kolumny identyfikatora procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:466
 msgid "Show process “ID” column on startup"
-msgstr "Wyświetlanie kolumny identyfikatora procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę identyfikatora procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:473
 msgid "Width of process “SELinux Security Context” column"
@@ -1296,8 +1313,7 @@ msgstr "Szerokość kolumny kontekstu bezpieczeństwa SELinux procesu"
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:479
 msgid "Show process “SELinux Security Context” column on startup"
 msgstr ""
-"Wyświetlanie kolumny kontekstu bezpieczeństwa SELinux procesu podczas "
-"uruchomienia"
+"Wyświetlaj kolumnę kontekstu bezpieczeństwa SELinux procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:486
 msgid "Width of process “Command Line” column"
@@ -1305,7 +1321,7 @@ msgstr "Szerokość kolumny wiersza poleceń procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:493
 msgid "Show process “Command Line” column on startup"
-msgstr "Wyświetlanie kolumny wiersza poleceń procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę wiersza poleceń procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:500
 msgid "Width of process “Memory” column"
@@ -1313,7 +1329,7 @@ msgstr "Szerokość kolumny pamięci procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:507
 msgid "Show process “Memory” column on startup"
-msgstr "Wyświetlanie kolumny pamięci procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę pamięci procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:514
 msgid "Width of process “Waiting Channel” column"
@@ -1321,7 +1337,7 @@ msgstr "Szerokość kolumny kanału oczekującego procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:521
 msgid "Show process “Waiting Channel” column on startup"
-msgstr "Wyświetlanie kolumny „Kanał oczekujący” procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę „Kanał oczekujący” procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:528
 msgid "Width of process “Control Group” column"
@@ -1329,7 +1345,7 @@ msgstr "Szerokość kolumny grupy kontrolnej procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:535
 msgid "Show process “Control Group” column on startup"
-msgstr "Wyświetlanie kolumny grupy kontrolnej procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę grupy kontrolnej procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:542
 msgid "Width of process “Unit” column"
@@ -1337,7 +1353,7 @@ msgstr "Szerokość kolumny nice procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:549
 msgid "Show process “Unit” column on startup"
-msgstr "Wyświetlanie kolumny jednostki procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę jednostki procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:556
 msgid "Width of process “Session” column"
@@ -1345,7 +1361,7 @@ msgstr "Szerokość kolumny sesji procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:563
 msgid "Show process “Session” column on startup"
-msgstr "Wyświetlanie kolumny sesji procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę sesji procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:570
 msgid "Width of process “Seat” column"
@@ -1353,7 +1369,7 @@ msgstr "Szerokość kolumny stanowiska procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:577
 msgid "Show process “Seat” column on startup"
-msgstr "Wyświetlanie kolumny stanowiska procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę stanowiska procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:584
 msgid "Width of process “Owner” column"
@@ -1361,7 +1377,7 @@ msgstr "Szerokość kolumny właściciela procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:591
 msgid "Show process “Owner” column on startup"
-msgstr "Wyświetlanie kolumny właściciela procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę właściciela procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:598
 msgid "Width of process “Disk read total” column"
@@ -1369,7 +1385,7 @@ msgstr "Szerokość kolumny łącznych odczytów z dysku procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:605
 msgid "Show process “Disk read total” column on startup"
-msgstr "Wyświetlanie kolumny łącznych odczytów z dysku procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę łącznych odczytów z dysku procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:612
 msgid "Width of process “Disk write total” column"
@@ -1377,7 +1393,7 @@ msgstr "Szerokość kolumny łącznych zapisów na dysku procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:619
 msgid "Show process “Disk write total” column on startup"
-msgstr "Wyświetlanie kolumny łącznych zapisów na dysku procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę łącznych zapisów na dysku procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:626
 msgid "Width of process “Disk read” column"
@@ -1385,7 +1401,7 @@ msgstr "Szerokość kolumny odczytów z dysku procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:633
 msgid "Show process “Disk read” column on startup"
-msgstr "Wyświetlanie kolumny odczytów z dysku procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę odczytów z dysku procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:640
 msgid "Width of process “Disk write” column"
@@ -1393,7 +1409,7 @@ msgstr "Szerokość kolumny zapisów na dysku procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:647
 msgid "Show process “Disk write” column on startup"
-msgstr "Wyświetlanie kolumny zapisów na dysku procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę zapisów na dysku procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:654
 msgid "Width of process “Priority” column"
@@ -1401,7 +1417,7 @@ msgstr "Szerokość kolumny priorytetu procesu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:661
 msgid "Show process “Priority” column on startup"
-msgstr "Wyświetlanie kolumny priorytetu procesu po uruchomieniu"
+msgstr "Wyświetlaj kolumnę priorytetu procesu po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:672
 msgid "Disk view sort column"
@@ -1421,7 +1437,7 @@ msgstr "Szerokość kolumny urządzenia widoku dysku"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:700
 msgid "Show disk view “Device” column on startup"
-msgstr "Wyświetlanie kolumny urządzenia widoku dysku po uruchomieniu"
+msgstr "Wyświetlaj kolumnę urządzenia widoku dysku po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:707
 msgid "Width of disk view “Directory” column"
@@ -1429,7 +1445,7 @@ msgstr "Szerokość kolumny katalogu widoku dysku"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:714
 msgid "Show disk view “Directory” column on startup"
-msgstr "Wyświetlanie kolumny katalogu widoku dysku po uruchomieniu"
+msgstr "Wyświetlaj kolumnę katalogu widoku dysku po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:721
 msgid "Width of disk view “Type” column"
@@ -1437,7 +1453,7 @@ msgstr "Szerokość kolumny typu widoku dysku"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:728
 msgid "Show disk view “Type” column on startup"
-msgstr "Wyświetlanie kolumny typu widoku dysku po uruchomieniu"
+msgstr "Wyświetlaj kolumnę typu widoku dysku po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:735
 msgid "Width of disk view “Total” column"
@@ -1445,7 +1461,7 @@ msgstr "Szerokość kolumny „łącznie” widoku dysku"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:742
 msgid "Show disk view “Total” column on startup"
-msgstr "Wyświetlanie kolumny „łącznie” widoku dysku po uruchomieniu"
+msgstr "Wyświetlaj kolumnę „łącznie” widoku dysku po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:749
 msgid "Width of disk view “Free” column"
@@ -1453,7 +1469,7 @@ msgstr "Szerokość kolumny „wolne” widoku dysku"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:756
 msgid "Show disk view “Free” column on startup"
-msgstr "Wyświetlanie kolumny „wolne” widoku dysku po uruchomieniu"
+msgstr "Wyświetlaj kolumnę „wolne” widoku dysku po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:763
 msgid "Width of disk view “Available” column"
@@ -1461,7 +1477,7 @@ msgstr "Szerokość kolumny „dostępne” widoku dysku"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:770
 msgid "Show disk view “Available” column on startup"
-msgstr "Wyświetlanie kolumny „dostępne” widoku dysku po uruchomieniu"
+msgstr "Wyświetlaj kolumnę „dostępne” widoku dysku po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:777
 msgid "Width of disk view “Used” column"
@@ -1469,7 +1485,7 @@ msgstr "Szerokość kolumny „używane” widoku dysku"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:784
 msgid "Show disk view “Used” column on startup"
-msgstr "Wyświetlanie kolumny „używane” widoku dysku po uruchomieniu"
+msgstr "Wyświetlaj kolumnę „używane” widoku dysku po uruchomieniu"
 
 #: src/org.gnome.gnome-system-monitor.gschema.xml.in:794
 msgid "Memory map sort column"
@@ -1515,8 +1531,8 @@ msgstr "Zakończyć „%s”?"
 #. xgettext: primary alert message for stopping single process
 #: src/procdialogs.cpp:134
 #, c-format
-msgid "Stop %s?"
-msgstr "Zatrzymać „%s”?"
+msgid "Temporarily Stop %s?"
+msgstr "Tymczasowo wstrzymać „%s”?"
 
 #. xgettext: primary alert message for killing multiple processes
 #: src/procdialogs.cpp:145
@@ -1540,11 +1556,11 @@ msgstr[2] "Zakończyć %d zaznaczonych procesów?"
 #. xgettext: primary alert message for stopping multiple processes
 #: src/procdialogs.cpp:159
 #, c-format
-msgid "Stop Selected Process?"
-msgid_plural "Stop %d Selected Processes?"
-msgstr[0] "Zatrzymać zaznaczony proces?"
-msgstr[1] "Zatrzymać %d zaznaczone procesy?"
-msgstr[2] "Zatrzymać %d zaznaczonych procesów?"
+msgid "Temporarily Stop Selected Process?"
+msgid_plural "Temporarily Stop %d Selected Processes?"
+msgstr[0] "Tymczasowo wstrzymać zaznaczony proces?"
+msgstr[1] "Tymczasowo wstrzymać %d zaznaczone procesy?"
+msgstr[2] "Tymczasowo wstrzymać %d zaznaczonych procesów?"
 
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:170
@@ -1573,33 +1589,28 @@ msgstr "Za_kończ"
 #. xgettext: secondary alert message
 #: src/procdialogs.cpp:184
 msgid ""
-"Stopping processes can result in data loss, crashes, and system failures"
+"Stopping (pausing) processes can result in data loss, crashes, and system "
+"failures"
 msgstr ""
-"Zatrzymanie procesów może spowodować utratę danych, awarie i błędy komputera"
+"Zatrzymanie (wstrzymywanie) procesów może spowodować utratę danych, awarie "
+"i błędy komputera"
 
 #: src/procdialogs.cpp:186
-msgid "_Stop"
-msgstr "_Zatrzymaj"
+msgid "_Pause"
+msgstr "_Wstrzymaj"
 
 #: src/procdialogs.cpp:278
 #, c-format
 msgid "Change Priority of %s (PID %u)"
-msgstr "Zmiana priorytetu %s (PID: %u)"
+msgstr "Zmień priorytet %s (PID: %u)"
 
 #: src/procdialogs.cpp:281
 #, c-format
 msgid "Change Priority of the Selected Process"
 msgid_plural "Change Priority of %d Selected Processes"
-msgstr[0] "Zmiana priorytetu zaznaczonego procesu"
-msgstr[1] "Zmiana priorytetu %d zaznaczonych procesów"
-msgstr[2] "Zmiana priorytetu %d zaznaczonych procesów"
-
-#: src/proctable.cpp:133
-msgid "_End Process…"
-msgid_plural "_End Processes…"
-msgstr[0] "Za_kończ proces…"
-msgstr[1] "Za_kończ procesy…"
-msgstr[2] "Za_kończ procesy…"
+msgstr[0] "Zmień priorytet zaznaczonego procesu"
+msgstr[1] "Zmień priorytet %d zaznaczonych procesów"
+msgstr[2] "Zmień priorytet %d zaznaczonych procesów"
 
 #: src/proctable.cpp:341
 msgid "Name"
@@ -1686,7 +1697,7 @@ msgstr "%ut%ud"
 #: src/util.cpp:89
 #, c-format
 msgid "%ud%02uh"
-msgstr "%ud%02ug"
+msgstr "%ud%02ugodz."
 
 #. xgettext: hours (0 -> 23), minutes, seconds
 #: src/util.cpp:93
@@ -1745,6 +1756,26 @@ msgstr "Bardzo niski priorytet"
 #, c-format
 msgid "%s/s"
 msgstr "%s/s"
+
+#~ msgid "_Stop…"
+#~ msgstr "_Zatrzymaj…"
+
+#~ msgid "_Terminate…"
+#~ msgstr "Za_kończ…"
+
+#, c-format
+#~ msgid "Stop %s?"
+#~ msgstr "Zatrzymać „%s”?"
+
+#, c-format
+#~ msgid "Stop Selected Process?"
+#~ msgid_plural "Stop %d Selected Processes?"
+#~ msgstr[0] "Zatrzymać zaznaczony proces?"
+#~ msgstr[1] "Zatrzymać %d zaznaczone procesy?"
+#~ msgstr[2] "Zatrzymać %d zaznaczonych procesów?"
+
+#~ msgid "_Stop"
+#~ msgstr "_Zatrzymaj"
 
 #~ msgctxt "shortcut window"
 #~ msgid "General"
